@@ -1,0 +1,107 @@
+@use './Mixins' as mxn
+@import './root'
+
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+html
+    font-size: 62.5%
+
+body
+    font-family: 'Kanit', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    font-size: 1.6rem
+
+p
+    --__fs: 1.6rem
+    font-size: var(--__fs)
+
+    span
+        font-size: var(--__fs)
+
+a
+    text-decoration: none
+    color: var(--color-primary)
+
+    &:hover
+        color: var(--color-primary-accent)
+
+ul, li
+    font-size: inherit
+    list-style: none
+
+h1, h2, h3, h4, h5, h6
+    --__fs: 1.6rem
+    font-size: var(--__fs)
+
+label, input[type="text"], button
+    --__fs: inherit
+    --__color: #B5B5B5
+    color: var(--__color)
+    font-size: var(--__fs)
+
+input[type="text"], button
+    --__bg: #F3F3F3
+    --__color: inherit
+    --__pad-x: 0
+    --__pad-y: 0
+    --__radius: var(--brdr-radius)
+    --__width: auto
+    background: var(--__bg)
+    border: none
+    border-radius: var(--__radius)
+    color: var(--__color)
+    display: inline-block
+    font-family: inherit
+    padding: var(--__pad-y) var(--__pad-x)
+    outline: none
+    width: var(--__width)
+
+button
+    --__color: #B5B5B5
+    --__pad-x: 1.8em
+    --__pad-y: .9em
+    cursor: pointer
+    transition: color, background .2s ease-in-out
+
+    &:hover
+        --__bg: #E9E9E9
+
+@include mxn.white_space
+
+.container
+    max-width: 620px
+    margin-inline: auto
+
+.title
+    --__fs: 1.6rem
+    &--1
+        --__fs: 3.6rem
+    &--2
+        --__fs: 2.4rem
+    &--3
+        --__fs: 2rem
+    &--4
+        --__fs: 1.8rem
+    &--5, &--6
+        --__fs: 1.6rem
+
+.t-center
+    text-align: center
+
+.block
+    display: block
+
+.link
+    --__fs: 1.6rem
+    --__color: var(--color-primary)
+    --__color-hover: var(--color-primary-accent)
+    font-size: var(--__fs)
+    color: var(--__color)
+
+    &:hover
+        color: var(--__color-hover)
+
+.footer-mark
+    color: var(--text-default-faded)

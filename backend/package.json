@@ -1,0 +1,32 @@
+{
+    "name": "htmlgeneratorserverside",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "app.js",
+    "scripts": {
+        "dev": "nodemon ./app.js",
+        "start": "node ./app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "archiver": "^7.0.1",
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "file-saver": "^2.0.5",
+        "google-auth-library": "^9.9.0",
+        "google-spreadsheet": "^4.1.1",
+        "handlebars": "^4.7.8",
+        "jszip": "^3.10.1",
+        "mongoose": "^8.3.4",
+        "mustache": "^4.2.0",
+        "node-zip": "^1.0.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.0"
+    }
+}

@@ -1,0 +1,8 @@
+@mixin white_space
+    $types: (m: margin, p: padding)
+    $directions: (l: left, r: right, t: top, b: bottom)
+    @each $type_key, $type in $types
+        @each $dir_key, $dir in $directions
+            @for $n from 0 through 12
+                .#{$type_key}#{$dir_key}-#{$n}
+                    #{$type}-#{$dir}: #{$n}em

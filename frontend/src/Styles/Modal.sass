@@ -1,0 +1,75 @@
+.modal-overlay
+    position: fixed
+    inset: 0
+    background: #00000099
+    backdrop-filter: blur(2px)
+    z-index: 999
+    display: flex
+    align-items: center
+    justify-content: center
+
+    .modal
+        max-width: 600px
+        max-height: 700px
+        min-height: 300px
+        width: 80%
+        height: fit-content
+        border-radius: var(--brdr-radius)
+        background: #fff
+        isolation: isolate
+        position: relative
+        overflow: hidden
+
+        &__header
+            position: relative
+            z-index: 1
+            padding: var(--gap)
+            background: var(--color-primary-accent)
+            display: flex
+            flex-flow: row nowrap
+            align-items: center
+            justify-content: space-between
+            color: #fff
+
+            .modal-close-btn
+                --__color: #ffffff
+            
+
+        &__body
+            position: relative
+            overflow: hidden
+            width: inherit
+            height: inherit
+            // border-radius: inherit
+            height: 100%
+            width: 100%
+
+        // .modal-close-btn
+        //     position: absolute
+        //     top: .6em
+        //     right: .6em
+        //     z-index: 9
+
+// download
+.download-display
+    display: flex
+    flex-flow: column nowrap
+    height: 100%
+
+    &__preview-wrap
+        // flex: 0 1 40%
+        position: relative
+        overflow: hidden
+        max-height: 300px
+
+        .preview
+            width: 100%
+
+    &__body
+        flex: 1
+        display: flex
+        flex-flow: column nowrap
+        gap: var(--gap)
+        align-items: center
+        justify-content: center
+        padding: 3em 2em
