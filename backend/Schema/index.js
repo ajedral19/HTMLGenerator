@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const MONGODB = "mongodb://0.0.0.0:27017/HTMLGenerator";
-// const MONGODB = "mongodb://mongodb:27017/new-html-generator";
+// const MONGODB = "mongodb://0.0.0.0:27017/HTMLGenerator";
+const MONGODB = "mongodb://mongodb:27017/new-html-generator";
 
 const main = async () => {
     const uri = MONGODB;
