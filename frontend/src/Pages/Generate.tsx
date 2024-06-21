@@ -1,5 +1,5 @@
 import { Fragment } from "react/jsx-runtime";
-import Input from "../Components/Form/IInput";
+import Input from "../Components/Form/Input";
 import DownloadStrip from "../Components/DownloadStip";
 import Button from "../Components/Button";
 
@@ -20,7 +20,6 @@ export default function Generate() {
 
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
-
 
         const target = e.target as typeof e.target & {
             ["template-options"]: { value: string, dataset: { id: string } },
@@ -44,7 +43,7 @@ export default function Generate() {
                     </div>
                     <div className="commands">
                         <Button type="submit" text='Generate' id='generate_textbook' variant='primary' />
-                        <Button text='Clear' id='clear_generate_fields' variant='danger' />
+                        <Button type="reset" text='Clear' id='clear_generate_fields' variant='danger' />
                     </div>
                 </div>
             </form>

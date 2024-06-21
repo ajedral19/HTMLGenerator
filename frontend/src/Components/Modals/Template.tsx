@@ -1,6 +1,6 @@
 import { Fragment } from "react/jsx-runtime"
 import Button from "../Button"
-import Input from "../Form/IInput"
+import Input from "../Form/Input"
 
 import { SaveTemplate } from "../../Utils/RequestHander"
 import { readFileDataAsBase64 } from "../../Utils/FileHandlers"

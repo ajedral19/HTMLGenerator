@@ -1,10 +1,5 @@
 import axios from "axios";
 import fileDownload from "js-file-download";
-// import { readFileDataAsBase64 } from "./FileHandlers";
-// import { useDispatch } from "react-redux";
-// import { getTemplates } from "../Redux/Slices/templates";
-
-
 
 const api = axios.create({
     baseURL: 'http://localhost:9100/',
@@ -57,7 +52,6 @@ export const SaveTemplate = (file: unknown, template_name: unknown, template_duc
 
 // get templates
 export const GetTemplates = () => {
-
     return api.get('/templates')
         .then(res => res.data)
         .catch(err => console.error(err))

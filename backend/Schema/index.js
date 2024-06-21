@@ -1,7 +1,17 @@
 import mongoose from "mongoose";
+import { config } from "dotenv";
 
+const env = config();
+
+const { DBNAME, DBHOST, DBPORT } = env.parsed;
+
+const db_name = DBNAME || "HTMLGenerator";
+const db_host = DBHOST || "0.0.0.0";
+const db_port = DBPORT || "27017";
+// const dbName = "new-html-generator"
 // const MONGODB = "mongodb://0.0.0.0:27017/HTMLGenerator";
-const MONGODB = "mongodb://mongodb:27017/new-html-generator";
+// const MONGODB = "mongodb://mongodb:27017/new-html-generator";
+const MONGODB = `mongodb://${db_host}:${db_port}/${db_name}`;
 
 const main = async () => {
     const uri = MONGODB;
