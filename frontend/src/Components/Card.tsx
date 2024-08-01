@@ -1,4 +1,5 @@
 import { Fragment } from "react/jsx-runtime";
+import Button from "./Button";
 
 type card = {
     id: string,
@@ -8,6 +9,7 @@ type card = {
 export default function Card({ id, template_name, document_template_url }: card) {
     return <Fragment>
         <div className="card" data-template-id={id} >
+            <Button text="Delete" variant="danger" />
             <div className="card__img-wrap">
                 <img src="./images/template-placeholder.png" alt="textbook name" />
             </div>

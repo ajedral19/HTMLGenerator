@@ -6,9 +6,11 @@ import { FieldInput, Option, Target } from "../../types";
 import { SVGDownload } from "../../svgAssets";
 
 export default function Input({ label, name, id, type, options, onChange }: FieldInput) {
+
     const [inputText, setInputText] = useState<string>("")
     const [toggled, setToggled] = useState<boolean>(false)
     const fff = useOptionFilter(inputText, options);
+    const [_id, set_id] = useState("")
 
 
     const input_ref = useRef<HTMLInputElement | null>(null)
@@ -22,9 +24,10 @@ export default function Input({ label, name, id, type, options, onChange }: Fiel
         setToggled(true)
     }
 
-    const handleOnSelect = (title: string) => {
+    const handleOnSelect = (title: string, template_id: string) => {
         setInputText("")
         input_ref.current!.value = title
+        set_id(template_id)
         setToggled(false)
     }
 
@@ -38,14 +41,14 @@ export default function Input({ label, name, id, type, options, onChange }: Fiel
                 :
                 <div className="input-wrap input-wrap--select">
                     <label htmlFor={id}>{label}</label>
-                    <input type="text" name={name} id={id} autoComplete="off" role="presesntation" onChange={handleOnChange} onClick={handleToggle} ref={input_ref} data-id={id} />
+                    <input type="text" name={name} id={id} autoComplete="off" role="presesntation" onChange={handleOnChange} onClick={handleToggle} ref={input_ref} data-id={_id} />
                     {
                         toggled ?
                             <ul className="input-wrap--select__options">
                                 {
                                     fff?.map((option: Option, key: number) => (
                                         option ?
-                                            <li className="option" data-id={option._id} key={key} onClick={() => handleOnSelect(option.template_name)}>
+                                            <li className="option" data-id={option._id} key={key} onClick={() => handleOnSelect(option.template_name, option._id)}>
                                                 <div className="option__preview">
                                                     <img src="./images/template-placeholder.png" alt="textbook name" />
                                                 </div>

@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { Option, Target } from "../types";
 import useOptionFilter from "../CustomHooks/useOptionFilter";
 import Input from "../Components/Form/Input";
+import io from 'socket.io-client'
+
+const socket = io('http://localhost:9100')
 
 export default function Templates() {
     const [templates, setTemplates] = useState<Option[]>([])
@@ -17,7 +20,21 @@ export default function Templates() {
     const handleOnChange = (e: Target) => {
         if (!e.target.value) setFiltered(templates)
         setText(e.target.value);
+        // socket.emit('test', { text: "ahh ok ok hehe" })
     }
+
+    useEffect(() => {
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        })
+
+        socket.on('get_templates', (data) => setTemplates(data.data))
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected to server');
+
+        })
+    }, [])
 
     useEffect(() => {
         const rows = GetTemplates()

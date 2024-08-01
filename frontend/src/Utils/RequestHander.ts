@@ -1,5 +1,6 @@
 import axios from "axios";
 import fileDownload from "js-file-download";
+import { io } from "socket.io-client"
 
 const api = axios.create({
     baseURL: 'http://localhost:9100/',
@@ -8,6 +9,7 @@ const api = axios.create({
         'X-Custom-Header': 'Hello'
     }
 })
+const socket = io("http://localhost:9100")
 
 // donwload files
 export const DownloadFile = (id: string, filename: string) => {
@@ -25,10 +27,9 @@ export const GenerateTexbook = (template_id: string, sheet_id: string) => {
     const payload = {
         template_id: template_id, sheet_id: sheet_id
     }
-
-    api.post('/generate', payload, { headers, responseType: 'arraybuffer' })
-        .then(res => fileDownload(res.data, 'textbook.zip'))
-        .catch(err => console.log(err.message))
+    return api.post('/generate', payload, { headers, responseType: 'arraybuffer' })
+    // .then(res => fileDownload(res.data, 'textbook.zip'))
+    // .catch(err => console.log(err.message))
 }
 
 
@@ -46,7 +47,10 @@ export const SaveTemplate = (file: unknown, template_name: unknown, template_duc
     }
 
     api.post('/template/register', payload, { headers })
-        .then(res => res.data)
+        .then(res => {
+            res.data
+            socket.emit('templates')
+        })
         .catch(err => console.error(err.message))
 }
 

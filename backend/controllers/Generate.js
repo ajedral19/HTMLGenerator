@@ -42,7 +42,10 @@ const extractSheet = async (sheet_id) => {
                 let values = row._rawData;
                 let key = values.shift();
                 content[key] = values;
+                // console.log(content[key]);
             });
+
+            // return
 
             // result[`sheet_${n + 1}`] = content;
             result = [...result, content];
@@ -175,22 +178,33 @@ const zipIt = () => {
 export const Generator = async (req, res) => {
     const { template_id = null, sheet_id = null } = req.body;
 
-    const sheetData = await extractSheet(sheet_id);
+    try {
+        const sheetData = await extractSheet(sheet_id);
 
-    const template = await HTMLGenerator.findOne({ _id: template_id }, "template_html");
+        // sheet data
+        console.log(sheetData);
+        // return
+        // const id = new ObjectId
+        const template = await HTMLGenerator.findOne({ _id: template_id }, "template_html");
+        // console.log(template)
+        // const template = await HTMLGenerator.findById(template_id, "template_html");
+        // return
 
-    let base64 = Buffer.from(template.template_html);
-    base64 = base64.toString("latin1");
-    base64 = base64.replace("data:text/html;base64,", "");
-    const html = atob(base64);
+        let base64 = Buffer.from(template.template_html);
+        base64 = base64.toString("latin1");
+        base64 = base64.replace("data:text/html;base64,", "");
+        const html = atob(base64);
 
-    const archive = archiveIt(html, sheetData);
+        const archive = archiveIt(html, sheetData);
 
-    res.writeHead(200, {
-        "Content-Type": "application/zip",
-        "Content-Disposition": "attachment; textbook.zip",
-    });
-    archive.pipe(res);
+        res.writeHead(200, {
+            "Content-Type": "application/zip",
+            "Content-Disposition": "attachment; textbook.zip",
+        });
+        archive.pipe(res);
+    } catch (err) {
+        console.log(err.message);
+    }
 
     // const readStream = fs.createReadStream(archive);
     // readStream.pipe(res);

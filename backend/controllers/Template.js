@@ -20,6 +20,12 @@ export const SaveTemplate = async (req, res) => {
 
 export const GetTemplates = async (req, res) => {
     const templates = await HTMLGenerator.find();
-
+    console.log({data: templates})
     res.json({ data: templates });
+};
+
+export const SocketGetTemplates = async () => {
+    const templates = await HTMLGenerator.find();
+
+    return { data: templates };
 };

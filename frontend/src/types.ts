@@ -13,7 +13,7 @@ export type FieldInput = {
     id: string,
     type?: 'select'
     options?: Option[],
-    onChange?: (e: Target) => void
+    onChange?: (e: Target) => void,
 }
 
 export type Target = {

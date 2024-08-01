@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux"
 import { showModal } from "../../Redux/Slices/modal"
 
 
+
 export default function Template() {
     const dispatch = useDispatch()
     const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -32,7 +33,6 @@ export default function Template() {
 
         // clear -> close modal 
         dispatch(showModal({ show: false }))
-
 
     }
 
