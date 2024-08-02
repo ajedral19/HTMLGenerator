@@ -50,8 +50,19 @@ export const SaveTemplate = (file: unknown, template_name: unknown, template_duc
         .then(res => {
             res.data
             socket.emit('templates')
-        })
-        .catch(err => console.error(err.message))
+        }).catch(err => console.error(err.message))
+}
+
+export const DeleteTemplate = (id: string) => {
+    const headers = {
+        'Content-Type': 'application/json'
+    }
+
+    api.delete(`/template/${id}/delete`, { headers })
+        .then(res => {
+            res.data
+            socket.emit('templates')
+        }).catch(err => console.error(err.message))
 }
 
 // get templates
