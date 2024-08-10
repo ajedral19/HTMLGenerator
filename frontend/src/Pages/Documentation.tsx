@@ -8,20 +8,20 @@ import { useEffect, useState } from "react";
 
 
 export default function Documentation() {
-    const wrapper_element = {
-        "data-color-mode": "light"
-    }
-
     const [markdown, setMarkdown] = useState("")
 
     useEffect(() => {
-        import('../../Documentation.md')
-            .then(res => {
-                fetch(res.default)
-                    .then(res => res.text())
-                    .then(res => setMarkdown(res))
-                    .catch(err => console.log(err))
-            })
+        fetch('../../Documentation.md')
+            .then(res => res.text())
+            .then(res => setMarkdown(res))
+            .catch(err => console.log(err))
+        // import('../../Documentation.md')
+        //     .then(res => {
+        //         fetch(res.default)
+        //             .then(res => res.text())
+        //             .then(res => setMarkdown(res))
+        //             .catch(err => console.log(err))
+        //     })
     }, [])
 
 
@@ -35,6 +35,6 @@ export default function Documentation() {
 
 
     return <Fragment>
-        <MarkdownPreview source={markdown} wrapperElement={wrapper_element} style={{ padding: "0" }} />
+        <MarkdownPreview source={markdown} wrapperElement={{ "data-color-mode": "dark" }} style={{ padding: "2rem" }} />
     </Fragment>
 }

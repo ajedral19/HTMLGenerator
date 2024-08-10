@@ -11,8 +11,10 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
 | *1* | Properties  | 0           | 1           | N ... 
 | *2* | **key_1**   | value       |             |
 | *3* | **key_2**   | item 1      | item 2      |
-| *4* | ...         |             |             |
+| *4* | ...
+
 | **sheet_1** | sheet_2   | ...
+
 <br>
 
 
@@ -55,3 +57,5 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
     </ul>
 </div>
 ```
+
+[PanthomJS](https://phantomjs.org/screen-capture.html)
