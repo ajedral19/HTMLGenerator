@@ -15,6 +15,7 @@ const serviceAccountAuth = new JWT({
 	scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
+// console.log(serviceAccountAuth);
 export const ReponseHandler = (status, message, data = null) => {
 	return {
 		status,
@@ -82,7 +83,7 @@ export const extractSheet = async (sheet_id) => {
 			response = result;
 		}
 	} catch (err) {
-		console.error(err.message);
+		console.error(err);
 	}
 
 	return response;
