@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
+    "@uiw/react-markdown-preview": "^5.1.2",
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "handlebars": "^4.7.8",
