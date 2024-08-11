@@ -46,7 +46,7 @@ export const archiveIt = (html, data) => {
 
 	data.forEach((row, n) => {
 		const compiled_html = template(row);
-		archive.append(compiled_html, { name: `${n}.html` });
+		archive.append(compiled_html, { name: `${n + 1}.html` });
 		// archive.file(compiled_html, { name: `${n}.html` });
 	});
 	archive.directory("subdir/", "new-subdir");

@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
+import Button from "./Button";
 
 
 export default function Navbar() {
+
+    const toggleTheme = () => {
+        document.querySelector('html')?.setAttribute('data-theme', 'dark')
+    }
+
     return <Fragment>
         <nav>
             <div className="navbar container">
@@ -23,6 +29,9 @@ export default function Navbar() {
                     </li>
                     <li className="menu__item">
                         <Link to="/generate">Generate</Link>
+                    </li>
+                    <li className="menu__item">
+                        <Button variant="primary" text="Switch Theme" onClick={toggleTheme} />
                     </li>
                 </ul>
             </div>
