@@ -3,7 +3,10 @@
 .card
     max-width: 360px
     // max-width: 300px
+    position: relative
     &__img-wrap
+        outline: 1px dotted green
+        border-radius: .4rem
         aspect-ratio: 1.54/1
         overflow: hidden
         border-radius: var(--brdr-radius)
@@ -11,6 +14,13 @@
         img
             object-fit: cover
             width: 100%
+
+    &__controls
+        position: absolute
+        top: .4rem
+        right: .4rem
+        display: flex
+        gap: .4rem
 
     &__body
         margin-block-start: .75em
@@ -120,33 +130,40 @@
                             display: unset
 // button
 .btn
-    &.primary
+    &.primary, &.icon-primary
         --__bg: #1a93e9
         --__color: #ffffff
         &:hover
             --__bg: #47ACF4
 
-    &.secondary
+    &.secondary, &.icon-secondary
         --__bg: #e6a326
         --__color: #ffffff
         &:hover
             --__bg: #f1af35
 
-    &.danger
+    &.danger, &.icon-danger
         --__bg: #e43048
         --__color: #ffffff
         &:hover
             --__bg: #f05368
 
-    &--icon
+    &--icon, &.icon
         padding: unset
-        background: transparent
-        max-width: 24px
+        // background: transparent
+        width: 2.4rem
+        height: 2.4rem
         transition: color .2s ease-in-out
-        --__color: #b4b6b9
+
+        svg
+            line-height: 0
+            display: block
+            margin: auto
+            vertical-align: middle
+        // --__color: #b4b6b9
 
         &:hover
-            --__color: var(--text-default)
+            // --__color: var(--text-default)
 
 // DownloadStrip
 .download-strip

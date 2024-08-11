@@ -8,8 +8,6 @@ import { archiveIt, extractSheet } from "../utils.js";
 
 // import credentials from "../html-generator-422807-694910701fb2.json" with { type: "json" };
 
-
-
 // -----------------------
 const get_file_path = (localdir) => {
     const __filename = fileURLToPath(import.meta.url);
@@ -202,3 +200,5 @@ export const DownloadFile = (req, res) => {
     const readStream = fs.createReadStream(filepath);
     readStream.pipe(res);
 };
+
+export const ScreenCapture = (req, res) => {};

@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { DownloadFile, Generate, SaveTemplate } from "./controllers/index.js";
 import { DeleteTemplate, GetTemplates } from "./controllers/Template.js";
-import { Generator } from "./controllers/Generate.js";
+import { Generator, ScreenCapture } from "./controllers/Generate.js";
 
 const router = Router();
 
 router.post("/generate", Generator);
 router.get("/download/:id", DownloadFile);
+router.post("/capture", ScreenCapture);
 
 // register template
 router.get("/templates", GetTemplates);

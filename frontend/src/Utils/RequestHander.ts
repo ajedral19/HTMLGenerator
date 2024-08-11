@@ -59,15 +59,14 @@ export const DeleteTemplate = (id: string) => {
     }
 
     api.delete(`/template/${id}/delete`, { headers })
-        .then(res => {
-            res.data
+        .then(() => {
             socket.emit('templates')
         }).catch(err => console.error(err.message))
 }
 
 // get templates
-export const GetTemplates = () => {
-    return api.get('/templates')
+export const GetTemplates = async (signal: AbortSignal) => {
+    return api.get('/templates', { signal })
         .then(res => res.data)
-        .catch(err => console.error(err))
+        .catch(err => console.error(err.name, err.message))
 }

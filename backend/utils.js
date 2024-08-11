@@ -2,6 +2,7 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 import captureWebsite from "capture-website";
 import { JWT } from "google-auth-library";
 import { config } from "dotenv";
+import Handlebars from "handlebars";
 
 const env = config();
 
@@ -87,14 +88,13 @@ export const extractSheet = async (sheet_id) => {
 };
 
 export const CaptureHTML = async (html, sheet_id) => {
-    // get template sheet url from post request
-    // const data = extractSheet(sheet_id)
-    console.log(html, sheet_id)
-    // get data from sheet template
+    const data = await extractSheet(sheet_id);
 
-    // get html from post request
-    // let base64 = Buffer.from(html)
-
-    // const captured = await captureWebsite.file(html, "sample.png");
-    // return captured;
+    let base64 = html.replace("data:text/html;base64,", "");
+    const htm = atob(base64);
+    const compile = Handlebars.compile(htm);
+    const output = compile(data[0]);
+    // const img = await captureWebsite.file(output, { inputType: "html" });
+    const img = await captureWebsite.buffer(output, { inputType: "html", type: "webp"});
+    return img
 };
