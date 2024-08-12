@@ -8,7 +8,7 @@ const getAll = (state: any, action: { payload: any; }) => (
     }
 )
 
-const filter = () => { }
+// const filter = () => { }
 
 
 export const templatesSlice = createSlice({

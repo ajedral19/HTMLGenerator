@@ -1,20 +1,11 @@
 import { Link } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
-import Button from "./Button";
+// import Button from "./Button";
 import useToggleTheme from "../CustomHooks/useToggleTheme";
-import { useState } from "react";
 
 
 export default function Navbar() {
-    // const [theme, setTheme] = useState('dark')
-
-    const theme = useToggleTheme()
-    console.log(theme);
-
-
-    // const toggleTheme = () => {
-    //     setTheme()
-    // }
+    useToggleTheme()
 
     return <Fragment>
         <nav>
@@ -37,9 +28,9 @@ export default function Navbar() {
                     <li className="menu__item">
                         <Link to="/templates/generate">Generate</Link>
                     </li>
-                    <li className="menu__item">
+                    {/* <li className="menu__item">
                         <Button variant="primary" text="Switch Theme" onClick={() => { }} />
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </nav>

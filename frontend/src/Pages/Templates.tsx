@@ -25,6 +25,9 @@ export default function Templates() {
         setText(e.target.value);
     }
 
+    console.log(templates);
+    
+
     useEffect(() => {
         setFiltered(data)
     }, [text, data])

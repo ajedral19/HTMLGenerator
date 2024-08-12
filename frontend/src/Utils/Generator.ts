@@ -4,7 +4,7 @@ import fileDownload from "js-file-download"
 export const DownloadFile = (id: string, filename: string) => {
     const options = {
         method: 'get',
-        url: "http://localhost:9100/download/someid"
+        url: "/download/someid"
     }
 
     axios(options).then(res => {
@@ -15,7 +15,7 @@ export const DownloadFile = (id: string, filename: string) => {
 export const GenerateTexbook = (template_id: string, sheet_id: string) => {
     const options = {
         method: 'post',
-        url: "http://localhost:9100/generate",
+        url: "/generate",
         'Content-Type': 'application/json',
         data: {
             template_id: template_id,

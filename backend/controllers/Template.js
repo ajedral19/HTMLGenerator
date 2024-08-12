@@ -1,11 +1,11 @@
 import { HTMLGenerator } from "../Schema/index.js";
-import { CaptureHTML } from "../utils.js";
+// import { CaptureHTML } from "../utils.js";
 
 export const SaveTemplate = async (req, res) => {
     const { name, file, url } = req.body;
 
-    const img = await CaptureHTML(file, "1-VH-PUDKBmF5R7j_BTrb32dMLXlZJqjNR6GjzK3a9qE");
-    let buff = Buffer.from(img, "base64");
+    // const img = await CaptureHTML(file, "1-VH-PUDKBmF5R7j_BTrb32dMLXlZJqjNR6GjzK3a9qE");
+    // let buff = Buffer.from(img, "base64");
 
     // console.log(buff);
     // return;
@@ -14,7 +14,7 @@ export const SaveTemplate = async (req, res) => {
         template_name: name,
         template_html: file,
         template_document: url,
-        template_screenshot: buff,
+        // template_screenshot: buff,
     };
     try {
         const template = await HTMLGenerator.create(payload);

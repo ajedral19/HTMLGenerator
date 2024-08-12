@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { GetTemplates } from "../Utils/RequestHander";
 import { Option } from "../types";
 
-const socket = io('http://localhost:9100')
+const socket = io("http://localhost:9100/")
 
 export default function useGetTemplates(): Option[] {
     const [templates, setTemplates] = useState<Option[]>([])

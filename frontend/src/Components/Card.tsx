@@ -8,9 +8,9 @@ type card = {
     document_template_url: string,
     template_screenshot: { data: [] },
 }
-export default function Card({ id, template_name, document_template_url, template_screenshot }: card) {
+export default function Card({ id, template_name, document_template_url, /*template_screenshot*/ }: card) {
 
-    const base64Str = btoa(String.fromCharCode(...new Uint8Array(template_screenshot.data)))
+    // const base64Str = btoa(String.fromCharCode(...new Uint8Array(template_screenshot.data)))
 
     const handleDelete = (id: string) => {
         DeleteTemplate(id)
@@ -34,7 +34,7 @@ export default function Card({ id, template_name, document_template_url, templat
                 </Button>
             </div>
             <div className="card__img-wrap">
-                <img src={`data:image/webp;base64,${base64Str}`} alt={template_name} />
+                {/* <img src={`data:image/webp;base64,${base64Str}`} alt={template_name} /> */}
             </div>
             <div className="card__body">
                 <h4 className="title title--5 card__title">{template_name}</h4>

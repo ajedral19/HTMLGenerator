@@ -3,13 +3,14 @@ import fileDownload from "js-file-download";
 import { io } from "socket.io-client"
 
 const api = axios.create({
-    baseURL: 'http://localhost:9100/',
+    baseURL: '/api',
     timeout: 60000,
     headers: {
         'X-Custom-Header': 'Hello'
     }
 })
-const socket = io("http://localhost:9100")
+const socket = io("http://localhost:9100/")
+
 
 // donwload files
 export const DownloadFile = (id: string, filename: string) => {

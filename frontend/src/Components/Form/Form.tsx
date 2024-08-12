@@ -1,21 +1,17 @@
-import { useForm } from "react-hook-form"
-
-const Form = ({ handler }) => {
-    const { register, handleSubmit, watch, formData{ errors }
-} = useForm()
+const Form = () => {
 
 
-const onSubmit = (data) => {
-    handler(data)
-}
+    // const onSubmit = (data) => {
+    //     handler(data)
+    // }
 
-return <>
-    <div className="form">
-        <form onSubmit={handleSubmit(onSubmit)}>
+    return <>
+        <div className="form">
+            {/* <form onSubmit={handleSubmit(onSubmit)}>
             <input type="text" />
-        </form>
-    </div>
-</>
+        </form> */}
+        </div>
+    </>
 }
 
 export default Form
