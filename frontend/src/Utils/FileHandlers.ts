@@ -21,6 +21,8 @@
 // }
 
 export const readFileDataAsBase64 = (file: Blob) => {
+    console.log(file);
+    
     
     return new Promise((resolve, reject) => {
         const reader = new FileReader()
