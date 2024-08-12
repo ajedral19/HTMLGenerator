@@ -4,7 +4,7 @@ export type Option = {
     _id: string,
     template_name: string,
     template_document: string,
-    template_screenshot?: string,
+    template_screenshot: string,
 }
 
 export type FieldInput = {

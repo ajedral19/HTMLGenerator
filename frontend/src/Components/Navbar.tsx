@@ -35,7 +35,7 @@ export default function Navbar() {
                         <Link to="/templates">Templates</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to="/generate">Generate</Link>
+                        <Link to="/templates/generate">Generate</Link>
                     </li>
                     <li className="menu__item">
                         <Button variant="primary" text="Switch Theme" onClick={() => { }} />

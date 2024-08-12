@@ -4,12 +4,14 @@ import Modal from './Components/Modal'
 import SiteRoutes from './SiteRoutes'
 import './Styles/App.sass'
 import './Styles/Layout.sass'
+import { RouterProvider } from 'react-router-dom'
 
 function App() {
   return (
     <Fragment>
       <Modal />
-      <SiteRoutes />
+      {/* <SiteRoutes /> */}
+      <RouterProvider router={SiteRoutes} />
     </Fragment>
   )
 }

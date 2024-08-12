@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 
-const templates = (state: any, action: { payload: any; }) => (
+const getAll = (state: any, action: { payload: any; }) => (
     {
         ...state,
         data: action.payload,
     }
 )
 
+const filter = () => { }
 
 
 export const templatesSlice = createSlice({
@@ -16,7 +17,7 @@ export const templatesSlice = createSlice({
         data: {}
     },
     reducers: {
-        getTemplates: templates
+        getTemplates: getAll,
     }
 })
 

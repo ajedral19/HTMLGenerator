@@ -205,3 +205,5 @@ export const DownloadFile = (req, res) => {
 	const readStream = fs.createReadStream(filepath);
 	readStream.pipe(res);
 };
+
+export const ScreenCapture = (req, res) => {};
