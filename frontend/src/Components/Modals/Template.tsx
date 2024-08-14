@@ -26,7 +26,6 @@ export default function Template() {
         const document_template = target['document-template-url'].value
 
 
-
         const base64 = await readFileDataAsBase64(file)
 
         SaveTemplate(base64, template_name, document_template)

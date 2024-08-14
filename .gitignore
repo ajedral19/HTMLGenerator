@@ -1,4 +1,6 @@
 */dist
 */.env
+*/Template/mock.html
+*/Template/Styles
 */node_modules
 credentials

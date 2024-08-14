@@ -58,4 +58,6 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
 </div>
 ```
 
+> ***Tip***: Create a static html with its dedicated content, structure the a document for templating and convert the static html to (mustached) template
+
 [PanthomJS](https://phantomjs.org/screen-capture.html)

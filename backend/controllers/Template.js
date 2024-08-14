@@ -7,9 +7,6 @@ export const SaveTemplate = async (req, res) => {
     // const img = await CaptureHTML(file, "1-VH-PUDKBmF5R7j_BTrb32dMLXlZJqjNR6GjzK3a9qE");
     // let buff = Buffer.from(img, "base64");
 
-    // console.log(buff);
-    // return;
-
     const payload = {
         template_name: name,
         template_html: file,
