@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+type modal_types = "download" | "addTemplate" | "previewTemplate" | undefined
+
 type modal = (
     state: {
         show: boolean
@@ -8,7 +10,7 @@ type modal = (
         payload: {
             show: boolean
             modal?: {
-                type: string
+                type: modal_types
             }
         }
     }) => void

@@ -1,10 +1,11 @@
 import { SetStateAction } from "react"
 
 export type Option = {
-    _id: string,
-    template_name: string,
-    template_document: string,
-    template_screenshot?: string,
+    id: string,
+    name: string,
+    template?: string,
+    sheet: string,
+    screenshot?: string,
 }
 
 export type FieldInput = {

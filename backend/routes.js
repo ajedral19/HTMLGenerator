@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { DownloadFile, Generate, SaveTemplate } from "./controllers/index.js";
-import { DeleteTemplate, GetTemplates } from "./controllers/Template.js";
+import { DownloadFile, TemplateAdd, TemplateDelete, TemplteGetAll } from "./controllers/index.js";
 import { Generator, ScreenCapture } from "./controllers/Generate.js";
+import { TemplatePreview } from "./controllers/Template.js";
 
 const router = Router();
 
@@ -10,13 +10,11 @@ router.get("/download/:id", DownloadFile);
 router.post("/capture", ScreenCapture);
 
 // register template
-router.get("/templates", GetTemplates);
-router.get("/template/:id", (req, res) => {
-    res.send("template + id");
-});
+router.get("/templates", TemplteGetAll);
+router.get("/template/:id", (req, res) => TemplatePreview(req, res));
 router.get("/template/:id/download", (req, res) => {});
 router.get("/template/:id/update", (req, res) => {});
-router.delete("/template/:id/delete", DeleteTemplate);
-router.post("/template/register", SaveTemplate);
+router.delete("/template/:id/delete", TemplateDelete);
+router.post("/template/register", TemplateAdd);
 const Routes = router;
 export default Routes;

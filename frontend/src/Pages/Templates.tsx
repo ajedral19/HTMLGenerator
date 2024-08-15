@@ -25,8 +25,7 @@ export default function Templates() {
         setText(e.target.value);
     }
 
-    console.log(templates);
-    
+    // const base64 = Buffer.from(templates[0].template_html)
 
     useEffect(() => {
         setFiltered(data)
@@ -52,12 +51,14 @@ export default function Templates() {
             <h2 className="title title--3">Textbook templates</h2>
             <div className="mt-1 templates">
                 {
-                    filtered?.length ?
-                        filtered.map((template, key) => <Card key={key} id={template._id} document_template_url={template.template_document} template_name={template.template_name} template_screenshot={template.template_screenshot} />)
-                        :
-                        templates?.length ?
-                            templates.map((template, key) => <Card key={key} id={template._id} document_template_url={template.template_document} template_name={template.template_name} template_screenshot={template.template_screenshot} />)
-                            : null
+                    templates.length ?
+                        templates.map((template, key) => (
+                            <Fragment key={key}>
+                                <Card id={template.id} sheet={template.sheet} name={template.name} screenshot={template.screenshot} />
+                                <div dangerouslySetInnerHTML={{ __html: `${template.template}` }}></div>
+                                {/* <p>{template.template}</p> */}
+                            </Fragment>
+                        )) : null
                 }
                 <AddCardButton />
             </div>

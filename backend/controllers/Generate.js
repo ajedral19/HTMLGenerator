@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import Handlebars from "handlebars";
 import { HTMLGenerator } from "../Schema/index.js";
 import archiver from "archiver";
-import { archiveIt, extractSheet } from "../utils.js";
+import { archiveIt, bufferToString, extractSheet } from "../utils.js";
 
 // import credentials from "../html-generator-422807-694910701fb2.json" with { type: "json" };
 
@@ -124,6 +124,18 @@ const zipIt = () => {
     return archive;
 };
 
+/**
+ *
+ * @param {string} template
+ * @param {object} data
+ * @returns HTML String
+ */
+export const GenerateHTML = async (template, data) => {
+    if (!template || !data) return;
+    let html = "";
+    return html;
+};
+
 // new generator
 export const Generator = async (req, res) => {
     const { template_id = null, sheet_id = null } = req.body;
@@ -134,7 +146,7 @@ export const Generator = async (req, res) => {
         // return
 
         // sheet data
-        console.log(sheetData);
+        // console.log(sheetData);
         // return
         // const id = new ObjectId
         const template = await HTMLGenerator.findOne({ _id: template_id }, "template_html");
@@ -142,10 +154,10 @@ export const Generator = async (req, res) => {
         // const template = await HTMLGenerator.findById(template_id, "template_html");
         // return
 
-        let base64 = Buffer.from(template.template_html);
-        base64 = base64.toString("latin1");
-        base64 = base64.replace("data:text/html;base64,", "");
-        const html = atob(base64);
+        // let base64 = Buffer.from(template.template_html);
+        // base64 = base64.toString("latin1");
+        // base64 = base64.replace("data:text/html;base64,", "");
+        const html = bufferToString(template.template_html);
 
         if (!sheetData) return;
 

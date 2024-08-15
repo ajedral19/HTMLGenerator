@@ -36,15 +36,15 @@ export const GenerateTexbook = (template_id: string, sheet_id: string) => {
 
 // templates
 // save templates
-export const SaveTemplate = (file: unknown, template_name: unknown, template_ducument_url: unknown) => {
+export const SaveTemplate = (template: unknown, name: unknown, sheet: unknown) => {
 
     const headers = {
         'Content-Type': 'application/json'
     }
     const payload = {
-        file,
-        name: template_name,
-        url: template_ducument_url
+        template,
+        name,
+        sheet
     }
 
     api.post('/template/register', payload, { headers })
@@ -60,8 +60,10 @@ export const DeleteTemplate = (id: string) => {
     }
 
     api.delete(`/template/${id}/delete`, { headers })
-        .then(() => {
-            socket.emit('templates')
+        .then((res) => {
+            if (res.data) {
+                socket.emit('templates')
+            }
         }).catch(err => console.error(err.message))
 }
 
@@ -70,4 +72,8 @@ export const GetTemplates = async (signal: AbortSignal) => {
     return api.get('/templates', { signal })
         .then(res => res.data)
         .catch(err => console.error(err.name, err.message))
+}
+
+export const ViewTemplate = async (id: string) => {
+    return api.get(`/template/${id}`).then(res => res.data).catch(err => console.log(err.name))
 }

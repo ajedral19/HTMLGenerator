@@ -7,7 +7,7 @@ type Button = {
     id?: string
     name?: string
     type?: 'submit' | 'reset' | 'button'
-    variant?: "primary" | "secondary" | "subtle" | "danger"
+    variant?: "primary" | "secondary" | "subtle" | "danger" | "transparent"
     icon?: boolean
     children?: React.ReactNode
     onClick?: () => void

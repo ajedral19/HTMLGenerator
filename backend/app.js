@@ -4,7 +4,7 @@ import Routes from "./routes.js";
 
 import { Server } from "socket.io";
 import http from "http";
-import { SocketGetTemplates } from "./controllers/Template.js";
+import { socket_get_all_templates } from "./SocketControls.js";
 
 const app = express();
 
@@ -12,8 +12,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "*", // client
-		methods: ["POST", "GET", "DELETE", "UPDATE", "PUT", "PATCH"],
-		// credentials: true
+        methods: ["POST", "GET", "DELETE", "UPDATE", "PUT", "PATCH"],
+        // credentials: true
     },
 });
 
@@ -29,9 +29,10 @@ io.on("connection", (socket) => {
     socket.on("test", (prop) => console.log("ahh okay " + prop.text));
 
     socket.on("templates", async () => {
-        const data = await SocketGetTemplates();
+        const data = await socket_get_all_templates();
         console.log("fetching");
-        io.emit("get_templates", data);
+        console.log(data);
+        io.emit("get_templates", data.lngth < 1 ? [] : data);
     });
 
     socket.on("disconnect", () => {

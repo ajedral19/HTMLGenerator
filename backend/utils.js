@@ -24,10 +24,13 @@ export const ReponseHandler = (status, message, data = null) => {
     };
 };
 
-export const Bufferize = () => {};
-
+/**
+ *
+ * @param {string} html
+ * @param {object[]} data
+ * @returns archive
+ */
 export const archiveIt = (html, data) => {
-    const template = Handlebars.compile(html);
     const archive = archiver("zip", { zlib: { level: 9 } });
 
     archive.on("warning", (err) => {
@@ -45,18 +48,54 @@ export const archiveIt = (html, data) => {
     });
 
     data.forEach((row, n) => {
-        const compiled_html = template(row);
-        archive.append(compiled_html, { name: `${n + 1}.html` });
+        const compiled_html = renderHTML(html, row);
+        if (compiled_html) archive.append(compiled_html, { name: `${n + 1}.html` });
         // archive.file(compiled_html, { name: `${n}.html` });
     });
+
     archive.directory("subdir/", "new-subdir");
     archive.directory("subdir/", false);
-
     archive.finalize();
+
     return archive;
 };
 
-// sheet extractor
+/**
+ *
+ * @param {string} template
+ * @param {object} data
+ * @returns HTML || null
+ */
+export const renderHTML = (template, data) => {
+    if (!template || !data) return null;
+    let html = "";
+
+    const document = Handlebars.compile(template);
+    html = document(data);
+
+    return html;
+};
+
+/**
+ *
+ * @param {Buffer} buffer
+ * @returns HTML | null
+ */
+export const bufferToString = (buffer) => {
+    if (!buffer) return null;
+    let base64 = Buffer.from(buffer);
+    base64 = base64.toString("utf8");
+    base64 = base64.replace("data:text/html;base64,", "");
+    const html = atob(base64);
+
+    return html;
+};
+
+/**
+ *
+ * @param {string} sheet_id
+ * @returns Promise | null
+ */
 export const extractSheet = async (sheet_id) => {
     let response = null;
     try {
@@ -87,6 +126,13 @@ export const extractSheet = async (sheet_id) => {
     }
 
     return response;
+};
+
+export const get_sheet_id = (url) => {
+    const regex = new RegExp("(/d/.*/)");
+    const finds = regex.exec(url);
+
+    return finds && finds[0].replace("/d/", "").replace("/", "");
 };
 
 // export const CaptureHTML = async (html, sheet_id) => {

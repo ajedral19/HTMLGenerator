@@ -3,9 +3,10 @@ import '../Styles/Modal.sass'
 import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../Redux/Slices/modal";
 import { useEffect } from "react";
-import Download from "./Modals/Download";
 import { modal_types } from "../constants";
+import Download from "./Modals/Download";
 import Template from "./Modals/Template";
+import TemplatePreview from "./Modals/TemplatePreview";
 
 type Modal = {
     children?: React.ReactNode
@@ -36,6 +37,8 @@ export default function Modal({ children }: Modal) {
             switch (modal.modal.type) {
                 case "download":
                     return <Download />
+                case "previewTemplate":
+                    return <TemplatePreview />
                 case "addTemplate":
                     return <Template />
                 default:
