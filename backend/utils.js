@@ -30,7 +30,7 @@ export const ReponseHandler = (status, message, data = null) => {
  * @param {object[]} data
  * @returns archive
  */
-export const archiveIt = (html, data) => {
+export const archive_it = (html, data) => {
     const archive = archiver("zip", { zlib: { level: 9 } });
 
     archive.on("warning", (err) => {
@@ -48,7 +48,7 @@ export const archiveIt = (html, data) => {
     });
 
     data.forEach((row, n) => {
-        const compiled_html = renderHTML(html, row);
+        const compiled_html = render_html(html, row);
         if (compiled_html) archive.append(compiled_html, { name: `${n + 1}.html` });
         // archive.file(compiled_html, { name: `${n}.html` });
     });
@@ -66,7 +66,7 @@ export const archiveIt = (html, data) => {
  * @param {object} data
  * @returns HTML || null
  */
-export const renderHTML = (template, data) => {
+export const render_html = (template, data) => {
     if (!template || !data) return null;
     let html = "";
 
@@ -81,9 +81,10 @@ export const renderHTML = (template, data) => {
  * @param {Buffer} buffer
  * @returns HTML | null
  */
-export const bufferToString = (buffer) => {
+export const buffer_to_string = (buffer, is_base64 = false) => {
     if (!buffer) return null;
-    let base64 = Buffer.from(buffer);
+    let base64 = buffer;
+    if (!is_base64) base64 = Buffer.from(buffer);
     base64 = base64.toString("utf8");
     base64 = base64.replace("data:text/html;base64,", "");
     const html = atob(base64);
@@ -96,7 +97,7 @@ export const bufferToString = (buffer) => {
  * @param {string} sheet_id
  * @returns Promise | null
  */
-export const extractSheet = async (sheet_id) => {
+export const extract_sheet = async (sheet_id) => {
     let response = null;
     try {
         const doc = new GoogleSpreadsheet(sheet_id, serviceAccountAuth);

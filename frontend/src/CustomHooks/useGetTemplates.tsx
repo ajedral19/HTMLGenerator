@@ -2,15 +2,21 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { GetTemplates } from "../Utils/RequestHander";
 import { Option } from "../types";
+import { useDispatch } from "react-redux";
+import { getTemplates } from "../Redux/Slices/templates";
 
 const socket = io("http://localhost:9100/")
 
 export default function useGetTemplates(): Option[] {
     const [templates, setTemplates] = useState<Option[]>([])
+    const dispatch = useDispatch()
     // const preload = useLoaderData()
 
     useEffect(() => {
-        socket.on('get_templates', ({ data: rows }) => setTemplates(() => rows))
+        socket.on('get_templates', ({ data: rows }) => {
+            setTemplates(() => rows)
+            dispatch(getTemplates({ data: rows }))
+        })
         // socket.on('get_templates', ({ data: rows }) => console.log(rows))
     }, [])
 
@@ -18,7 +24,10 @@ export default function useGetTemplates(): Option[] {
         const controller = new AbortController()
         const signal = controller.signal
 
-        GetTemplates(signal).then(({ data: rows }) => setTemplates(rows))
+        GetTemplates(signal).then(({ data: rows }) => {
+            setTemplates(rows)
+            dispatch(getTemplates({ data: rows }))
+        })
 
         return () => controller.abort()
 

@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import Handlebars from "handlebars";
 import { HTMLGenerator } from "../Schema/index.js";
 import archiver from "archiver";
-import { archiveIt, bufferToString, extractSheet } from "../utils.js";
+import { archive_it, buffer_to_string, extract_sheet } from "../utils.js";
 
 // import credentials from "../html-generator-422807-694910701fb2.json" with { type: "json" };
 
@@ -39,7 +39,7 @@ const compileHTML = async (html, data) => {
     });
 };
 
-// const archiveIt = (html, data) => {
+// const archive_it = (html, data) => {
 //     const template = Handlebars.compile(html);
 //     const archive = archiver("zip", { zlib: { level: 9 } });
 
@@ -141,7 +141,7 @@ export const Generator = async (req, res) => {
     const { template_id = null, sheet_id = null } = req.body;
 
     try {
-        const sheetData = await extractSheet(sheet_id);
+        const sheetData = await extract_sheet(sheet_id);
         // console.log(sheet_id);
         // return
 
@@ -157,11 +157,11 @@ export const Generator = async (req, res) => {
         // let base64 = Buffer.from(template.template_html);
         // base64 = base64.toString("latin1");
         // base64 = base64.replace("data:text/html;base64,", "");
-        const html = bufferToString(template.template_html);
+        const html = buffer_to_string(template.template_html);
 
         if (!sheetData) return;
 
-        const archive = archiveIt(html, sheetData);
+        const archive = archive_it(html, sheetData);
 
         res.writeHead(200, {
             "Content-Type": "application/zip",
@@ -179,7 +179,7 @@ export const Generator = async (req, res) => {
 // generate html files
 export const Generate = async (req, res) => {
     const { template_id = null, sheet_id = null } = req.body;
-    const rows = await extractSheet(sheet_id);
+    const rows = await extract_sheet(sheet_id);
 
     const filepath = get_file_path("../template/index.html");
     const source = fs.readFileSync(filepath);

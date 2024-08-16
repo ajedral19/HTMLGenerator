@@ -1,8 +1,9 @@
 import { Fragment } from "react/jsx-runtime";
 import Button from "./Button";
-import { DeleteTemplate, ViewTemplate } from "../Utils/RequestHander";
-import { useDispatch } from "react-redux";
+import { DeleteTemplate, GetTemplate } from "../Utils/RequestHander";
+import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../Redux/Slices/modal";
+import { Option } from "../types";
 
 type card = {
     id: string,
@@ -14,6 +15,7 @@ type card = {
 }
 export default function Card({ id, name, sheet /*screenshot*/ }: card) {
     const dispatch = useDispatch()
+    const data = useSelector((state: { templates: { data: Option[] } }) => state.templates.data)
 
     // const base64Str = btoa(String.fromCharCode(...new Uint8Array(template_screenshot.data)))
 
@@ -26,10 +28,8 @@ export default function Card({ id, name, sheet /*screenshot*/ }: card) {
     }
 
     const handlePreview = (id: string) => {
-        ViewTemplate(id);
-        dispatch(showModal({ show: true, modal: { type: "previewTemplate" } }))
-
-
+        const template = data.filter(item => item.id === id)
+        dispatch(showModal({ show: true, data: template.length ? template[0] : null, modal: { type: "previewTemplate" } }))
     }
 
     return <Fragment>

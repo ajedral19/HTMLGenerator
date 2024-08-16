@@ -31,6 +31,7 @@ const { Schema, model } = mongoose;
 const templatesSchema = new Schema({
     template_name: { type: String, required: true },
     template_html: { type: Buffer, contentType: String, required: true },
+    template_preview: {type: String},
     template_document: { type: String, required: true },
     template_screenshot: Buffer,
 });

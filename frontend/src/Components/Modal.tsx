@@ -37,10 +37,10 @@ export default function Modal({ children }: Modal) {
             switch (modal.modal.type) {
                 case "download":
                     return <Download />
-                case "previewTemplate":
-                    return <TemplatePreview />
                 case "addTemplate":
                     return <Template />
+                case "previewTemplate":
+                    return <TemplatePreview />
                 default:
                     return <h1>unknown</h1>
             }

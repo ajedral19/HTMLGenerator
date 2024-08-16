@@ -55,8 +55,8 @@ export default function Templates() {
                         templates.map((template, key) => (
                             <Fragment key={key}>
                                 <Card id={template.id} sheet={template.sheet} name={template.name} screenshot={template.screenshot} />
-                                <div dangerouslySetInnerHTML={{ __html: `${template.template}` }}></div>
-                                {/* <p>{template.template}</p> */}
+                                {/* <div dangerouslySetInnerHTML={{ __html: `${template.template}` }}></div> */}
+                                <p>{template.template}</p>
                             </Fragment>
                         )) : null
                 }

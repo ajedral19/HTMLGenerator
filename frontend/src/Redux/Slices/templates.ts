@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const getAll = (state: any, action: { payload: any; }) => (
     {
         ...state,
-        data: action.payload,
+        data: action.payload.data,
     }
 )
 

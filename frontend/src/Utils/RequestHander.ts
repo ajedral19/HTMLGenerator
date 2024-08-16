@@ -74,6 +74,10 @@ export const GetTemplates = async (signal: AbortSignal) => {
         .catch(err => console.error(err.name, err.message))
 }
 
-export const ViewTemplate = async (id: string) => {
-    return api.get(`/template/${id}`).then(res => res.data).catch(err => console.log(err.name))
+export const GetTemplate = async (id: string, signal?: AbortSignal) => {
+    return api.get(`/template/${id}`, { signal }).then(res => res.data).catch(err => console.log(err.name))
+}
+
+export const ViewTemplate = async (id: string, signal?: AbortSignal) => {
+    return api.get(`/template/${id}/preview`, { signal }).then(res => res.data).catch(err => console.log(err.name))
 }

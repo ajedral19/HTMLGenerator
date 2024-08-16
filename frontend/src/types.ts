@@ -4,6 +4,7 @@ export type Option = {
     id: string,
     name: string,
     template?: string,
+    mockup?:string,
     sheet: string,
     screenshot?: string,
 }

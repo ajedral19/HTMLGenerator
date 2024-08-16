@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { DownloadFile, TemplateAdd, TemplateDelete, TemplteGetAll } from "./controllers/index.js";
 import { Generator, ScreenCapture } from "./controllers/Generate.js";
-import { TemplatePreview } from "./controllers/Template.js";
+import { TemplateGetOne, TemplatePreview } from "./controllers/Template.js";
 
 const router = Router();
 
@@ -11,7 +11,8 @@ router.post("/capture", ScreenCapture);
 
 // register template
 router.get("/templates", TemplteGetAll);
-router.get("/template/:id", (req, res) => TemplatePreview(req, res));
+router.get("/template/:id", (req, res) => TemplateGetOne(req, res));
+router.get("/template/:id/preview", (req, res) => TemplatePreview(req, res));
 router.get("/template/:id/download", (req, res) => {});
 router.get("/template/:id/update", (req, res) => {});
 router.delete("/template/:id/delete", TemplateDelete);

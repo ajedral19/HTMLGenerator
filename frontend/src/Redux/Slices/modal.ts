@@ -9,6 +9,7 @@ type modal = (
     action: {
         payload: {
             show: boolean
+            data?: unknown
             modal?: {
                 type: modal_types
             }
@@ -18,6 +19,7 @@ type modal = (
 const modal: modal = (state, action) => ({
     ...state,
     show: action.payload.show,
+    data: action.payload?.data,
     modal: { type: action.payload.modal?.type }
 })
 
