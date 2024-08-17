@@ -7,6 +7,7 @@ import { modal_types } from "../constants";
 import Download from "./Modals/Download";
 import Template from "./Modals/Template";
 import TemplatePreview from "./Modals/TemplatePreview";
+import TemplateScreenshot from "./Modals/TemplateScreenshot";
 
 type Modal = {
     children?: React.ReactNode
@@ -41,6 +42,8 @@ export default function Modal({ children }: Modal) {
                     return <Template />
                 case "previewTemplate":
                     return <TemplatePreview />
+                case "previewScreenshot":
+                    return <TemplateScreenshot />
                 default:
                     return <h1>unknown</h1>
             }

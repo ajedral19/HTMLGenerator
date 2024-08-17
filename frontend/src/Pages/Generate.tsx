@@ -23,7 +23,7 @@ export default function Generate() {
 
     useEffect(() => {
         const rows = GetTemplates()
-        rows.then(res => setTemplates(res.data))
+        rows.then(res => setTemplates(res.data.templates))
     }, [])
 
     const handleSubmit = (e: React.SyntheticEvent) => {

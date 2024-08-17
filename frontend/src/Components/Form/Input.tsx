@@ -48,13 +48,13 @@ export default function Input({ label, name, id, type, options, onChange }: Fiel
                                 {
                                     fff?.map((option: Option, key: number) => (
                                         option ?
-                                            <li className="option" data-id={option._id} key={key} onClick={() => handleOnSelect(option.template_name, option._id)}>
+                                            <li className="option" data-id={option.id} key={key} onClick={() => handleOnSelect(option.name, option.id)}>
                                                 <div className="option__preview">
-                                                    <img src="./images/template-placeholder.png" alt="textbook name" />
+                                                    <img src={`data:image/webp;base64,${option.screenshot}`} alt={option.name} />
                                                 </div>
                                                 <div className="option__body">
-                                                    <p className="">{option.template_name}</p>
-                                                    <a href={option.template_document} className="link link--external" target="__blank">Document template URL</a>
+                                                    <p className="">{option.name}</p>
+                                                    <a href={option.sheet} className="link link--external" target="__blank">Document template URL</a>
                                                 </div>
                                                 <button className="btn btn--icon icon-download option__action">
                                                     <SVGDownload />

@@ -13,7 +13,7 @@ type card = {
     screenshot?: string,
     // screenshot: { data: [] },
 }
-export default function Card({ id, name, sheet /*screenshot*/ }: card) {
+export default function Card({ id, name, sheet, screenshot }: card) {
     const dispatch = useDispatch()
     const data = useSelector((state: { templates: { data: Option[] } }) => state.templates.data)
 
@@ -32,6 +32,10 @@ export default function Card({ id, name, sheet /*screenshot*/ }: card) {
         dispatch(showModal({ show: true, data: template.length ? template[0] : null, modal: { type: "previewTemplate" } }))
     }
 
+    const handleScreenshotPreivew = () => {
+        dispatch(showModal({ show: true, data: { img: screenshot, alt: name }, modal: { type: "previewScreenshot" } }))
+    }
+
     return <Fragment>
         <div className="card" data-template-id={id} >
             <div className="card__controls">
@@ -48,8 +52,8 @@ export default function Card({ id, name, sheet /*screenshot*/ }: card) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16.5 3.266c.844-.012 3.64-.593 4.234 0c.592.593.012 3.39 0 4.234m-.228-4.009l-7.004 7.005M3.266 16.5c-.012.845-.593 3.641 0 4.234s3.39.012 4.234 0m3.002-7.236l-7.004 7.005" color="currentColor" /></svg>
                 </Button>
             </div>
-            <div className="card__img-wrap">
-                {/* <img src={`data:image/webp;base64,${base64Str}`} alt={template_name} /> */}
+            <div className="card__img-wrap" role="button" onClick={handleScreenshotPreivew}>
+                <img src={`data:image/webp;base64,${screenshot}`} alt={name} />
             </div>
             <div className="card__body">
                 <h4 className="title title--5 card__title">{name}</h4>

@@ -14,8 +14,8 @@ export default function useGetTemplates(): Option[] {
 
     useEffect(() => {
         socket.on('get_templates', ({ data: rows }) => {
-            setTemplates(() => rows)
-            dispatch(getTemplates({ data: rows }))
+            setTemplates(() => rows.templates)
+            dispatch(getTemplates({ data: rows.templates }))
         })
         // socket.on('get_templates', ({ data: rows }) => console.log(rows))
     }, [])
@@ -25,8 +25,8 @@ export default function useGetTemplates(): Option[] {
         const signal = controller.signal
 
         GetTemplates(signal).then(({ data: rows }) => {
-            setTemplates(rows)
-            dispatch(getTemplates({ data: rows }))
+            setTemplates(rows.templates)
+            dispatch(getTemplates({ data: rows.templates }))
         })
 
         return () => controller.abort()
