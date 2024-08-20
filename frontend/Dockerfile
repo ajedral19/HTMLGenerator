@@ -10,5 +10,5 @@ COPY . .
 
 EXPOSE 3800
 
-CMD ["npm", "run", "dev"]
-# CMD ["npm", "start"]
+# CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]

@@ -8,8 +8,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        // target: "http://nodejs-api:9100",
-        target: "http://localhost:9100",
+        target: "http://nodejs-api:9100",
+        // target: "http://localhost:9100",
         changeOrigin: true,
         secure: false,
         ws: true,
