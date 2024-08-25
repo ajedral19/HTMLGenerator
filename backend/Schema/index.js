@@ -6,9 +6,6 @@ const env = config();
 const { DATABASE_HOST, DATABASE_NAME } = env.parsed;
 
 const MONGODB = `mongodb://${DATABASE_HOST}/${DATABASE_NAME}`;
-// const dbName = "new-html-generator"
-// const MONGODB = "mongodb://0.0.0.0:27017/HTMLGenerator";
-// const MONGODB = "mongodb://mongo-db/HTMLGenerator";
 
 const main = async () => {
 	const uri = MONGODB;
