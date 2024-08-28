@@ -1,4 +1,5 @@
 import { AddTemplate, DeleteTemplate, GetAllTemplates, GetTemplate, GetTemplatePreview } from "../Model.js";
+import { extract_sheet, get_sheet_id } from "../utils.js";
 // import { CaptureHTML } from "../utils.js";
 
 export const TemplateAdd = async (req, res) => {
@@ -32,6 +33,15 @@ export const TemplatePreview = async (req, res) => {
     const { id } = req.params;
     const template = await GetTemplatePreview(id);
     return res.status(200).json(template);
+};
+
+export const ExtractSheet = async (req, res) => {
+    const { "google-sheet": google_sheet } = req.headers;
+    const sheet_id = get_sheet_id(google_sheet);
+    const data = await extract_sheet(sheet_id);
+    return res.status(200).json({ data });
+
+    // extract_sheet()
 };
 
 // generate screenshot

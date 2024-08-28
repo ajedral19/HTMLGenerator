@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { DownloadFile, TemplateAdd, TemplateDelete, TemplteGetAll } from "./controllers/index.js";
+import { DownloadFile, TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
 import { Generator, ScreenCapture } from "./controllers/Generate.js";
-import { TemplateGetOne, TemplatePreview } from "./controllers/Template.js";
+import { TemplateGetOne, TemplatePreview, } from "./controllers/Template.js";
 
 const router = Router();
+
+router.get("/extract-sheet", ExtractSheet)
 
 router.post("/generate", Generator);
 router.get("/download/:id", DownloadFile);

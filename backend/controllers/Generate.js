@@ -141,7 +141,7 @@ export const Generator = async (req, res) => {
     const { template_id = null, sheet_id = null } = req.body;
 
     try {
-        const sheetData = await extract_sheet(sheet_id, 31, 70);
+        const sheetData = await extract_sheet(sheet_id, 1, 30);
         // console.log(sheet_id);
         // return
 
@@ -162,7 +162,7 @@ export const Generator = async (req, res) => {
 
         if (!sheetData) return;
 
-        const archive = archive_it(html, sheetData, 31);
+        const archive = archive_it(html, sheetData, 1);
 
         res.writeHead(200, {
             "Content-Type": "application/zip",

@@ -10,7 +10,6 @@
 
     .modal
         max-width: 600px
-        max-height: 700px
         min-height: 300px
         width: 80%
         height: fit-content
@@ -19,7 +18,6 @@
         isolation: isolate
         position: relative
         overflow: hidden
-
         &__header
             position: relative
             z-index: 1
@@ -37,12 +35,20 @@
 
         &__body
             position: relative
-            overflow: hidden
+            overflow-y: auto
             width: inherit
             height: inherit
             // border-radius: inherit
             height: 100%
+            max-height: 700px
             width: 100%
+
+            .preview-wrap, .screenshot-wrap
+                position: relative
+                // overflow-y: scroll
+                height: 100%
+                img
+                    width: 100%
 
         // .modal-close-btn
         //     position: absolute

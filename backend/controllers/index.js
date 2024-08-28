@@ -1,4 +1,4 @@
 import { Generate, DownloadFile } from "./Generate.js";
-import { TemplateAdd, TemplateDelete, TemplteGetAll } from "./Template.js";
+import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./Template.js";
 
-export { Generate, DownloadFile, TemplateAdd, TemplateDelete, TemplteGetAll };
+export { Generate, DownloadFile, TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet };
