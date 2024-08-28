@@ -5,7 +5,9 @@ import { config } from "dotenv";
 import archiver from "archiver";
 import Handlebars from "handlebars";
 import puppeteer from "puppeteer";
+import Mustache from "mustache";
 import path, { join, dirname, resolve } from "path";
+import { escape } from "querystring";
 
 const env = config();
 
@@ -32,7 +34,7 @@ export const response_handler = (status, message, data = null) => {
  * @param {object[]} data
  * @returns archive
  */
-export const archive_it = (html, data) => {
+export const archive_it = (html, data, n_start = 1) => {
     const archive = archiver("zip", { zlib: { level: 9 } });
 
     archive.on("warning", (err) => {
@@ -49,9 +51,16 @@ export const archive_it = (html, data) => {
         throw err;
     });
 
-    data.forEach((row, n) => {
+    let chapter_n = 0;
+
+    if (typeof n_start == "number") {
+        chapter_n = n_start;
+    }
+
+    data.forEach((row) => {
         const compiled_html = render_html(html, row);
-        if (compiled_html) archive.append(compiled_html, { name: `${n + 1}.html` });
+        if (compiled_html) archive.append(compiled_html, { name: `${chapter_n}.html` });
+        chapter_n += 1;
         // archive.file(compiled_html, { name: `${n}.html` });
     });
 
@@ -72,10 +81,16 @@ export const render_html = (template, data) => {
     if (!template || !data) return null;
     let html = "";
 
+    // Mustache.parse(template);
+
+    // const document = Mustache.render(template, data);
     const document = Handlebars.compile(template);
     html = document(data);
+    html = html.replaceAll(/\%.*_path%/g, "https://nativecamp-public-web-production.s3-ap-northeast-1.amazonaws.com/");
 
-    return html;
+    // html = document;
+
+    return decodeURIComponent(escape(html));
 };
 
 /**
@@ -87,11 +102,12 @@ export const buffer_to_string = (buffer, is_base64 = false) => {
     if (!buffer) return null;
     let base64 = buffer;
     if (!is_base64) base64 = Buffer.from(buffer);
-    base64 = base64.toString("utf8");
+    base64 = base64.toString("utf-8");
     base64 = base64.replace("data:text/html;base64,", "");
     const html = atob(base64);
+    const decoded_html = decodeURIComponent(escape(html));
 
-    return html;
+    return decoded_html;
 };
 
 /**
@@ -99,25 +115,36 @@ export const buffer_to_string = (buffer, is_base64 = false) => {
  * @param {string} sheet_id
  * @returns Promise | null
  */
-export const extract_sheet = async (sheet_id) => {
+export const extract_sheet = async (sheet_id, offset_start = 1, offset_end = 30) => {
     let response = null;
     try {
         const doc = new GoogleSpreadsheet(sheet_id, serviceAccountAuth);
         await doc.loadInfo();
+        doc.sheetsApi();
 
         let result = [];
         const sheet_count = doc.sheetCount;
 
-        for (let n = 0; n < sheet_count; n++) {
+        const off_start = offset_start - 1;
+        const off_end = offset_end > sheet_count ? sheet_count : offset_end;
+
+        for (let n = off_start; n < off_end; n++) {
+            console.log(n);
+
             const sheet = doc.sheetsByIndex[n];
 
             const rows = await sheet.getRows({ offset: 0 });
 
-            let content = {};
-            rows.forEach((row) => {
+            let content = { item_number: n + 1 };
+            rows.forEach((row, n, arr) => {
                 let values = row._rawData;
                 let key = values.shift();
-                content[key] = values;
+
+                if (values.length > 1) {
+                    content[key] = values.map((value, key) => {
+                        return { key: key + 1, value };
+                    });
+                } else content[key] = values.toString();
             });
 
             result = [...result, content];
@@ -138,9 +165,11 @@ export const get_sheet_id = (url) => {
     return finds && finds[0].replace("/d/", "").replace("/", "");
 };
 
+export const embed_css = () => {};
+
 export const capture_template = async (html) => {
     if (!html) return null;
-
+    html = html.replaceAll(/\%.*_path%/g, "https://nativecamp-public-web-production.s3-ap-northeast-1.amazonaws.com/");
     try {
         const browser = await puppeteer.launch({
             headless: "new",
@@ -148,8 +177,8 @@ export const capture_template = async (html) => {
                 height: 1920,
                 width: 1080,
             },
-            executablePath: "/usr/bin/chromium-browser",
-			args: ['--no-sandbox', '--disable-gpu', '--disable-setuid-sandbox', '--no-zygote']
+            // executablePath: "/usr/bin/chromium-browser",
+            // args: ['--no-sandbox', '--disable-gpu', '--disable-setuid-sandbox', '--no-zygote']
         });
 
         const page = await browser.newPage();

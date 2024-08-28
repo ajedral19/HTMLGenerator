@@ -5,6 +5,8 @@ import { GetTemplate, ViewTemplate } from "../../Utils/RequestHander";
 
 export default function TemplatePreview() {
     const data = useSelector((state: { modal: { data: Option } }) => state.modal.data)
+    let html = data?.mockup || ""
+    html = html.toString().replace(/%/g, '~~pct~~');
 
 
     return (
@@ -15,7 +17,7 @@ export default function TemplatePreview() {
                     <a href={data.sheet}>Sheet URL</a>
                     {
                         data?.mockup ?
-                            <div dangerouslySetInnerHTML={{ __html: data?.mockup || "" }}></div>
+                            <div dangerouslySetInnerHTML={{ __html: html }}></div>
                             :
                             <p>No mockup is loaded</p>
                     }

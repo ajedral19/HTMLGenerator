@@ -27,7 +27,7 @@ export default function Template() {
 
 
         const base64 = await readFileDataAsBase64(file)
-
+        
         // while saving
         SaveTemplate(base64, template_name, document_template)
         // loading... genarating template mock and screenshot

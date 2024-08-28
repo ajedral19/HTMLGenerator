@@ -141,7 +141,7 @@ export const Generator = async (req, res) => {
     const { template_id = null, sheet_id = null } = req.body;
 
     try {
-        const sheetData = await extract_sheet(sheet_id);
+        const sheetData = await extract_sheet(sheet_id, 31, 70);
         // console.log(sheet_id);
         // return
 
@@ -149,7 +149,7 @@ export const Generator = async (req, res) => {
         // console.log(sheetData);
         // return
         // const id = new ObjectId
-        const template = await HTMLGenerator.findOne({ _id: template_id }, "template_html");
+        const template = await HTMLGenerator.findOne({ _id: template_id }, "template_html template_name");
         // console.log(template)
         // const template = await HTMLGenerator.findById(template_id, "template_html");
         // return
@@ -157,15 +157,16 @@ export const Generator = async (req, res) => {
         // let base64 = Buffer.from(template.template_html);
         // base64 = base64.toString("latin1");
         // base64 = base64.replace("data:text/html;base64,", "");
-        const html = buffer_to_string(template.template_html);
+        // const html = buffer_to_string(template.template_html);
+        const html = template.template_html;
 
         if (!sheetData) return;
 
-        const archive = archive_it(html, sheetData);
+        const archive = archive_it(html, sheetData, 31);
 
         res.writeHead(200, {
             "Content-Type": "application/zip",
-            "Content-Disposition": "attachment; textbook.zip",
+            "Content-Disposition": "attachment;" + template.template_name +".zip",
         });
         archive.pipe(res);
     } catch (err) {
@@ -184,7 +185,7 @@ export const Generate = async (req, res) => {
     const filepath = get_file_path("../template/index.html");
     const source = fs.readFileSync(filepath);
 
-    const html = source.toString("latin1");
+    const html = source.toString("utf-8");
     const template = Handlebars.compile(html);
 
     const data = [
