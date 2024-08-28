@@ -1,0 +1,9 @@
+add cooldown counter
+    cooldown takes a minute
+    cooldown takes effect after generation html files
+
+add limitter
+    set limit when generating files. maximum 30 files per request
+
+inject css to preview
+    allow uploaded to choose which stylesheet to use for the preview

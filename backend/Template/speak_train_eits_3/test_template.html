@@ -1,0 +1,56 @@
+<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+    <div class="v4--canvas-1">
+        <div class="card-img">
+            <div class="img-<?= $locale; ?>">
+                <img src="%cdn_path%resources/speak_train_ielts_3/{{ item_number }}/{{ item_number }}-2.png">
+            </div>
+            <div class="text-btn-con lang-scale">
+                <div class="card-text card-ex1 translation-btn-control">
+                    <div class="space teacher_hide"></div>
+                    <div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
+                    <p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+                    <div class="clearfix clear-after teacher_hide"></div>
+                </div>
+                <div class="clearfix teacher_hide"></div>
+                <div class="toggle-content-wrap func_slide_toggle_target hide translate_btn_content">
+                    <div class="card-text lang-translation scroll-to-content jp_content lang-hide-2">
+                        <div class="m_b_10">
+                            <p class="clickToToggleTranslate fs_20">Index</p>
+                        </div>
+                        <div class="m_b_10">
+                            <p class="fs_20">01 Notice for the Student</p>
+                            <span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
+                                <?php echo __d($po_name, '生徒への注意事項'); ?>
+                            </span>
+                        </div>
+                        <div class="m_b_10">
+                            <p class="fs_20">02. Revision card</p>
+                            <span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
+                                <?php echo __d($po_name, '復習カード'); ?>
+                            </span>
+                        </div>
+                        <div>
+                            <p class="fs_20">03. General Question 1</p>
+                            <span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
+                                <?php echo __d($po_name, '一般的な質問'); ?> 1
+                            </span>
+                        </div>
+                        <div class="m_b_10">
+                            <p class="fs_20">04. General Question 2</p>
+                            <span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
+                                <?php echo __d($po_name, '一般的な質問'); ?> 2
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>question 1</h3>
+<p>{{ question_1 }}</p>
+<p>{{ question_1_jp }}</p>
+<h3>question 2</h3>
+<p>{{ question_2 }}</p>
+<p>{{ question_2_jp }}</p>

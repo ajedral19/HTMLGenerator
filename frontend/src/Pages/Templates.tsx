@@ -1,7 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 import AddCardButton from "../Components/AddCardButton";
 import Card from "../Components/Card";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Option, Target } from "../types";
 import useOptionFilter from "../CustomHooks/useOptionFilter";
 import Input from "../Components/Form/Input";
@@ -31,6 +31,9 @@ export default function Templates() {
         setFiltered(data)
     }, [text, data])
 
+    console.log(templates);
+    
+
     return <Fragment>
         <section className="templates-wrap">
             <div className="mt-1 mb-2">
@@ -50,11 +53,15 @@ export default function Templates() {
             </div>
             <h2 className="title title--3">Textbook templates</h2>
             <div className="mt-1 templates">
+
                 {
-                    templates.length ?
+                    templates?.length ?
                         templates.map((template, key) => (
                             <Fragment key={key}>
-                                <Card id={template.id} sheet={template.sheet} name={template.name} screenshot={template.screenshot} />
+                                <Suspense fallback="<h1>loading...</h1>">
+
+                                    <Card id={template.id} sheet={template.sheet} name={template.name} screenshot={template.screenshot} />
+                                </Suspense>
                                 {/* <div dangerouslySetInnerHTML={{ __html: `${template.template}` }}></div> */}
                                 {/* <p>{template.template}</p> */}
                             </Fragment>

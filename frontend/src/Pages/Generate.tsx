@@ -43,7 +43,7 @@ export default function Generate() {
                 .then(res => {
                     if (res.data) {
                         setCaption("Generate")
-                        fileDownload(res.data, 'textbook.zip')
+                        fileDownload(res.data, `${to.dataset.id}.zip`)
                     }
 
                 })

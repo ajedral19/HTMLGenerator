@@ -28,7 +28,16 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
 [
     {
         "key_1": "value",
-        "key_2": ["item 1", "item 2"]
+        "key_2": [
+            {
+                "key": 1,
+                "value": "items 1"
+            },
+            {
+                "key": 2,
+                "value": "items 2"
+            }
+        ]
         ...
     },
     {
@@ -42,7 +51,7 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
     <h1>{{ key_1 }}</h1>
     <ul>
         {{ #key_2 }}
-            <li>{{ . }}</li>
+            <li>{{ key }} - {{ value }}</li>
         {{ /key_2 }}
     </ul>
 </div>
@@ -52,12 +61,12 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
 <div>
     <h1>value</h1>
     <ul>
-        <li>item 1</li>
-        <li>item 2</li>
+        <li>1 - item 1</li>
+        <li>2 - item 2</li>
     </ul>
 </div>
 ```
 
 > ***Tip***: Create a static html with its dedicated content, structure the a document for templating and convert the static html to (mustached) template
 
-[PanthomJS](https://phantomjs.org/screen-capture.html)
+<!-- [PanthomJS](https://phantomjs.org/screen-capture.html) -->

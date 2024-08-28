@@ -7,6 +7,6 @@ export const readFileDataAsBase64 = (file: Blob) => {
 		reader.onload = (e) => resolve(e.target?.result);
 		reader.onerror = (err) => reject(err);
 
-		reader.readAsDataURL(file);
+		reader.readAsText(file);
 	});
 };
