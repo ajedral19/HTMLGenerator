@@ -1,5 +1,8 @@
 FROM node:20-alpine
 
+ENV DATABASE_HOST mongo-db
+ENV DATABASE_NAME HTMLGenerator
+
 WORKDIR /app
 
 COPY package.json .

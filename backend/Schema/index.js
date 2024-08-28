@@ -3,15 +3,9 @@ import { config } from "dotenv";
 
 const env = config();
 
-const { DBNAME, DBHOST, DBPORT } = env.parsed;
+const { DATABASE_HOST, DATABASE_NAME } = env.parsed;
 
-const db_name = DBNAME || "HTMLGenerator";
-const db_host = DBHOST || "0.0.0.0";
-const db_port = DBPORT || "27017";
-const MONGODB = `mongodb://${db_host}:${db_port}/${db_name}`;
-// const dbName = "new-html-generator"
-// const MONGODB = "mongodb://0.0.0.0:27017/HTMLGenerator";
-// const MONGODB = "mongodb://mongo-db/HTMLGenerator";
+const MONGODB = `mongodb://${DATABASE_HOST}/${DATABASE_NAME}`;
 
 const main = async () => {
     const uri = MONGODB;

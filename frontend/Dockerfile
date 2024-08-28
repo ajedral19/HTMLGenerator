@@ -2,6 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+ENV BASE_URL http://nodejs-api:9100
+
 COPY package.json .
 
 RUN npm install
