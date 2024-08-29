@@ -1,5 +1,6 @@
 */dist
 */.env
+*/package-lock.json
 */Template/mock.html
 */Template/Styles
 */node_modules

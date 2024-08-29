@@ -2,15 +2,31 @@ import { Fragment } from "react/jsx-runtime"
 import Button from "../Button"
 import Input from "../Form/Input"
 
-import { SaveTemplate } from "../../Utils/RequestHander"
+import { GetTemplates, SaveTemplate } from "../../Utils/RequestHander"
 import { readFileDataAsBase64 } from "../../Utils/FileHandlers"
 import FileUpload from "../Form/File"
 import { useDispatch } from "react-redux"
 import { showModal } from "../../Redux/Slices/modal"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useEffect, useState } from "react"
 
 
 
 export default function Template() {
+    const [state, setState] = useState({
+        base64: "",
+        template_name: "",
+        document_template: "",
+    });
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+        mutationFn: () => GetTemplates()
+    })
+
+
+
+
     const dispatch = useDispatch()
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault()
@@ -27,9 +43,10 @@ export default function Template() {
 
 
         const base64 = await readFileDataAsBase64(file)
-        
+
         // while saving
-        SaveTemplate(base64, template_name, document_template)
+        // SaveTemplate(base64, template_name, document_template)
+        setState({ base64, template_name, document_template })
         // loading... genarating template mock and screenshot
 
         // then
