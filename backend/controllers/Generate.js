@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import Handlebars from "handlebars";
 import { HTMLGenerator } from "../Schema/index.js";
 import archiver from "archiver";
-import { archive_it, buffer_to_string, extract_sheet } from "../utils.js";
+import { archive_it, buffer_to_string, extract_sheet, get_sheet_id } from "../utils.js";
 
 // import credentials from "../html-generator-422807-694910701fb2.json" with { type: "json" };
 
@@ -138,10 +138,14 @@ export const GenerateHTML = async (template, data) => {
 
 // new generator
 export const Generator = async (req, res) => {
-    const { template_id = null, sheet_id = null } = req.body;
+    const { template_id = null, sheet_url = null } = req.body;
+    const sheet_id = get_sheet_id(sheet_url);
+    console.log(template_id, sheet_url);
 
     try {
-        const sheetData = await extract_sheet(sheet_id, 1, 30);
+        const sheetData = await extract_sheet(sheet_id, 1, 10);
+        console.log(sheetData);
+        
         // console.log(sheet_id);
         // return
 
@@ -160,13 +164,13 @@ export const Generator = async (req, res) => {
         // const html = buffer_to_string(template.template_html);
         const html = template.template_html;
 
-        if (!sheetData) return;
+        if (!sheetData) return res.status(500).send("oops! got some error");
 
         const archive = archive_it(html, sheetData, 1);
 
         res.writeHead(200, {
             "Content-Type": "application/zip",
-            "Content-Disposition": "attachment;" + template.template_name +".zip",
+            "Content-Disposition": "attachment;" + template.template_name + ".zip",
         });
         archive.pipe(res);
     } catch (err) {
@@ -217,5 +221,3 @@ export const DownloadFile = (req, res) => {
     const readStream = fs.createReadStream(filepath);
     readStream.pipe(res);
 };
-
-export const ScreenCapture = (req, res) => {};

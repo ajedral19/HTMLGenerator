@@ -12,31 +12,30 @@ import Button from "../Components/Button";
 export default function Templates() {
     // transfer to reducer
     // const [templates, setTemplates] = useState<Option[]>([])
-    const [filtered, setFiltered] = useState<Option[] | undefined>([])
 
-    const templates = useGetTemplates()
 
-    const [text, setText] = useState("")
+    const { templates, isLoading } = useGetTemplates()
 
-    const data = useOptionFilter(text, templates)
+
+    // const [text, setText] = useState("")
+
 
     const handleOnChange = (e: Target) => {
-        if (!e.target.value) setFiltered(templates)
-        setText(e.target.value);
+        // if (!e.target.value) setFiltered(templates)
+        // setText(e.target.value);
     }
 
     // const base64 = Buffer.from(templates[0].template_html)
 
-    useEffect(() => {
-        setFiltered(data)
-    }, [text, data])
-
-    console.log(templates);
-    
+    // if (isLoading) {
+    //     return <p>loading...</p>
+    // } else {
+    //     console.log(templates);
+    // }
 
     return <Fragment>
         <section className="templates-wrap">
-            <div className="mt-1 mb-2">
+            {/* <div className="mt-1 mb-2">
                 <h2 className="title title--3">Stylesheets</h2>
                 <div className="mt-1">
                     <Button type="button" variant="primary" text="Upload Stylesheet" />
@@ -50,13 +49,13 @@ export default function Templates() {
             </div>
             <div className="mt-1 mb-2">
                 <Input label="Find template by name" name="test" id="test" onChange={handleOnChange} />
-            </div>
+            </div> */}
             <h2 className="title title--3">Textbook templates</h2>
             <div className="mt-1 templates">
 
                 {
-                    templates?.length ?
-                        templates.map((template, key) => (
+                    !isLoading ?
+                        templates?.rows.map((template, key) => (
                             <Fragment key={key}>
                                 <Suspense fallback="<h1>loading...</h1>">
 
@@ -65,7 +64,7 @@ export default function Templates() {
                                 {/* <div dangerouslySetInnerHTML={{ __html: `${template.template}` }}></div> */}
                                 {/* <p>{template.template}</p> */}
                             </Fragment>
-                        )) : null
+                        )) : "loading..."
                 }
                 <AddCardButton />
             </div>

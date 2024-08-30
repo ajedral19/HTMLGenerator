@@ -20,15 +20,16 @@ export const DownloadFile = (id: string, filename: string) => {
 };
 
 // generate textbook
-export const GenerateTexbook = (template_id: string, sheet_id: string) => {
+export const GenerateTexbook = (template_id: string, sheet_url: string) => {
 	const headers = {
 		// 'Content-Type': 'application/json',
 		Accept: "application/zip",
 	};
 	const payload = {
-		template_id: template_id,
-		sheet_id: sheet_id,
+		template_id,
+		sheet_url,
 	};
+
 	return api.post("/generate", payload, { headers, responseType: "arraybuffer" });
 	// .then(res => fileDownload(res.data, 'textbook.zip'))
 	// .catch(err => console.log(err.message))
@@ -36,36 +37,41 @@ export const GenerateTexbook = (template_id: string, sheet_id: string) => {
 
 // templates
 // save templates
-export const SaveTemplate = (template: unknown, name: unknown, sheet: unknown) => {
+export const SaveTemplate = (template: { template: string | unknown, name: string, sheet: string }) => {
 	const headers = {
 		"Content-Type": "application/json",
 	};
 	const payload = {
-		template,
-		name,
-		sheet,
+		template: template?.template,
+		name: template?.name,
+		sheet: template?.sheet,
 	};
 
-	api
+	console.log(payload);
+
+
+	return api
 		.post("/template/register", payload, { headers })
 		.then((res) => {
-			res.data;
-			socket.emit("templates");
+			return res.data;
+			// socket.emit("templates");
 		})
 		.catch((err) => console.error(err.message));
 };
 
-export const DeleteTemplate = (id: string) => {
+export const DeleteTemplate = (template: { id: string }) => {
+	const { id } = template
 	const headers = {
 		"Content-Type": "application/json",
 	};
 
-	api
+	return api
 		.delete(`/template/${id}/delete`, { headers })
 		.then((res) => {
-			if (res.data) {
-				socket.emit("templates");
-			}
+			return res.data
+			// if (res.data) {
+			// 	socket.emit("templates");
+			// }
 		})
 		.catch((err) => console.error(err.message));
 };
