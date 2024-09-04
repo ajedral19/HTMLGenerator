@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const getAll = (state: any, action: { payload: any; }) => (
     {
         ...state,
-        data: action.payload.data,
+        ...action.payload,
     }
 )
 
@@ -14,7 +14,9 @@ const getAll = (state: any, action: { payload: any; }) => (
 export const templatesSlice = createSlice({
     name: 'templates',
     initialState: {
-        data: {}
+        rows: [],
+        rowCount: 0
+
     },
     reducers: {
         getTemplates: getAll,

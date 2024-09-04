@@ -1,12 +1,12 @@
-import { AddTemplate, DeleteTemplate, GetAllTemplates, GetTemplate, GetTemplatePreview } from "../Model.js";
-import { extract_sheet, get_sheet_id } from "../utils.js";
+import { AddTemplate, DeleteTemplate, GetAllTemplates, GetScreenshot, GetTemplate, GetTemplatePreview } from "../Model.js";
+import { extract_sheet, get_sheet_id, response_handler, template_uri } from "../utils.js";
 // import { CaptureHTML } from "../utils.js";
 
 export const TemplateAdd = async (req, res) => {
     const { name, template, sheet } = req.body;
-    // const img = await CaptureHTML(file, "1-VH-PUDKBmF5R7j_BTrb32dMLXlZJqjNR6GjzK3a9qE");
-    // let buff = Buffer.from(img, "base64");
-    // console.log(template);
+    console.log(req.body.name, req.body.sheet);
+
+    if (!name || !template || !sheet) return res.status(404).json({ message: "cannot proceed to register" });
 
     const stored_template = await AddTemplate(name, template, sheet);
     return res.status(200).json({ message: "register", data: stored_template });
@@ -19,29 +19,35 @@ export const TemplateDelete = async (req, res) => {
 };
 
 export const TemplteGetAll = async (req, res) => {
-    const templates = await GetAllTemplates();
-    res.status(200).json({ data: templates });
+    const data = await GetAllTemplates()(template_uri());
+
+    return response_handler(200, "", { rows: data, rowCount: data.length })(res);
 };
 
 export const TemplateGetOne = async (req, res) => {
     const { id } = req.params;
-    const template = await GetTemplate(id);
-    return res.status(200).json({ data: template });
+    const data = await GetTemplate(id);
+
+    return response_handler(200, "", { row: data })(res);
 };
 
 export const TemplatePreview = async (req, res) => {
     const { id } = req.params;
-    const template = await GetTemplatePreview(id);
-    return res.status(200).json(template);
+    const data = await GetTemplatePreview(id);
+    return response_handler(200, "", { row: data })(res);
 };
 
 export const ExtractSheet = async (req, res) => {
     const { "google-sheet": google_sheet } = req.headers;
     const sheet_id = get_sheet_id(google_sheet);
     const data = await extract_sheet(sheet_id);
-    return res.status(200).json({ data });
 
-    // extract_sheet()
+    return response_handler(200, "", { rows: data, rowCount: data.length })(res);
 };
 
+export const TemplateScreenshot = async (req, res) => {
+    const { id } = req.params;
+    const data = await GetScreenshot(id);
+    return res.status(200).setHeader("content-type", "image/webp").send(data);
+};
 // generate screenshot

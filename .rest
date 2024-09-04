@@ -1,3 +1,44 @@
 GET http://localhost:9100/api/extract-sheet
 Content-Type: application/json
 google-sheet: "https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0"
+###
+
+GET http://localhost:9100/api/templates
+Content-Type: application/json
+###
+
+GET http://localhost:9100/api/template/66ce9e2963a6dce7ac5e142a
+Content-Type: application/json
+###
+
+# needs modification
+GET http://localhost:9100/api/template/66ce9e2963a6dce7ac5e142a/preview
+Content-Type: application/json
+###
+
+GET http://localhost:9100/api/template/66ce9e2963a6dce7ac5e142a/screenshot
+Content-Type: image/webp
+###
+
+# delete
+DELETE http://localhost:9100/api/template/66ce9e2963a6dce7ac5e142a/delete
+###
+
+#post
+POST http://localhost:9100/api/template/register
+Content-Type: application/json
+
+{
+    "name": "",
+    "template": "",
+    "sheet": ""   
+}
+###
+
+POST http://localhost:9100/api/generate
+Content-Type: application/json
+
+{
+    "template_id": "66ce9e2963a6dce7ac5e142a",
+    "sheet_url": "https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0"
+}

@@ -6,11 +6,23 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
  
 
 ### Document format
-|     | *A*         |*B*          | *C*         | *D*          
-| --- | ----------- | ----------- | ----------- | -----------
-| *1* | Properties  | 0           | 1           | N ... 
-| *2* | **key_1**   | value       |             |
-| *3* | **key_2**   | item 1      | item 2      |
+|     | *A*                                |*B*                                                                                                          | *C*                | *D*                  | *E*
+| --- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------ | -------------------- | -----------
+| *1* | Properties                         | 0                                                                                                           | 1                  | 2                    | N...
+| *2* | **title**                          | IELTS Speaking \| Part                                                                                     |                    |                     |
+| *3* | **title_jp**                       | IELTSスピーキング対策 \| パート                                                                                                          |                    |                     |
+| *2* | **heading**                        | Lesson                                                                                                     |                    |                     |
+| *3* | **heading_jp**                     | レッスン                                                                                                   |                    |                     |
+| *2* | **revision_card_desc**             | Describe a book you have recently read.                                                                     |                    |                     |
+| *3* | **revision_card_desc_jp**          | 最近読んだ本について説明してください。                                                                         |                    |                     |
+| *2* | **revision_card_say_list**         | The name of the book                                                                                       | What ist was about | When you read it    |
+| *3* | **revision_card_say_list_jp**      | 本の名前                                                                                                    | どんな内容だったか   | いつ読んだか         |
+| *2* | **revision_card_say_explain**      | And explain how you liked it.                                                                              |                      |                   |
+| *3* | **revision_card_say_explain_jp**   | そして、その本がどのように良かったかを説明してください。                                                        |                     |                      |
+| *2* | **question_1**                     | Do many people go to the library in your country?                                                          |                      |                   |
+| *3* | **question_1_jp**                  | あなたの国では多くの人が図書館に行きますか？                                                                   |                      |                   |
+| *2* | **question_2**                     | In your opinion, what are some advantages and disadvantages of reading books on electronic devices?        |                      |                   |
+| *3* | **question_2_jp**                  | 電子機器で本を読むことのメリットとデメリットは何だと思いますか？                                                  |                      |                    |
 | *4* | ...
 
 | **sheet_1** | sheet_2   | ...
@@ -27,25 +39,52 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
 ```json
 [
     {
-        "key_1": "value",
-        "key_2": [
-            {
-                "key": 1,
-                "value": "items 1"
-            },
-            {
-                "key": 2,
-                "value": "items 2"
-            }
-        ]
-        ...
+      "index": 1,
+      "title": {
+        "eng": "IELTS Speaking | Part 3",
+        "jp": ""
+      },
+      "heading": {
+        "eng": "Lesson 1",
+        "jp": ""
+      },
+      "revision_card_desc": {
+        "eng": "Describe a book you have recently read.",
+        "jp": "最近読んだ本について説明してください。"
+      },
+      "revision_card_say_list": [
+        {
+          "eng": "The name of the book",
+          "jp": "本の名前"
+        },
+        {
+          "eng": "What ist was about",
+          "jp": "どんな内容だったか"
+        },
+        {
+          "eng": "When you read it",
+          "jp": "いつ読んだか"
+        }
+      ],
+      "revision_card_say_explain": {
+        "eng": "And explain how you liked it.",
+        "jp": "そして、その本がどのように良かったかを説明してください。"
+      },
+      "question_1": {
+        "eng": "Do many people go to the library in your country?",
+        "jp": "あなたの国では多くの人が図書館に行きますか？"
+      },
+      "question_2": {
+        "eng": "In your opinion, what are some advantages and disadvantages of reading books on electronic devices?",
+        "jp": "電子機器で本を読むことのメリットとデメリットは何だと思いますか？"
+      }
     },
     {
         ...
     }
 ]
 ```
-### Template Creation
+<!-- ### Template Creation
 ```html
 <div>
     <h1>{{ key_1 }}</h1>
@@ -65,7 +104,7 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
         <li>2 - item 2</li>
     </ul>
 </div>
-```
+``` -->
 
 > ***Tip***: Create a static html with its dedicated content, structure the a document for templating and convert the static html to (mustached) template
 

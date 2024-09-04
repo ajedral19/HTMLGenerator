@@ -7,10 +7,24 @@ import { readFileDataAsBase64 } from "../../Utils/FileHandlers"
 import FileUpload from "../Form/File"
 import { useDispatch } from "react-redux"
 import { showModal } from "../../Redux/Slices/modal"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useEffect } from "react"
 
 
 
 export default function Template() {
+
+    const queryClient = useQueryClient()
+
+    const { mutateAsync: SaveTemplateMutate, isSuccess } = useMutation({
+        mutationFn: SaveTemplate,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["templates"] })
+        },
+
+    })
+
+
     const dispatch = useDispatch()
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault()
@@ -27,9 +41,9 @@ export default function Template() {
 
 
         const base64 = await readFileDataAsBase64(file)
-        
+
         // while saving
-        SaveTemplate(base64, template_name, document_template)
+        await SaveTemplateMutate({ template: base64, name: template_name, sheet: document_template })
         // loading... genarating template mock and screenshot
 
         // then

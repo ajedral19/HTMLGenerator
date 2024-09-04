@@ -20,13 +20,15 @@ const serviceAccountAuth = new JWT({
 });
 
 // console.log(serviceAccountAuth);
-export const response_handler = (status, message, data = null) => {
-    return {
-        status,
-        message,
-        ...data,
+export const response_handler =
+    (status, message, data = null) =>
+    (res) => {
+        return res.status(status).json({
+            status,
+            message,
+            ...data,
+        });
     };
-};
 
 /**
  *
@@ -117,42 +119,58 @@ export const buffer_to_string = (buffer, is_base64 = false) => {
  */
 export const extract_sheet = async (sheet_id, offset_start = 1, offset_end = 30) => {
     let response = null;
+    let result = [];
     try {
         const doc = new GoogleSpreadsheet(sheet_id, serviceAccountAuth);
         await doc.loadInfo();
         doc.sheetsApi();
 
-        let result = [];
         const sheet_count = doc.sheetCount;
 
         const off_start = offset_start - 1;
         const off_end = offset_end > sheet_count ? sheet_count : offset_end;
 
         for (let n = off_start; n < off_end; n++) {
-            console.log(n);
+            console.log("request:", n);
 
             const sheet = doc.sheetsByIndex[n];
-
             const rows = await sheet.getRows({ offset: 0 });
-
-            let content = { item_number: n + 1 };
+            let content = { index: n + 1 };
+            let prev_key = "";
             rows.forEach((row, n, arr) => {
                 let values = row._rawData;
                 let key = values.shift();
+                let eng, jp, props;
+                prev_key = !key.includes("_jp") ? key : prev_key;
 
-                if (values.length > 1) {
-                    content[key] = values.map((value, key) => {
-                        return { key: key + 1, value };
-                    });
-                } else content[key] = values.toString();
+                if (key.includes("_jp")) {
+                    let prev_values = arr[n - 1]._rawData;
+                    if (values.length > 1 && prev_values.length > 1) {
+                        props = [];
+                        eng = prev_values;
+                        jp = values;
+
+                        eng.forEach((item, n) => {
+                            props = [...props, { eng: item, jp: jp[n] }];
+                        });
+                    } else {
+                        jp = values.toString();
+                        eng = prev_values.toString();
+                        props = { eng, jp };
+                    }
+                }
+                content[prev_key] = props;
             });
 
             result = [...result, content];
-
             response = result;
         }
     } catch (err) {
-        console.error(err);
+        console.error(err.message);
+        response = false;
+    } finally {
+        console.log("done executing");
+        // exucute the request timer here
     }
 
     return response;
@@ -199,20 +217,14 @@ export const capture_template = async (html) => {
     }
 };
 
-// export const CaptureHTML = async (html, sheet_id) => {
-//     const data = await extractSheet(sheet_id);
+// export const template_uri = (req) => {
+//     const protocol = req.protocol;
+//     const url = "/api/template";
+//     const host = req.get("host");
+//     const uri = `${protocol}://${host}${url}`;
 
-//     let base64 = html.replace("data:text/html;base64,", "");
-//     const htm = atob(base64);
-//     const compile = Handlebars.compile(htm);
-//     const output = compile(data[0]);
-//     // const img = await captureWebsite.file(output, { inputType: "html" });
-//     try {
-//         const img = await captureWebsite.buffer(output, { inputType: "html", type: "webp" });
-//         return img;
-//     } catch (err) {
-//         console.log(err);
-//     }
-
-//     // todo - use panthomjs instead
+//     return uri;
 // };
+export const template_uri = () => {
+    return "http://localhost:9100/api/template"
+};
