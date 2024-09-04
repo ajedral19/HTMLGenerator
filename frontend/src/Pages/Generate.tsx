@@ -7,8 +7,9 @@ import Button from "../Components/Button";
 import { GenerateTexbook, GetTemplates } from "../Utils/RequestHander";
 
 // import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import fileDownload from "js-file-download";
+import useGetTemplates from "../CustomHooks/useGetTemplates";
 // import { useSelector } from "react-redux";
 
 type Input = {
@@ -17,14 +18,10 @@ type Input = {
 }
 
 export default function Generate() {
-    const [templates, setTemplates] = useState([])
     const [caption, setCaption] = useState("Generate")
-    const [err, setErr] = useState(false)
+    const [errMsg, setErrMsg] = useState(false)
 
-    useEffect(() => {
-        const rows = GetTemplates()
-        rows.then(res => setTemplates(res.rows))
-    }, [])
+    const { templates, isLoading } = useGetTemplates()
 
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
@@ -35,21 +32,20 @@ export default function Generate() {
         }
         const { ["template-options"]: to, ["document-id"]: di } = target
 
-        // console.log(to.dataset.id, di.value);
+
         if (to.dataset.id && di.value) {
-            setErr(false)
+            setErrMsg(false)
             setCaption("Fetching")
             GenerateTexbook(to.dataset.id, di.value)
                 .then(res => {
                     if (res.data) {
                         setCaption("Generate")
-                        fileDownload(res.data, `${to.dataset.id}.zip`)
+                        fileDownload(res.data, `${to.dataset.name}.zip`)
                     }
-
                 })
                 .catch(err => console.log(err.message))
         } else {
-            setErr(true)
+            setErrMsg(true)
         }
     }
 
@@ -59,15 +55,11 @@ export default function Generate() {
             <form onSubmit={handleSubmit} className="mt-1 form">
                 <div className="form">
                     <div className="fields">
-                        <Input label="Choose Template" name='template-options' id='template_options' type="select" options={templates} />
+                        <Input label="Choose Template" name='template-options' id='template_options' type="select" options={!isLoading ? templates.rows : []} />
                         <Input label="Document ID" name='document-id' id='document_id' />
                         {
-                            err && <p>Oopes! Got in to some error</p>
+                            errMsg && <p>Oopes! Got in to some error</p>
                         }
-                        {/* <div className="input-wrap input-wrap--text">
-                            <label htmlFor="document_id">Document ID</label>
-                            <input {...register("sheet")} type="text" name="document_id" id="document_id" />
-                        </div> */}
                     </div>
                     <div className="commands">
                         <Button type="submit" text={caption} id='generate_textbook' variant='primary' />
@@ -75,22 +67,6 @@ export default function Generate() {
                     </div>
                 </div>
             </form>
-
-
-            {/* <div className="mt-4">
-                <h5 className='title title--3'>Recent generated files</h5>
-                <div className="mt-1 block-table">
-                    <div className="item">
-                        <DownloadStrip />
-                    </div>
-                    <div className="item">
-                        <DownloadStrip />
-                    </div>
-                    <div className="item">
-                        <DownloadStrip />
-                    </div>
-                </div>
-            </div> */}
         </div>
     </Fragment>
 }
