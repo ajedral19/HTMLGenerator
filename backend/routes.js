@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
+import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet, SheetGetCount } from "./controllers/index.js";
 import { Generator } from "./controllers/Generate.js";
 import { TemplateGetOne, TemplatePreview, TemplateScreenshot } from "./controllers/Template.js";
 
@@ -10,6 +10,7 @@ const router = Router();
 router.post("/template/register", TemplateAdd);
 router.post("/generate", Generator);
 router.get("/extract-sheet", ExtractSheet);
+router.get("/template/sheet-count", SheetGetCount);
 router.get("/templates", TemplteGetAll);
 router.get("/template/:id", TemplateGetOne);
 router.get("/template/:id/preview", TemplatePreview); // use fetched data instead
