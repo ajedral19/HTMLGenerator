@@ -60,7 +60,7 @@ export default function Modal({ children }: Modal) {
                         <div className="modal">
                             <div className="modal__header">
                                 <p className="modal__header__title">Modal title</p>
-                                <button className="btn btn--icon modal-close-btn" onClick={handleOnClose}>
+                                <button className="btn transparent btn--icon modal-close-btn" onClick={handleOnClose}>
                                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.17605 13.7L0.300049 11.8333L5.12405 6.99998L0.300049 2.19998L2.17605 0.333313L7.00005 5.15331L11.7907 0.333313L13.6667 2.19998L8.84272 6.99998L13.6667 11.8333L11.7907 13.7L7.00005 8.87998L2.17605 13.7Z" fill="currentColor" />
                                     </svg>

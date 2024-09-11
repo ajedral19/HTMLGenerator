@@ -7,9 +7,12 @@ export default function Templates() {
     const { templates, isLoading } = useGetTemplates()
 
     return <Fragment>
-        <section className="templates-wrap">
-            <h2 className="title title--3">Textbook templates</h2>
-            <div className="mt-1 templates">
+        <section className="templates-wrap flex flow-column">
+            <div className="flex">
+                <h2 className="title title--2 col grow">Textbook templates</h2>
+                <p className="col">Filter here</p>
+            </div>
+            <div className="mt-1 templates col grow">
 
                 {
                     !isLoading ?
@@ -23,6 +26,7 @@ export default function Templates() {
                 }
                 <AddCardButton />
             </div>
+            <p className="col">Pagination goes here</p>
         </section>
     </Fragment>
 }

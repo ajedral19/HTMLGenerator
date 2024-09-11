@@ -1,3 +1,5 @@
+@use "sass:math"
+
 @mixin white_space
     $types: (m: margin, p: padding)
     $directions: (l: left, r: right, t: top, b: bottom)
@@ -6,3 +8,11 @@
             @for $n from 0 through 12
                 .#{$type_key}#{$dir_key}-#{$n}
                     #{$type}-#{$dir}: #{$n}em
+
+@mixin flexbox($n_grid: 12, $breakpoint: null)
+    $cn: col
+    @if $breakpoint 
+        $cn: col-#{$breakpoint}
+    @for $n from 1 through $n_grid
+        .#{$cn}-#{$n}
+            flex-basis: math.percentage(math.div($n, $n_grid))

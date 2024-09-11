@@ -51,15 +51,22 @@ export default function Generate() {
 
     return <Fragment>
         <div className="generate-wrap">
-            <h2 className="title title--3">Generate Textbook</h2>
+            <div className="flex">
+
+                <h2 className="title title--3 col grow">Generate Textbook</h2>
+                <p className="col">Request Timer</p>
+            </div>
             <form onSubmit={handleSubmit} className="mt-1 form">
                 <div className="form">
                     <div className="fields">
+                        <Input label="Spreadsheet URL" name='document-id' id='document_id' />
+                        <code>if Spreadsheet url is valid, enable template selection</code>
                         <Input label="Choose Template" name='template-options' id='template_options' type="select" options={!isLoading ? templates.rows : []} />
-                        <Input label="Document ID" name='document-id' id='document_id' />
                         {
                             errMsg && <p>Oopes! Got in to some error</p>
                         }
+                        <code>display parsed Spreadsheet to JSON here</code>
+                        <code>add another field which allow the user to choose and offset where to begin to generating</code>
                     </div>
                     <div className="commands">
                         <Button type="submit" text={caption} id='generate_textbook' variant='primary' />

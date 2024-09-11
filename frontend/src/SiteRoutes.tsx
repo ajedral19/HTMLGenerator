@@ -4,6 +4,7 @@ import Templates from "./Pages/Templates";
 import Generate from "./Pages/Generate";
 import Home from "./Pages/Home";
 import Documentation from "./Pages/Documentation";
+import ApplicationLayout from "./Components/ApplicationLayout";
 
 // export default function SiteRoutes() {
 //     return (
@@ -36,11 +37,11 @@ const SiteRoutes = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Layout><Templates /></Layout>,
+                element: <Layout><ApplicationLayout><Templates /></ApplicationLayout></Layout>,
             },
             {
                 path: 'generate',
-                element: <Layout><Generate /></Layout>
+                element: <Layout><ApplicationLayout><Generate /></ApplicationLayout></Layout>
             }
         ]
     }
