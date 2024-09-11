@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Option } from "../../types";
-import DOMPurify from 'dompurify'
+import DOMPurify from "dompurify";
 
 export default function TemplatePreview() {
     const data = useSelector((state: { modal: { data: Option } }) => state.modal.data)

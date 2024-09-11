@@ -2,7 +2,7 @@ import { HTMLGenerator } from "./Schema/index.js";
 import { buffer_to_string, capture_template, extract_sheet, get_sheet_id, render_html, response_handler, template_uri } from "./utils.js";
 
 // setters
-export const AddTemplate = async (template_name, template, sheet_url) => {
+export const AddTemplate = async (template_name, template, sheet_url, cdn_uri) => {
     try {
         // const template_html = buffer_to_string(template_file, true);
         const template_html = template;
@@ -11,7 +11,7 @@ export const AddTemplate = async (template_name, template, sheet_url) => {
         const rendered_html = render_html(template_html, document_data[0]);
 
         if (rendered_html) {
-            const screenshot = await capture_template(rendered_html);
+            const screenshot = await capture_template(rendered_html, cdn_uri);
 
             const payload = {
                 template_name,
@@ -36,7 +36,7 @@ export const DeleteTemplate = async (id) => {
 };
 
 // getters
-export const GetAllTemplates = () => async (uri) => {
+export const GetAllTemplates = async () =>  {
     try {
         const rows = await HTMLGenerator.find({});
         // const uri = req ? template_uri(req) : null;
@@ -44,7 +44,7 @@ export const GetAllTemplates = () => async (uri) => {
         const templates = rows.map((row) => {
             const { id, template_name: name, template_html: template, template_preview: mockup, template_document: sheet } = row;
             const html = template;
-            return { id, name, template: html, mockup, sheet, screenshot: `${uri}/${id}/screenshot` };
+            return { id, name, template: html, mockup, sheet, screenshot: `/${id}/screenshot` };
         });
 
         return templates;

@@ -1,23 +1,14 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 // import captureWebsite from "capture-website";
 import { JWT } from "google-auth-library";
-import { config } from "dotenv";
+
 import archiver from "archiver";
 import Handlebars from "handlebars";
 import puppeteer from "puppeteer";
 import Mustache from "mustache";
 import path, { join, dirname, resolve } from "path";
 import { escape } from "querystring";
-
-const env = config();
-
-const { CLIENT_EMAIL, PRIVATE_KEY } = env.parsed;
-
-const serviceAccountAuth = new JWT({
-    email: CLIENT_EMAIL,
-    key: PRIVATE_KEY,
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-});
+import { serviceAccountAuth } from "./config.js";
 
 // console.log(serviceAccountAuth);
 export const response_handler =
@@ -176,18 +167,28 @@ export const extract_sheet = async (sheet_id, offset_start = 1, offset_end = 30)
     return response;
 };
 
+/**
+ * 
+ * @param {string} url 
+ * @returns string
+ */
 export const get_sheet_id = (url) => {
     const regex = new RegExp("(/d/.*/)");
     const finds = regex.exec(url);
 
-    return finds && finds[0].replace("/d/", "").replace("/", "");
+    let id = url
+
+    if(finds)
+        id = finds[0].replace("/d/", "").replace("/", "")
+    
+    return id
 };
 
 export const embed_css = () => {};
 
-export const capture_template = async (html) => {
+export const capture_template = async (html, cdn_uri = "__unknown_path__") => {
     if (!html) return null;
-    html = html.replaceAll(/\%.*_path%/g, "https://nativecamp-public-web-production.s3-ap-northeast-1.amazonaws.com/");
+    html = html.replaceAll(/\%.*_path%/g, cdn_uri);
     try {
         const browser = await puppeteer.launch({
             headless: "new",
@@ -226,5 +227,5 @@ export const capture_template = async (html) => {
 //     return uri;
 // };
 export const template_uri = () => {
-    return "http://localhost:9100/api/template"
+    return "http://localhost:9100/api/template";
 };

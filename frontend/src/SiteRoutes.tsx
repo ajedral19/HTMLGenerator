@@ -5,6 +5,7 @@ import Generate from "./Pages/Generate";
 import Home from "./Pages/Home";
 import Documentation from "./Pages/Documentation";
 import ApplicationLayout from "./Components/ApplicationLayout";
+import LiveEditor from "./Pages/LiveEditor";
 
 // export default function SiteRoutes() {
 //     return (
@@ -38,6 +39,10 @@ const SiteRoutes = createBrowserRouter([
             {
                 index: true,
                 element: <Layout><ApplicationLayout><Templates /></ApplicationLayout></Layout>,
+            },
+            {
+                path: 'live-editor',
+                element: <Layout><LiveEditor /></Layout>
             },
             {
                 path: 'generate',

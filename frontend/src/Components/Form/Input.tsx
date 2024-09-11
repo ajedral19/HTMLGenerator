@@ -50,7 +50,7 @@ export default function Input({ label, name, id, type, options, onChange }: Fiel
                                         option ?
                                             <li className="option" data-id={option.id} key={key} onClick={() => handleOnSelect(option.name, option.id)}>
                                                 <div className="option__preview">
-                                                    <img src={option.screenshot} alt={option.name} />
+                                                    <img src={`/api/template/${option.screenshot}`} alt={option.name} />
                                                 </div>
                                                 <div className="option__body">
                                                     <p className="">{option.name}</p>

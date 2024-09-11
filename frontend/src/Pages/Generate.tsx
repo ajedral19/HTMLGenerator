@@ -1,16 +1,10 @@
 import { Fragment } from "react/jsx-runtime";
 import Input from "../Components/Form/Input";
-import DownloadStrip from "../Components/DownloadStip";
 import Button from "../Components/Button";
-
-// import { DownloadFile, GenerateTexbook } from "../Utils/Generator";
-import { GenerateTexbook, GetTemplates } from "../Utils/RequestHander";
-
-// import { useSearchParams } from "react-router-dom";
+import { GenerateTexbook, GetSheetCount } from "../Utils/RequestHander";
 import { useState } from "react";
 import fileDownload from "js-file-download";
 import useGetTemplates from "../CustomHooks/useGetTemplates";
-// import { useSelector } from "react-redux";
 
 type Input = {
     document: string,
@@ -40,7 +34,7 @@ export default function Generate() {
                 .then(res => {
                     if (res.data) {
                         setCaption("Generate")
-                        fileDownload(res.data, `${to.dataset.name}.zip`)
+                        fileDownload(res.data, `${to.dataset.id}.zip`)
                     }
                 })
                 .catch(err => console.log(err.message))
@@ -62,6 +56,7 @@ export default function Generate() {
                         <Input label="Spreadsheet URL" name='document-id' id='document_id' />
                         <code>if Spreadsheet url is valid, enable template selection</code>
                         <Input label="Choose Template" name='template-options' id='template_options' type="select" options={!isLoading ? templates.rows : []} />
+                        {/* <input type="range" min={1} max={} /> */}
                         {
                             errMsg && <p>Oopes! Got in to some error</p>
                         }

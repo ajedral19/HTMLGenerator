@@ -3,12 +3,11 @@ import { extract_sheet, get_sheet_id, response_handler, template_uri } from "../
 // import { CaptureHTML } from "../utils.js";
 
 export const TemplateAdd = async (req, res) => {
-    const { name, template, sheet } = req.body;
-    console.log(req.body.name, req.body.sheet);
+    const { name, template, sheet, cdn } = req.body;
 
-    if (!name || !template || !sheet) return res.status(404).json({ message: "cannot proceed to register" });
+    if (!name || !template || !sheet || !cdn) return res.status(404).json({ message: "cannot proceed to register" });
 
-    const stored_template = await AddTemplate(name, template, sheet);
+    const stored_template = await AddTemplate(name, template, sheet, cdn);
     return res.status(200).json({ message: "register", data: stored_template });
 };
 
@@ -19,7 +18,7 @@ export const TemplateDelete = async (req, res) => {
 };
 
 export const TemplteGetAll = async (req, res) => {
-    const data = await GetAllTemplates()(template_uri());
+    const data = await GetAllTemplates();
 
     return response_handler(200, "", { rows: data, rowCount: data.length })(res);
 };
@@ -38,7 +37,9 @@ export const TemplatePreview = async (req, res) => {
 };
 
 export const ExtractSheet = async (req, res) => {
-    const { "google-sheet": google_sheet } = req.headers;
+    const { spreadsheet: google_sheet } = req.query;
+    console.log(google_sheet);
+
     const sheet_id = get_sheet_id(google_sheet);
     const data = await extract_sheet(sheet_id);
 

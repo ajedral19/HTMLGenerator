@@ -25,6 +25,9 @@ export default function Navbar() {
                     <li className="menu__item">
                         <Link to="/templates">Templates</Link>
                     </li>
+                    <li className="menu__item">
+                        <Link to="/templates/live-editor">Live Editor</Link>
+                    </li>
                     {/* <li className="menu__item">
                         <Button variant="primary" text="Switch Theme" onClick={() => { }} />
                     </li> */}
