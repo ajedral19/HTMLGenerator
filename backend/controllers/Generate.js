@@ -140,12 +140,11 @@ export const GenerateHTML = async (template, data) => {
 export const Generator = async (req, res) => {
     const { template_id = null, sheet_url = null } = req.body;
     const sheet_id = get_sheet_id(sheet_url);
-    console.log(template_id, sheet_url);
 
     try {
         const sheetData = await extract_sheet(sheet_id, 1, 10);
         console.log(sheetData);
-        
+
         // console.log(sheet_id);
         // return
 

@@ -30,14 +30,14 @@ export const GenerateTexbook = (template_id: string, sheet_url: string) => {
 		sheet_url,
 	};
 
-	return api.post("/generate", payload, { headers, responseType: "arraybuffer" });
+	return api.post("/generate?offset=0", payload, { headers, responseType: "arraybuffer" });
 	// .then(res => fileDownload(res.data, 'textbook.zip'))
 	// .catch(err => console.log(err.message))
 };
 
 // templates
 // save templates
-export const SaveTemplate = (template: { template: string | unknown, name: string, sheet: string }) => {
+export const SaveTemplate = async (template: { template: string | unknown, name: string, sheet: string, cdn: string }) => {
 	const headers = {
 		"Content-Type": "application/json",
 	};
@@ -45,10 +45,8 @@ export const SaveTemplate = (template: { template: string | unknown, name: strin
 		template: template?.template,
 		name: template?.name,
 		sheet: template?.sheet,
+		cdn: template?.cdn
 	};
-
-	console.log(payload);
-
 
 	return api
 		.post("/template/register", payload, { headers })
@@ -59,7 +57,7 @@ export const SaveTemplate = (template: { template: string | unknown, name: strin
 		.catch((err) => console.error(err.message));
 };
 
-export const DeleteTemplate = (template: { id: string }) => {
+export const DeleteTemplate = async (template: { id: string }) => {
 	const { id } = template
 	const headers = {
 		"Content-Type": "application/json",
@@ -97,3 +95,17 @@ export const ViewTemplate = async (id: string, signal?: AbortSignal) => {
 		.then((res) => res.data)
 		.catch((err) => console.log(err.name));
 };
+
+export const GetSheetCount = async () => {
+	return api
+		.get(`/template/sheet-count?id=1RwTPIFQSaO6yrTR2g-auHENnr1JMFYbTfQGA4iMF12w`)
+		.then((res) => res.data)
+		.catch((err) => console.log(err.name));
+}
+
+export const GetJSONData = async (spreadsheet_url?: string = "https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0") => {
+	return api
+		.get(`/extract-sheet?spreadsheet=${spreadsheet_url}`)
+		.then((res) => res.data)
+		.catch((err) => console.log(err.name));
+}

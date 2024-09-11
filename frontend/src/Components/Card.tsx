@@ -43,7 +43,7 @@ export default function Card({ template }: card) {
                 </Button>
             </div>
             <div className="card__img-wrap" role="button" onClick={handleScreenshotPreivew}>
-                <img src={screenshot} alt={name} />
+                <img src={`api/template/${screenshot}`} alt={name} />
             </div>
             <div className="card__body">
                 <h4 className="title title--5 card__title">{name}</h4>

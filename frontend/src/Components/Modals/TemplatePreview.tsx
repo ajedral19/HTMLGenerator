@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Option } from "../../types";
-import { GetTemplate, ViewTemplate } from "../../Utils/RequestHander";
+import DOMPurify from "dompurify";
 
 export default function TemplatePreview() {
     const data = useSelector((state: { modal: { data: Option } }) => state.modal.data)
@@ -17,7 +17,7 @@ export default function TemplatePreview() {
                     <a href={data.sheet}>Sheet URL</a>
                     {
                         data?.mockup ?
-                            <div dangerouslySetInnerHTML={{ __html: html }}></div>
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }}></div>
                             :
                             <p>No mockup is loaded</p>
                     }
