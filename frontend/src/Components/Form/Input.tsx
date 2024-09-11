@@ -39,7 +39,7 @@ export default function Input({ label, name, id, type, options, onChange }: Fiel
                     <input type="text" name={name} id={id} onChange={handleOnChange} />
                 </div>
                 :
-                <div className="input-wrap input-wrap--select">
+                <div className="input-wrap input-wrap--text input-wrap--select">
                     <label htmlFor={id}>{label}</label>
                     <input type="text" name={name} id={id} autoComplete="off" role="presesntation" onChange={handleOnChange} onClick={handleToggle} ref={input_ref} data-id={_id} />
                     {

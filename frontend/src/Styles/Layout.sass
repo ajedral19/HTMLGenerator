@@ -1,7 +1,14 @@
+.view
+    display: flex
+    flex-flow: column
+    height: 100dvh
+    .main
+        flex: 1
+
 .templates
     display: grid
     grid-template-columns: repeat(3, 1fr)
-    grid-template-rows: repeat(auto, 1fr)
+    grid-template-rows: max-content
     gap: var(--gap)
 
 .form
@@ -19,13 +26,11 @@
         flex-flow: row nowrap
         gap: var(--gap)
 
-
 .block-table
     display: grid
     grid-template-rows: repeat(auto, 1fr)
     grid-template-columns: repeat(2, 1fr)
     gap: var(--gap)
-
 
 .navbar
     display: flex
@@ -48,6 +53,19 @@
                 text-transform: capitalize
                 &:hover
                     color: var(--text-default)
+
+.panel
+    padding: var(--gap)
+    background: var(--panel-bg)
+    height: 100%
+
+    &--sidebar
+        .categories
+            display: flex
+            flex-flow: column
+            .item
+                a
+                    display: block
 
 .footer
     border-top: 1px solid #dfdfdf

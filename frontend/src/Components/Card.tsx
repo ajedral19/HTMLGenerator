@@ -46,7 +46,7 @@ export default function Card({ template }: card) {
                 <img src={`api/template/${screenshot}`} alt={name} />
             </div>
             <div className="card__body">
-                <h4 className="title title--5 card__title">{name}</h4>
+                <h4 className="title title--6 card__title">{name}</h4>
                 <a href={sheet} className="link link--external" target="__blank">Check document template</a>
             </div>
         </div>

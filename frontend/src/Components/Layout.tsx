@@ -8,10 +8,12 @@ type Layout = {
 
 export default function Layout({ children }: Layout) {
     return <Fragment>
-        <Navbar />
-        <div className="container">
-            {children}
+        <div className="view">
+            <Navbar />
+            <div className="container main">
+                {children}
+            </div>
+            <Footer />
         </div>
-        <Footer />
     </Fragment>
 }
