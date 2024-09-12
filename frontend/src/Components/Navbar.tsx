@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 // import Button from "./Button";
 import useToggleTheme from "../CustomHooks/useToggleTheme";
+import cn from 'classnames'
 
 
-export default function Navbar() {
+export default function Navbar({ className }: { className: string }) {
     useToggleTheme()
 
     return <Fragment>
         <nav>
-            <div className="navbar container">
+            <div className={cn("navbar container", className)}>
                 <div className="logo">
                     <Link to="/">
                         <svg width="159" height="14" viewBox="0 0 159 14" fill="none" xmlns="http://www.w3.org/2000/svg">

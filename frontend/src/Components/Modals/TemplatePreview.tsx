@@ -17,7 +17,7 @@ export default function TemplatePreview() {
                     <a href={data.sheet}>Sheet URL</a>
                     {
                         data?.mockup ?
-                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }}></div>
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html, { IN_PLACE: true, FORBID_TAGS: ['style', 'script'] }) }}></div>
                             :
                             <p>No mockup is loaded</p>
                     }

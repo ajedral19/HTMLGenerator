@@ -42,7 +42,7 @@ const SiteRoutes = createBrowserRouter([
             },
             {
                 path: 'live-editor',
-                element: <Layout><LiveEditor /></Layout>
+                element: <Layout wide><LiveEditor /></Layout>
             },
             {
                 path: 'generate',

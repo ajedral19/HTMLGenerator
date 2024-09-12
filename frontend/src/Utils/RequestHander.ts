@@ -103,7 +103,8 @@ export const GetSheetCount = async () => {
 		.catch((err) => console.log(err.name));
 }
 
-export const GetJSONData = async (spreadsheet_url?: string = "https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0") => {
+export const GetJSONData = async (spreadsheet_url?: string) => {
+	if (!spreadsheet_url) return ["No data"]
 	return api
 		.get(`/extract-sheet?spreadsheet=${spreadsheet_url}`)
 		.then((res) => res.data)
