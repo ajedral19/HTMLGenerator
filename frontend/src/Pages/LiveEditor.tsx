@@ -62,7 +62,7 @@ export default function LiveEditor() {
 
             </div>
             <div className="col col-6">
-                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html, { IN_PLACE: true, FORBID_TAGS: ['style', 'script'] }) }}></div>
+                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html, { IN_PLACE: true, FORBID_TAGS: ['style', 'script'], }) }}></div>
             </div>
         </div>
 

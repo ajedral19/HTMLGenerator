@@ -1,12 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 // import Button from "./Button";
 import useToggleTheme from "../CustomHooks/useToggleTheme";
 import cn from 'classnames'
+import { URLSearchParams } from "url";
 
 
 export default function Navbar({ className }: { className: string }) {
     useToggleTheme()
+
+    const { searchParams, setsearchParams } = useSearchParams()
+    console.log(searchParams);
+
+
 
     return <Fragment>
         <nav>
@@ -25,9 +31,6 @@ export default function Navbar({ className }: { className: string }) {
                     </li>
                     <li className="menu__item">
                         <Link to="/templates">Templates</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to="/templates/live-editor">Live Editor</Link>
                     </li>
                     {/* <li className="menu__item">
                         <Button variant="primary" text="Switch Theme" onClick={() => { }} />
