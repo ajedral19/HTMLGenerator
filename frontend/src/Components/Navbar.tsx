@@ -32,6 +32,9 @@ export default function Navbar({ className }: { className: string }) {
                     <li className="menu__item">
                         <Link to="/templates">Templates</Link>
                     </li>
+                    <li className="menu__item">
+                        <Link to="/backlog">Backlog</Link>
+                    </li>
                     {/* <li className="menu__item">
                         <Button variant="primary" text="Switch Theme" onClick={() => { }} />
                     </li> */}

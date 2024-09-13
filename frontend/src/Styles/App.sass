@@ -45,7 +45,7 @@
 .input-wrap
     label
         --__fs: 1.4rem
-        --__color: var(--text-default-faded)
+        --__color: var(--theme-text-color)
         display: block
         font-size: var(--__fs)
 
@@ -131,34 +131,32 @@
                             display: unset
 // button
 .btn
-    --__color: #1d1d1d
+    --__color: var(--theme-text-color-default)
+    background: var(--__bg)
     &.primary, &.icon-primary
-        --__bg: #1a93e9
+        --__bg: var(--theme-color-cool)
+        --__bg-hover: var(--theme-color-cool-accent)
         --__color: #ffffff
-        &:hover
-            --__bg: #47ACF4
 
     &.secondary, &.icon-secondary
-        --__bg: #e6a326
+        --__bg: var(--theme-color-mild)
+        --__bg-hover: var(--theme-color-mild-accent)
         --__color: #ffffff
         &:hover
             --__bg: #f1af35
 
     &.danger, &.icon-danger
-        --__bg: #e43048
+        --__bg: var(--theme-color-hot)
+        --__bg-hover: var(--theme-color-hot-accent)
         --__color: #ffffff
         &:hover
             --__bg: #f05368
-            --__color: inherit
 
     &.transparent
         --__bg: transparent
-        &:hover
-            --__bg: #E9E9E912           
 
     &--icon, &.icon
         padding: unset
-        // background: transparent
         width: 2.4rem
         height: 2.4rem
         transition: color .2s ease-in-out
@@ -168,10 +166,10 @@
             display: block
             margin: auto
             vertical-align: middle
-        // --__color: #b4b6b9
+            --__color: #ffffff
 
-        &:hover
-            // --__color: var(--text-default)
+    &:hover
+        background: var(--__bg-hover)
 
 // DownloadStrip
 .download-strip

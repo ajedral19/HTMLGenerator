@@ -35,7 +35,7 @@ export default function LiveEditor() {
             <div className="col col-12">
                 <Input name='sheet_url' id='sheet_url' label='Enter Sheet URL' onChange={handleRequest} />
                 <h4 className='mb-1'>Structured Data from Spreadsheet</h4>
-                <MarkdownPreview style={{ width: "auto" }} source={isLoading ? `\`\`\`json \nloading...` : `\`\`\`json \n${JSON.stringify(data, null, " ")}`} />
+                <MarkdownPreview style={{ width: "auto" }} source={isLoading ? `\`\`\`json \nloading...` : `\`\`\`json \n${JSON.stringify(data.rows, null, " ")}`} />
             </div>
             <div className="col col-6">
                 <AceEditor

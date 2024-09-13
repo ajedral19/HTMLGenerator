@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import Documentation from "./Pages/Documentation";
 import ApplicationLayout from "./Components/ApplicationLayout";
 import LiveEditor from "./Pages/LiveEditor";
+import Backlog from "./Pages/Backlog";
 
 // export default function SiteRoutes() {
 //     return (
@@ -47,6 +48,15 @@ const SiteRoutes = createBrowserRouter([
             {
                 path: 'generate',
                 element: <Layout><ApplicationLayout><Generate /></ApplicationLayout></Layout>
+            }
+        ]
+    },
+    {
+        path: 'backlog',
+        children: [
+            {
+                index: true,
+                element: <Layout><Backlog /></Layout>
             }
         ]
     }

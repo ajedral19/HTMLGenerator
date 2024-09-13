@@ -14,7 +14,7 @@
         width: 80%
         height: fit-content
         border-radius: var(--brdr-radius)
-        background: var(--bg-default)
+        background: var(--theme-background)
         isolation: isolate
         position: relative
         overflow: hidden
@@ -22,15 +22,15 @@
             position: relative
             z-index: 1
             padding: calc(var(--gap) / 1.5)
-            background: var(--color-primary-accent)
+            background: var(--theme-background)
             display: flex
             flex-flow: row nowrap
             align-items: center
             justify-content: space-between
-            color: #fff
+            color: var(--theme-text-color)
 
             .modal-close-btn
-                --__color: #ffffff
+                --__color: var(--theme-text-color)
 
         &__body
             position: relative
