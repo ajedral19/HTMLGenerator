@@ -2,6 +2,7 @@ import { Router } from "express";
 import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet, SheetGetCount } from "./controllers/index.js";
 import { Generator } from "./controllers/Generate.js";
 import { TemplateGetOne, TemplatePreview, TemplateScreenshot } from "./controllers/Template.js";
+import { aiTest } from "./ai_test.js";
 
 const router = Router();
 // router.get("/download/:id", DownloadFile);
@@ -16,6 +17,8 @@ router.get("/template/:id", TemplateGetOne);
 router.get("/template/:id/preview", TemplatePreview); // use fetched data instead
 router.get("/template/:id/screenshot", TemplateScreenshot);
 router.delete("/template/:id/delete", TemplateDelete);
+
+router.get('/ai-test', aiTest)
 
 const Routes = router;
 export default Routes;

@@ -47,3 +47,7 @@ Content-Type: application/json
     "template_id": "66ce9e2963a6dce7ac5e142a",
     "sheet_url": "https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0"
 }
+###
+
+GET http://localhost:9100/api/ai-test
+Content-Type: application/json
