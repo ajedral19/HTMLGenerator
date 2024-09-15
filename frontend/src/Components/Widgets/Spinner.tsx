@@ -1,7 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 
-export default function Backlog() {
+export default function Spinner () {
     return <Fragment>
-        <h1>Hello from Backlog</h1>
+        
     </Fragment>
 }

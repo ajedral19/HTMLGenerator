@@ -1,12 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "./Components/Layout";
+import Layout from "./Components/Layouts/Layout";
 import Templates from "./Pages/Templates";
 import Generate from "./Pages/Generate";
 import Home from "./Pages/Home";
 import Documentation from "./Pages/Documentation";
-import ApplicationLayout from "./Components/ApplicationLayout";
 import LiveEditor from "./Pages/LiveEditor";
 import Backlog from "./Pages/Backlog";
+import Helper from "./Pages/Helper";
+import { ApplicationLayout } from "./Components/Layouts";
 
 // export default function SiteRoutes() {
 //     return (
@@ -59,7 +60,16 @@ const SiteRoutes = createBrowserRouter([
                 element: <Layout><Backlog /></Layout>
             }
         ]
-    }
+    },
+    {
+        path: 'helper',
+        children: [
+            {
+                index: true,
+                element: <Layout><Helper /></Layout>
+            }
+        ]
+    },
 ])
 
 export default SiteRoutes

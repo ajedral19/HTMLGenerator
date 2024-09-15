@@ -9,10 +9,10 @@ export const aiTest = async (req, res) => {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `
-        grab every visible japanese characters paragraphs or sentences
-        on this page https://nativecamp.net/vi/campaign/half_price-callan
+        tell me chuck norris joke, must be really funny.
     `;
 
+    // const result = await model.generateContent(prompt);
     const result = await model.generateContent(prompt);
 
     res.status(200).json({ message: "okay", result });

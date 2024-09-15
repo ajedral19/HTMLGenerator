@@ -1,10 +1,10 @@
 import { Fragment } from "react/jsx-runtime";
-import Button from "./Button";
-import { DeleteTemplate } from "../Utils/RequestHander";
 import { useDispatch } from "react-redux";
-import { showModal } from "../Redux/Slices/modal";
-import { TemplateData } from "../types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { TemplateData } from "../../types";
+import { TemplateDelete } from "../../Handlers/HandleTemplate";
+import { showModal } from "../../Redux/Slices/modal";
+import Button from "./Button";
 
 type card = {
     template: TemplateData
@@ -14,18 +14,18 @@ export default function Card({ template }: card) {
     const dispatch = useDispatch()
     const { id, name, screenshot, sheet } = template
 
-
     const { mutateAsync: DeleteTemplateMutate } = useMutation({
-        mutationFn: DeleteTemplate,
+        mutationFn: TemplateDelete,
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["templates"] })
     })
 
     const handleDelete = (id: string) => {
-        DeleteTemplateMutate({ id })
+        DeleteTemplateMutate(id)
     }
 
     const handlePreview = () => {
-        dispatch(showModal({ show: true, data: template, modal: { type: "previewTemplate" } }))
+        // dispatch(showModal({ show: true, data: template, modal: { type: "previewTemplate" } }))
+        window.open(`/html/${id}/preview`, 'rel=noopener noreferrer')
     }
 
     const handleScreenshotPreivew = () => {

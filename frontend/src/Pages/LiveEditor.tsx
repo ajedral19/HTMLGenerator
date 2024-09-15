@@ -5,38 +5,44 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import { useState } from 'react';
 import DOMPurify from 'dompurify'
 import Input from '../Components/Form/Input';
-import { useQuery } from '@tanstack/react-query';
-import { GetJSONData } from '../Utils/RequestHander';
 import MarkdownPreview from '@uiw/react-markdown-preview';
+import useExtract from '../Hooks/useExtract';
+import Button from '../Components/Widgets/Button';
 export default function LiveEditor() {
-    const [html, setHtml] = useState("<h1>hello</h1>")
-    const [url, setUrl] = useState("")
+    const [html, setHtml] = useState<string>("<h1>hello</h1>")
+    const [url, setUrl] = useState<string>("")
 
-    const { data, isLoading } = useQuery({
-        queryKey: ["jsonData", url],
-        queryFn: () => GetJSONData(url),
-    })
-
+    const { data, isLoading } = useExtract(url)
 
     const handleOnChange = (value: string) => {
         setHtml(value)
     }
 
-    const handleRequest = (e: React.SyntheticEvent) => {
-        const { value } = e.target as typeof e.target & { value: string }
-        setUrl(value)
-    }
 
-    console.log(data?.rows);
+    const handleRequest = () => {
+        const { value } = e.target as typeof e.target & { value: string }
+        setUrl(() => value)
+    }
 
 
     return <>
         <div className="flex">
-            <div className="col col-12">
-                <Input name='sheet_url' id='sheet_url' label='Enter Sheet URL' onChange={handleRequest} />
-                <h4 className='mb-1'>Structured Data from Spreadsheet</h4>
-                <MarkdownPreview style={{ width: "auto" }} source={isLoading ? `\`\`\`json \nloading...` : `\`\`\`json \n${JSON.stringify(data.rows, null, " ")}`} />
+            <h2 className="title title--3 col grow">Template Playground</h2>
+            {/* <p className="col">Request Timer</p> */}
+        </div>
+        <div className="flex">
+            <div className='col grow'>
+                <Input name='sheet_url' id='sheet_url' onChange={(e) => setUrl(e.target.value)} />
             </div>
+            <div className="col">
+                <Button name='extract' text='Extract' />
+            </div>
+            <div className='col col-12'>
+                <h4 className='mb-1'>Structured Data from Spreadsheet</h4>
+                <MarkdownPreview style={{ width: "auto", maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json \nloading...` : `\`\`\`json \n${JSON.stringify(data?.rows, null, " ")}`} />
+            </div>
+        </div>
+        <div className="flex">
             <div className="col col-6">
                 <AceEditor
                     placeholder='Play here'

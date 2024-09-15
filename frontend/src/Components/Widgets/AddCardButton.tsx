@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Fragment } from "react/jsx-runtime";
-import { showModal } from "../Redux/Slices/modal";
+import { showModal } from "../../Redux/Slices/modal";
 
 export default function AddCardButton() {
     const dispatch = useDispatch()

@@ -7,3 +7,15 @@ add limitter
 
 inject css to preview
     allow uploaded to choose which stylesheet to use for the preview
+
+routes
+/templates -
+/template/add -
+/template/:id -
+/template/:id -
+/template/:id/screenshot -
+/template/:id/generate?spreadsheet -
+/extract?spreadsheet -
+
+
+/templates?page

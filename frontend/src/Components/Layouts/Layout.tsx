@@ -1,6 +1,6 @@
 import { Fragment } from "react/jsx-runtime";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 import cn from 'classnames'
 
 type Layout = {

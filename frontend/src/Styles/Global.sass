@@ -120,14 +120,17 @@ button
         flex-direction: column
     &.no-wrap
         flex-wrap: nowrap
+    &.items-center
+        align-items: center
     @include mxn.flexbox(12)
 
 .container
     width: 100%
     max-width: 860px
+    max-width: 80dvw
     margin-inline: auto
     &.wide
-        max-width: 90dvw
+        max-width: 60dvw
 
 .title
     --__fs: 1.6rem

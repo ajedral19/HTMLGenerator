@@ -1,23 +1,21 @@
 import { Fragment } from "react/jsx-runtime"
-import Button from "../Button"
+import Button from "../Widgets/Button"
 import Input from "../Form/Input"
-
-import { SaveTemplate } from "../../Utils/RequestHander"
-import { readFileDataAsBase64 } from "../../Utils/FileHandlers"
 import FileUpload from "../Form/File"
 import { useDispatch } from "react-redux"
 import { showModal } from "../../Redux/Slices/modal"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react"
+import { useSearchParams } from "react-router-dom"
+import { TemplateSave } from "../../Handlers/HandleTemplate"
 
 
 
 export default function Template() {
-
     const queryClient = useQueryClient()
 
     const { mutateAsync: SaveTemplateMutate, isPending } = useMutation({
-        mutationFn: SaveTemplate,
+        mutationFn: TemplateSave,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["templates"] })
         },
@@ -42,15 +40,15 @@ export default function Template() {
         const resource_cdn = target.template_resource_cdn.value
 
 
-        const base64 = await readFileDataAsBase64(file)
+        // const base64 = await readFileDataAsBase64(file)
 
         // while saving
-        await SaveTemplateMutate({ template: base64, name: template_name, sheet: document_template, cdn: resource_cdn })
+        await SaveTemplateMutate({ template: file, name: template_name, sheet: document_template, cdn: resource_cdn })
         // loading... genarating template mock and screenshot
 
         // then
         // clear -> close modal 
-        dispatch(showModal({ show: false }))
+        // dispatch(showModal({ show: false }))
 
     }
 

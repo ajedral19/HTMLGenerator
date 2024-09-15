@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 
-import useOptionFilter from "../../CustomHooks/useOptionFilter";
+import useOptionFilter from "../../Hooks/useOptionFilter";
 import { FieldInput, Option, Target } from "../../types";
 import { SVGDownload } from "../../svgAssets";
+import cn from 'classnames'
 
-export default function Input({ label, name, id, type, options, onChange }: FieldInput) {
+export default function Input({ label, name, id, type, options, className, onChange }: FieldInput) {
 
     const [inputText, setInputText] = useState<string>("")
     const [toggled, setToggled] = useState<boolean>(false)
@@ -34,13 +35,13 @@ export default function Input({ label, name, id, type, options, onChange }: Fiel
     return <Fragment>
         {
             !type ?
-                <div className="input-wrap input-wrap--text">
-                    <label htmlFor={id}>{label}</label>
+                <div className={cn("input-wrap input-wrap--text", className)}>
+                    {label && <label htmlFor={id}>{label}</label>}
                     <input type="text" name={name} id={id} onChange={handleOnChange} />
                 </div>
                 :
-                <div className="input-wrap input-wrap--text input-wrap--select">
-                    <label htmlFor={id}>{label}</label>
+                <div className={cn("input-wrap input-wrap--text input-wrap--select", className)}>
+                    {label && <label htmlFor={id}>{label}</label>}
                     <input type="text" name={name} id={id} autoComplete="off" role="presesntation" onChange={handleOnChange} onClick={handleToggle} ref={input_ref} data-id={_id} />
                     {
                         toggled ?
