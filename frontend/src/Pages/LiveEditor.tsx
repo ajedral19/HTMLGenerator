@@ -2,7 +2,7 @@ import AceEditor from 'react-ace'
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/theme-twilight";
 import "ace-builds/src-noconflict/ext-language_tools";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import DOMPurify from 'dompurify'
 import Input from '../Components/Form/Input';
 import MarkdownPreview from '@uiw/react-markdown-preview';
@@ -14,13 +14,15 @@ export default function LiveEditor() {
 
     const { data, isLoading } = useExtract(url)
 
+    const ref = useRef()
+
     const handleOnChange = (value: string) => {
         setHtml(value)
     }
 
 
     const handleRequest = () => {
-        const { value } = e.target as typeof e.target & { value: string }
+        const value = ref.current.value
         setUrl(() => value)
     }
 
@@ -32,10 +34,10 @@ export default function LiveEditor() {
         </div>
         <div className="flex">
             <div className='col grow'>
-                <Input name='sheet_url' id='sheet_url' onChange={(e) => setUrl(e.target.value)} />
+                <Input name='sheet_url' id='sheet_url' ref={ref} />
             </div>
             <div className="col">
-                <Button name='extract' text='Extract' />
+                <Button name='extract' text='Extract' onClick={handleRequest} />
             </div>
             <div className='col col-12'>
                 <h4 className='mb-1'>Structured Data from Spreadsheet</h4>

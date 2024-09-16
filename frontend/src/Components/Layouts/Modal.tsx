@@ -24,13 +24,14 @@ export default function Modal({ children }: Modal) {
 
     useEffect(() => {
         document.onkeydown = (e) => {
-            if (e.key.toLowerCase() === 'escape' && e.code.toLowerCase() === 'escape')
-                handleOnClose()
+            if (e.key)
+                if (e.key.toLowerCase() === 'escape' && e.code.toLowerCase() === 'escape')
+                    handleOnClose()
         }
 
         // fetchSheet()
 
-    }, [])
+    }, [document.onkeydown])
 
     const ModalContent = () => {
 

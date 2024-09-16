@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, forwardRef } from "react";
 import { Fragment } from "react/jsx-runtime";
 
 import useOptionFilter from "../../Hooks/useOptionFilter";
@@ -6,8 +6,8 @@ import { FieldInput, Option, Target } from "../../types";
 import { SVGDownload } from "../../svgAssets";
 import cn from 'classnames'
 
-export default function Input({ label, name, id, type, options, className, onChange }: FieldInput) {
-
+const Input = forwardRef((props: FieldInput, ref) => {
+    const { label, name, id, type, options, className, onChange } = props
     const [inputText, setInputText] = useState<string>("")
     const [toggled, setToggled] = useState<boolean>(false)
     const fff = useOptionFilter(inputText, options);
@@ -32,17 +32,18 @@ export default function Input({ label, name, id, type, options, className, onCha
         setToggled(false)
     }
 
+
     return <Fragment>
         {
             !type ?
                 <div className={cn("input-wrap input-wrap--text", className)}>
                     {label && <label htmlFor={id}>{label}</label>}
-                    <input type="text" name={name} id={id} onChange={handleOnChange} />
+                    <input type="text" name={name} id={id} onChange={handleOnChange} ref={ref || input_ref} />
                 </div>
                 :
                 <div className={cn("input-wrap input-wrap--text input-wrap--select", className)}>
                     {label && <label htmlFor={id}>{label}</label>}
-                    <input type="text" name={name} id={id} autoComplete="off" role="presesntation" onChange={handleOnChange} onClick={handleToggle} ref={input_ref} data-id={_id} />
+                    <input type="text" name={name} id={id} autoComplete="off" role="presesntation" onChange={handleOnChange} onClick={handleToggle} ref={ref || input_ref} data-id={_id} />
                     {
                         toggled ?
                             <ul className="input-wrap--select__options">
@@ -71,4 +72,6 @@ export default function Input({ label, name, id, type, options, className, onCha
 
         }
     </Fragment>
-}
+})
+
+export default Input
