@@ -23,13 +23,13 @@ export default function FileUpload({ name }: FileUpload) {
 
     }
 
-    const triggerFileInput = () => fileinput.current?.click();
+    const triggerFileInput = () => { fileinput.current?.click() }
 
     return (
         <Fragment>
             <div className="file-field">
                 <div className="file-field__thumbnail mb-3">
-                    <button className={cn("btn file-upload-button", file ? 'primary' : 'secondary')} onClick={triggerFileInput}>
+                    <button className={cn("btn file-upload-button", file ? 'primary' : 'secondary')} onClick={triggerFileInput} type="button">
                         {
                             file ?
                                 <p>{file}</p>

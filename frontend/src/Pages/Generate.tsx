@@ -1,11 +1,11 @@
 import { Fragment } from "react/jsx-runtime";
 import Input from "../Components/Form/Input";
-import Button from "../Components/Widgets/Button";
 // import { GenerateTexbook, GetSheetCount } from "../Handlers/RequestHander";
 import { useState } from "react";
 import fileDownload from "js-file-download";
 import useGetTemplates from "../Hooks/useGetTemplates";
 import { HTMLGenerate } from "../Handlers/HandleHTML";
+import { Button } from "../Components/Widgets";
 
 type Input = {
     document: string,
@@ -57,7 +57,15 @@ export default function Generate() {
                     <div className="fields">
                         <Input label="Spreadsheet URL" name='document-id' id='document_id' />
                         <code>if Spreadsheet url is valid, enable template selection</code>
-                        <Input label="Choose Template" name='template-options' id='template_options' type="select" options={!isLoading ? templates.rows : []} />
+                        <div className="flex">
+                            <div className="col grow">
+                                <Input label="Choose Template" name='template-options' id='template_options' type="select" options={!isLoading ? templates.rows : []} />
+
+                            </div>
+                            <div className="col col-2">
+                                <Input label="Start At" name="offset" id="offset" />
+                            </div>
+                        </div>
                         {/* <input type="range" min={1} max={} /> */}
                         {
                             errMsg && <p>Oopes! Got in to some error</p>

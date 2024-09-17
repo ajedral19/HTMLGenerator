@@ -1,10 +1,9 @@
 import { Fragment } from "react/jsx-runtime";
-import AddCardButton from "../Components/Widgets/AddCardButton";
+import AddCardButton from "../Components/Widgets/add_card_button.widget";
 import { TemplateData } from "../types";
 import useGetTemplates from "../Hooks/useGetTemplates";
-import Button from "../Components/Widgets/Button";
 import useGetParams from "../Hooks/useGetParams";
-import { Card, Pagination } from "../Components/Widgets";
+import { Button, Card, Pagination } from "../Components/Widgets";
 export default function Templates() {
 
     let { templates, isLoading, isPending, MutateTemplate } = useGetTemplates()
@@ -35,7 +34,7 @@ export default function Templates() {
                 <AddCardButton />
             </div>
             <div className="col">
-                <Pagination row_count={60} />
+                <Pagination pageCount={60} />
             </div>
         </section>
     </Fragment>

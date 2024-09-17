@@ -8,6 +8,7 @@ import LiveEditor from "./Pages/LiveEditor";
 import Backlog from "./Pages/Backlog";
 import Helper from "./Pages/Helper";
 import { ApplicationLayout } from "./Components/Layouts";
+import BucketGateway from "./Pages/BucketGateway";
 
 // export default function SiteRoutes() {
 //     return (
@@ -49,6 +50,10 @@ const SiteRoutes = createBrowserRouter([
             {
                 path: 'generate',
                 element: <Layout><ApplicationLayout><Generate /></ApplicationLayout></Layout>
+            },
+            {
+                path: 'bucket',
+                element: <Layout><ApplicationLayout><BucketGateway /></ApplicationLayout></Layout>
             }
         ]
     },

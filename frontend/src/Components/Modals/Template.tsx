@@ -1,5 +1,5 @@
 import { Fragment } from "react/jsx-runtime"
-import Button from "../Widgets/Button"
+import Button from "../Widgets/button.widget"
 import Input from "../Form/Input"
 import FileUpload from "../Form/File"
 import { useDispatch } from "react-redux"

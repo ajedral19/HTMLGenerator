@@ -1,11 +1,11 @@
 import { Fragment } from "react/jsx-runtime";
 import { useSearchParams } from "react-router-dom";
-import Button from "./Button";
+import Button from "./button.widget";
 import { useEffect } from "react";
 
-export default function Pagination({ row_count = 10, listener, limit }: { row_count?: number, listener?: (page: number) => void, limit?: number }) {
+export default function Pagination({ pageCount = 10, listener, visible = 5 }: { pageCount?: number, listener?: (page: number) => void, visible?: number }) {
     const [searchParams, setSearchParams] = useSearchParams()
-    const n_of_pages = Array.from(Array(row_count), (_, k) => k)
+    const n_of_pages = Array.from(Array(pageCount), (_, k) => k)
 
     const handleOnclick = (n: number) => {
         setSearchParams({ page: n.toString(), of: n_of_pages.length.toString() })

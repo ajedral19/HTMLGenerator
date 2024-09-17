@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux"
 
 export default function TemplateScreenshot() {
-    const { img, alt } = useSelector((state: { modal: { data: { img: string, alt: string } } }) => state.modal.data)
+    const { id, alt } = useSelector((state: { modal: { data: { id: string, alt: string } } }) => state.modal.data)
 
     return <div className="screenshot-wrap">
-        <img src={`/api/template/${id}/preview`} alt={alt} />
+        <img src={`/api/template/${id}/screenshot`} alt={alt} />
     </div>
 }
