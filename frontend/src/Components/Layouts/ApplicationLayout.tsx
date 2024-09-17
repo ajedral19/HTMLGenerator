@@ -1,5 +1,5 @@
 import { Fragment } from "react/jsx-runtime";
-import SidePanel from "./SidePanel";
+import SidePanel from "../SidePanel";
 
 export default function ApplicationLayout({ children }: { children: React.ReactNode }) {
     return <Fragment>

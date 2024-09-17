@@ -19,6 +19,13 @@ export default defineConfig({
 				ws: true,
 				rewrite: (path) => path.replace(/^\/api/, "/api"),
 			},
+			"/html": {
+				target: BASE_URL,
+				changeOrigin: true,
+				secure: false,
+				ws: true,
+				rewrite: (path) => path.replace(/^\/html/, "/html"),
+			},
 		},
 		watch: {
 			usePolling: true,

@@ -1,13 +1,13 @@
 import { Fragment } from "react/jsx-runtime";
-import '../Styles/Modal.sass'
+import '../../Styles/Modal.sass'
 import { useDispatch, useSelector } from "react-redux";
-import { showModal } from "../Redux/Slices/modal";
+import { showModal } from "../../Redux/Slices/modal";
 import { useEffect } from "react";
-import { modal_types } from "../constants";
-import Download from "./Modals/Download";
-import Template from "./Modals/Template";
-import TemplatePreview from "./Modals/TemplatePreview";
-import TemplateScreenshot from "./Modals/TemplateScreenshot";
+import { modal_types } from "../../constants";
+import Download from "../Modals/Download";
+import Template from "../Modals/Template";
+import TemplatePreview from "../Modals/TemplatePreview";
+import TemplateScreenshot from "../Modals/TemplateScreenshot";
 
 type Modal = {
     children?: React.ReactNode
@@ -24,13 +24,14 @@ export default function Modal({ children }: Modal) {
 
     useEffect(() => {
         document.onkeydown = (e) => {
-            if (e.key.toLowerCase() === 'escape' && e.code.toLowerCase() === 'escape')
-                handleOnClose()
+            if (e.key)
+                if (e.key.toLowerCase() === 'escape' && e.code.toLowerCase() === 'escape')
+                    handleOnClose()
         }
 
         // fetchSheet()
 
-    }, [])
+    }, [document.onkeydown])
 
     const ModalContent = () => {
 

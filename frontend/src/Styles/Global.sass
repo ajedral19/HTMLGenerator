@@ -1,5 +1,8 @@
-@use './Mixins' as mxn
-@import './root'
+@use "sass:math"
+@use 'Varaibles' as var
+@use 'Mixins' as mxn
+@use 'Functions' as fn
+@import 'root'
 
 *
     margin: 0
@@ -12,8 +15,8 @@ html
 body
     font-family: 'Kanit', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
     font-size: 1.6rem
-    background: var(--bg-default)
-    color: var(--text-default)
+    background: var(--theme-background)
+    color: var(--theme-text-color)
 
 p
     --__fs: 1.6rem
@@ -24,10 +27,10 @@ p
 
 a
     text-decoration: none
-    color: var(--color-primary)
+    color: var(--theme-text-color-cool)
 
     &:hover
-        color: var(--color-primary-accent)
+        color: var(--theme-text-color-cool-accent)
 
 ul, li
     font-size: inherit
@@ -39,7 +42,7 @@ h1, h2, h3, h4, h5, h6
 
 label, input[type="text"], button
     --__fs: inherit
-    --__color: #B5B5B5
+    --__color: var(--theme-field-text-color)
     color: var(--__color)
     font-size: var(--__fs)
 
@@ -50,7 +53,7 @@ input[type="text"], button
     --__pad-y: 0
     --__radius: var(--brdr-radius)
     --__width: auto
-    background: var(--__bg)
+    background: var(--theme-field-background)
     border: none
     border-radius: var(--__radius)
     color: var(--__color)
@@ -61,17 +64,17 @@ input[type="text"], button
     width: var(--__width)
 
 input[type="text"]
-    --__color: var(--text-field-color)
+    --__color: var(--theme-field-text-color)
 
 button
-    --__color: #B5B5B5
+    --__color: var(--theme-text-color-default)
     --__pad-x: 1.2em
     --__pad-y: .6em
     cursor: pointer
     transition: color, background .2s ease-in-out
 
     &:hover
-        --__bg: #E9E9E9
+        --__bg-hover: #c9c9c9
 
 .h-100
     height: 100%
@@ -91,18 +94,16 @@ button
 @include mxn.white_space
 
 .flex
+    --__gap: var(--gap)
     display: flex
     flex-direction: row
     flex-wrap: wrap
-    --__gap: var(--gap)
-    gap: var(--__gap)
+    margin: calc(calc(var(--__gap) / 2) * -1)
     &.flow-column
         flex-direction: column
         height: 100%
-    &.no-gap
-        --__gap: 0
     .col
-        // outline: 1px dashed orange
+        padding: calc(var(--__gap) / 2)
         flex-shrink: 0
         flex-grow: 0
 
@@ -112,17 +113,24 @@ button
         &.shrink
             flex-shrink: 1
 
+    &.no-gap
+        --__gap: 0
+
     &.flow-column
         flex-direction: column
     &.no-wrap
         flex-wrap: nowrap
+    &.items-center
+        align-items: center
     @include mxn.flexbox(12)
-
 
 .container
     width: 100%
     max-width: 860px
+    max-width: 80dvw
     margin-inline: auto
+    &.wide
+        max-width: 60dvw
 
 .title
     --__fs: 1.6rem
@@ -145,8 +153,8 @@ button
 
 .link
     --__fs: 1.6rem
-    --__color: var(--color-primary)
-    --__color-hover: var(--color-primary-accent)
+    --__color: var(--theme-color-cool)
+    --__color-hover: var(--theme-color-cool-accent)
     font-size: var(--__fs)
     color: var(--__color)
 
@@ -154,4 +162,4 @@ button
         color: var(--__color-hover)
 
 .footer-mark
-    color: var(--text-default-faded)
+    color: var(--theme-text-color)

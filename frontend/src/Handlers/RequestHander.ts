@@ -1,4 +1,5 @@
 import axios from "axios";
+import { log } from "console";
 import fileDownload from "js-file-download";
 import { io } from "socket.io-client";
 
@@ -20,6 +21,7 @@ export const DownloadFile = (id: string, filename: string) => {
 };
 
 // generate textbook
+// migrated
 export const GenerateTexbook = (template_id: string, sheet_url: string) => {
 	const headers = {
 		// 'Content-Type': 'application/json',
@@ -37,7 +39,13 @@ export const GenerateTexbook = (template_id: string, sheet_url: string) => {
 
 // templates
 // save templates
-export const SaveTemplate = async (template: { template: string | unknown, name: string, sheet: string, cdn: string }) => {
+// migrated
+export const SaveTemplate = async (template: {
+	template: string | unknown;
+	name: string;
+	sheet: string;
+	cdn: string;
+}) => {
 	const headers = {
 		"Content-Type": "application/json",
 	};
@@ -45,7 +53,7 @@ export const SaveTemplate = async (template: { template: string | unknown, name:
 		template: template?.template,
 		name: template?.name,
 		sheet: template?.sheet,
-		cdn: template?.cdn
+		cdn: template?.cdn,
 	};
 
 	return api
@@ -56,9 +64,9 @@ export const SaveTemplate = async (template: { template: string | unknown, name:
 		})
 		.catch((err) => console.error(err.message));
 };
-
+// migrated
 export const DeleteTemplate = async (template: { id: string }) => {
-	const { id } = template
+	const { id } = template;
 	const headers = {
 		"Content-Type": "application/json",
 	};
@@ -66,7 +74,7 @@ export const DeleteTemplate = async (template: { id: string }) => {
 	return api
 		.delete(`/template/${id}/delete`, { headers })
 		.then((res) => {
-			return res.data
+			return res.data;
 			// if (res.data) {
 			// 	socket.emit("templates");
 			// }
@@ -75,13 +83,15 @@ export const DeleteTemplate = async (template: { id: string }) => {
 };
 
 // get templates
-export const GetTemplates = async (signal?: AbortSignal) => {
+// migrated
+export const GetTemplates = async (page?: string, signal?: AbortSignal) => {
 	return api
-		.get("/templates", { signal })
+		.get(`/templates${page ? "?page=" + page : ""}`, { signal })
 		.then((res) => res.data)
 		.catch((err) => console.error(err.name, err.message));
 };
 
+// migrated
 export const GetTemplate = async (id: string, signal?: AbortSignal) => {
 	return api
 		.get(`/template/${id}`, { signal })
@@ -101,11 +111,15 @@ export const GetSheetCount = async () => {
 		.get(`/template/sheet-count?id=1RwTPIFQSaO6yrTR2g-auHENnr1JMFYbTfQGA4iMF12w`)
 		.then((res) => res.data)
 		.catch((err) => console.log(err.name));
-}
+};
 
-export const GetJSONData = async (spreadsheet_url?: string = "https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0") => {
+// migrated
+export const GetJSONData = async (spreadsheet?: string) => {
+	console.log(spreadsheet, "hihi");
+
+	if (!spreadsheet) return ["No data"];
 	return api
-		.get(`/extract-sheet?spreadsheet=${spreadsheet_url}`)
+		.get(`/extract-sheet?spreadsheet=${spreadsheet}`)
 		.then((res) => res.data)
-		.catch((err) => console.log(err.name));
-}
+		.catch((err) => console.log(err));
+};

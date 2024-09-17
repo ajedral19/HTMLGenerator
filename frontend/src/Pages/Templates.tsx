@@ -1,45 +1,32 @@
 import { Fragment } from "react/jsx-runtime";
-import AddCardButton from "../Components/AddCardButton";
-import Card from "../Components/Card";
+import AddCardButton from "../Components/Widgets/AddCardButton";
 import { TemplateData } from "../types";
-import useGetTemplates from "../CustomHooks/useGetTemplates";
-import Button from "../Components/Button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { GetTemplates } from "../Utils/RequestHander";
-import Input from "../Components/Form/Input";
+import useGetTemplates from "../Hooks/useGetTemplates";
+import Button from "../Components/Widgets/Button";
+import useGetParams from "../Hooks/useGetParams";
+import { Card, Pagination } from "../Components/Widgets";
 export default function Templates() {
-    let { templates, isLoading } = useGetTemplates()
-    const queryClient = useQueryClient()
 
-
-    const { mutateAsync: RefreshMutation, isPending } = useMutation({
-        mutationFn: GetTemplates,
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['templates'] })
-    })
-
-    const handleRefresh = () => RefreshMutation(undefined)
-
-    const handleOnChange = () => {
-        // dispatch modal
-    }
+    let { templates, isLoading, isPending, MutateTemplate } = useGetTemplates()
+    const { page }: { page?: string } = useGetParams()
 
     return <Fragment>
         <section className="templates-wrap flex flow-column">
             <div className="flex">
-                <h2 className="title title--2 col grow">Textbook templates</h2>
-                <div className="col">
-                    <p className="col">Filter here</p>
-                    <Button text={isPending ? "Loading" : "Refresh"} name="refresh" type="button" variant="primary" onClick={handleRefresh} />
+                <div className="col grow flex items-center">
+                    <h2 className="title title--3 col grow">Textbook templates</h2>
+                    <div className="col">
+                        <p>Filter here</p>
+                    </div>
+                    <div className="col">
+                        <Button text={isPending ? "Loading" : "Refresh"} name="refresh" type="button" variant="primary" onClick={() => MutateTemplate(page)} />
+                    </div>
                 </div>
 
             </div>
-            <div className="mb-2">
-                <h2 className="title title--3 mb-1">See Sheet JSON format</h2>
-                <Input label="Enter Sheet URL" onChange={handleOnChange} />
-            </div>
             <div className="mt-1 templates col grow">
                 {
-                    !isLoading ?
+                    !isLoading || !isPending ?
                         templates?.rows.map((template: TemplateData, key: number) => (
                             <Fragment key={key}>
 
@@ -50,7 +37,9 @@ export default function Templates() {
                 }
                 <AddCardButton />
             </div>
-            <p className="col">Pagination goes here</p>
+            <div className="col">
+                <Pagination row_count={60} />
+            </div>
         </section>
     </Fragment>
 }

@@ -1,10 +1,11 @@
 import { Fragment } from "react/jsx-runtime";
 import Input from "../Components/Form/Input";
-import Button from "../Components/Button";
-import { GenerateTexbook, GetSheetCount } from "../Utils/RequestHander";
+import Button from "../Components/Widgets/Button";
+// import { GenerateTexbook, GetSheetCount } from "../Handlers/RequestHander";
 import { useState } from "react";
 import fileDownload from "js-file-download";
-import useGetTemplates from "../CustomHooks/useGetTemplates";
+import useGetTemplates from "../Hooks/useGetTemplates";
+import { HTMLGenerate } from "../Handlers/HandleHTML";
 
 type Input = {
     document: string,
@@ -30,11 +31,13 @@ export default function Generate() {
         if (to.dataset.id && di.value) {
             setErrMsg(false)
             setCaption("Fetching")
-            GenerateTexbook(to.dataset.id, di.value)
+            HTMLGenerate(to.dataset.id, di.value)
                 .then(res => {
                     if (res.data) {
+                        const { headers } = res
+                        const file = headers['content-disposition'].split(';')[1]
                         setCaption("Generate")
-                        fileDownload(res.data, `${to.dataset.id}.zip`)
+                        fileDownload(res.data, `${file}`)
                     }
                 })
                 .catch(err => console.log(err.message))
@@ -46,7 +49,6 @@ export default function Generate() {
     return <Fragment>
         <div className="generate-wrap">
             <div className="flex">
-
                 <h2 className="title title--3 col grow">Generate Textbook</h2>
                 <p className="col">Request Timer</p>
             </div>

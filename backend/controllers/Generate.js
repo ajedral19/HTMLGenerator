@@ -10,33 +10,34 @@ import { archive_it, buffer_to_string, extract_sheet, get_sheet_id } from "../ut
 
 // -----------------------
 const get_file_path = (localdir) => {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-    const filepath = path.join(__dirname, localdir);
+	const __filename = fileURLToPath(import.meta.url);
+	const __dirname = dirname(__filename);
+	const filepath = path.join(__dirname, localdir);
 
-    return filepath;
+	return filepath;
 };
 
 // store files
 const storeHTML = (template_name, file, file_name) => {
-    fs.existsSync(get_file_path(`../Template/${template_name}`)) || fs.mkdirSync(get_file_path(`../Template/${template_name}`));
-    const dirpath = get_file_path(`../Template/${template_name}/${file_name}.html`);
-    fs.writeFile(dirpath, file, (err) => err && console.log(err.message));
-    // console.log('okay');
+	fs.existsSync(get_file_path(`../Template/${template_name}`)) ||
+		fs.mkdirSync(get_file_path(`../Template/${template_name}`));
+	const dirpath = get_file_path(`../Template/${template_name}/${file_name}.html`);
+	fs.writeFile(dirpath, file, (err) => err && console.log(err.message));
+	// console.log('okay');
 };
 
 // compiler
 const compileHTML = async (html, data) => {
-    const template = Handlebars.compile(html);
-    let files = [];
-    data.forEach((row, n) => {
-        const document = template(row);
-        files = [...files, document];
-        // const dirpath = get_file_path(`../Template/test_file.zip`);
-        // fs.writeFile(dirpath, row, (err) => err && console.log(err.message));
+	const template = Handlebars.compile(html);
+	let files = [];
+	data.forEach((row, n) => {
+		const document = template(row);
+		files = [...files, document];
+		// const dirpath = get_file_path(`../Template/test_file.zip`);
+		// fs.writeFile(dirpath, row, (err) => err && console.log(err.message));
 
-        storeHTML("sample template exports", document, n);
-    });
+		storeHTML("sample template exports", document, n);
+	});
 };
 
 // const archive_it = (html, data) => {
@@ -71,57 +72,57 @@ const compileHTML = async (html, data) => {
 
 // make file zip
 const zipIt = () => {
-    const __dirname = get_file_path("../Template");
+	const __dirname = get_file_path("../Template");
 
-    // const output = fs.createWriteStream(__dirname + "/testzip.zip");
-    const archive = archiver("zip", {
-        zlib: { level: 9 },
-    });
+	// const output = fs.createWriteStream(__dirname + "/testzip.zip");
+	const archive = archiver("zip", {
+		zlib: { level: 9 },
+	});
 
-    // output.on("close", () => {
-    //     console.log(archive.pointer() + "total bytes");
-    //     console.log("archiving has been finalized and the output file has closed");
-    // });
+	// output.on("close", () => {
+	//     console.log(archive.pointer() + "total bytes");
+	//     console.log("archiving has been finalized and the output file has closed");
+	// });
 
-    // output.on("end", () => {
-    //     console.log("Data has been drained");
-    // });
+	// output.on("end", () => {
+	//     console.log("Data has been drained");
+	// });
 
-    archive.on("warning", (err) => {
-        if (err.code === "ENOENT") {
-            console.log("some warning");
-        } else {
-            console.log(err.message);
-            throw err;
-        }
-    });
+	archive.on("warning", (err) => {
+		if (err.code === "ENOENT") {
+			console.log("some warning");
+		} else {
+			console.log(err.message);
+			throw err;
+		}
+	});
 
-    archive.on("error", (err) => {
-        console.log(err.message);
-        throw err;
-    });
+	archive.on("error", (err) => {
+		console.log(err.message);
+		throw err;
+	});
 
-    // archive.pipe(output);
+	// archive.pipe(output);
 
-    const file1 = __dirname + "/index.html";
-    archive.append(fs.createReadStream(file1), { name: "index.html" });
+	const file1 = __dirname + "/index.html";
+	archive.append(fs.createReadStream(file1), { name: "index.html" });
 
-    archive.append("string chese!", { name: "index.html" });
+	archive.append("string chese!", { name: "index.html" });
 
-    const buffer3 = Buffer.from("buff it!");
-    archive.append(buffer3, { name: "index.html" });
+	const buffer3 = Buffer.from("buff it!");
+	archive.append(buffer3, { name: "index.html" });
 
-    archive.file("file1.txt", { name: "index.html" });
+	archive.file("file1.txt", { name: "index.html" });
 
-    archive.directory("subdir/", "new-subdir");
+	archive.directory("subdir/", "new-subdir");
 
-    archive.directory("subdir/", false);
+	archive.directory("subdir/", false);
 
-    archive.glob("file*.txt", { cwd: __dirname });
+	archive.glob("file*.txt", { cwd: __dirname });
 
-    archive.finalize();
+	archive.finalize();
 
-    return archive;
+	return archive;
 };
 
 /**
@@ -131,92 +132,99 @@ const zipIt = () => {
  * @returns HTML String
  */
 export const GenerateHTML = async (template, data) => {
-    if (!template || !data) return;
-    let html = "";
-    return html;
+	if (!template || !data) return;
+	let html = "";
+	return html;
 };
 
 // new generator
 export const Generator = async (req, res) => {
-    const { template_id = null, sheet_url = null } = req.body;
-    const sheet_id = get_sheet_id(sheet_url);
+	const { template_id } = req.params;
+	const { spreadsheet } = req.query;
+	const sheet_id = get_sheet_id(spreadsheet);
 
-    try {
-        const sheetData = await extract_sheet(sheet_id, 1, 10);
-        console.log(sheetData);
+	try {
+		const sheetData = await extract_sheet(sheet_id, 1, 10);
 
-        // console.log(sheet_id);
-        // return
+		// console.log(sheet_id);
+		// return
 
-        // sheet data
-        // console.log(sheetData);
-        // return
-        // const id = new ObjectId
-        const template = await HTMLGenerator.findOne({ _id: template_id }, "template_html template_name");
-        // console.log(template)
-        // const template = await HTMLGenerator.findById(template_id, "template_html");
-        // return
+		// sheet data
+		// console.log(sheetData);
+		// return
+		// const id = new ObjectId
+		const template = await HTMLGenerator.findOne({ _id: template_id }, "template_file template_name");
+		const { template_file: file, template_name: name } = template;
+		const { buffer } = file;
+		let html_template = Buffer.from(buffer);
+		html_template = html_template.toString("utf-8");
 
-        // let base64 = Buffer.from(template.template_html);
-        // base64 = base64.toString("latin1");
-        // base64 = base64.replace("data:text/html;base64,", "");
-        // const html = buffer_to_string(template.template_html);
-        const html = template.template_html;
+		// console.log(template)
+		// const template = await HTMLGenerator.findById(template_id, "template_html");
+		// return
 
-        if (!sheetData) return res.status(500).send("oops! got some error");
+		// let base64 = Buffer.from(template.template_html);
+		// base64 = base64.toString("latin1");
+		// base64 = base64.replace("data:text/html;base64,", "");
+		// const html = buffer_to_string(template.template_html);
 
-        const archive = archive_it(html, sheetData, 1);
+		if (!sheetData) return res.status(500).send("oops! got some error");
 
-        res.writeHead(200, {
-            "Content-Type": "application/zip",
-            "Content-Disposition": "attachment;" + template.template_name + ".zip",
-        });
-        archive.pipe(res);
-    } catch (err) {
-        console.log(err);
-    }
+		const archive = archive_it(html_template, sheetData, 1);
 
-    // const readStream = fs.createReadStream(archive);
-    // readStream.pipe(res);
+		res.writeHead(200, {
+			"Content-Type": "application/zip",
+			"Content-Disposition": "attachment;" + name + ".zip",
+			"File-Name": name,
+		});
+		archive.pipe(res);
+	} catch (err) {
+		console.log(err);
+	}
+
+	// const readStream = fs.createReadStream(archive);
+	// readStream.pipe(res);
 };
 
 // generate html files
 export const Generate = async (req, res) => {
-    const { template_id = null, sheet_id = null } = req.body;
-    const rows = await extract_sheet(sheet_id);
+	const { template_id = null, sheet_id = null } = req.body;
+	const rows = await extract_sheet(sheet_id);
 
-    const filepath = get_file_path("../template/index.html");
-    const source = fs.readFileSync(filepath);
+	const filepath = get_file_path("../template/index.html");
+	const source = fs.readFileSync(filepath);
 
-    const html = source.toString("utf-8");
-    const template = Handlebars.compile(html);
+	const html = source.toString("utf-8");
+	const template = Handlebars.compile(html);
 
-    const data = [
-        { name: "Jane Doe", company: "Kigwaxkie" },
-        { name: "Johny Papa", company: ["Kigwaxkie", "sdsfdf"] },
-    ];
+	const data = [
+		{ name: "Jane Doe", company: "Kigwaxkie" },
+		{ name: "Johny Papa", company: ["Kigwaxkie", "sdsfdf"] },
+	];
 
-    data.forEach((item, n) => {
-        const contents = template(item);
-        const template_path = get_file_path(`../Template/somename${n}.html`);
-        fs.writeFile(template_path, contents, (err) => err && console.log(err.message));
-    });
+	data.forEach((item, n) => {
+		const contents = template(item);
+		const template_path = get_file_path(`../Template/somename${n}.html`);
+		fs.writeFile(template_path, contents, (err) => err && console.log(err.message));
+	});
 
-    res.status(rows ? 200 : 500).send({ message: !rows ? "oops! we encountered some errors" : "temlpate is now available to download" });
+	res
+		.status(rows ? 200 : 500)
+		.send({ message: !rows ? "oops! we encountered some errors" : "temlpate is now available to download" });
 };
 
 // download file
 export const DownloadFile = (req, res) => {
-    const filepath = get_file_path("../path/to/archive.html");
-    const stat = fs.statSync(filepath);
-    let fname = req.params.id;
+	const filepath = get_file_path("../path/to/archive.html");
+	const stat = fs.statSync(filepath);
+	let fname = req.params.id;
 
-    res.writeHead(200, {
-        "Content-Type": "text/html; charset=utf-8",
-        "Content-Disposition": "attachment; filename=" + fname + ".html",
-        "Content-Length": stat.size,
-    });
+	res.writeHead(200, {
+		"Content-Type": "text/html; charset=utf-8",
+		"Content-Disposition": "attachment; filename=" + fname + ".html",
+		"Content-Length": stat.size,
+	});
 
-    const readStream = fs.createReadStream(filepath);
-    readStream.pipe(res);
+	const readStream = fs.createReadStream(filepath);
+	readStream.pipe(res);
 };

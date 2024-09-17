@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { GetTemplates } from "../Utils/RequestHander";
+import { GetTemplates } from "../Handlers/RequestHander";
 import { Option, TemplateData } from "../types";
 import { useDispatch } from "react-redux";
 import { getTemplates } from "../Redux/Slices/templates";

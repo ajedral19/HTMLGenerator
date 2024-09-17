@@ -1,19 +1,46 @@
 <?php $page_num = 0; ?>
 <?php $po_name = 'ielts'; ?>
-<article class="webtext native_expression native_phrase_basic ielts tb--v4 lang-<?php echo $locale; ?> card-body" id="webtext_%class_id%_%chapter_id%" data-class_id="%class_id%" data-chapter_id="%chapter_id%" data-orderno="%orderno%" style="padding-right: 0px; padding-left: 0px;">
-
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	body {
+		color: #fff;
+		background: #000;
+	}
+</style>
+<article
+	class="webtext native_expression native_phrase_basic ielts tb--v4 lang-<?php echo $locale; ?> card-body"
+	id="webtext_%class_id%_%chapter_id%"
+	data-class_id="%class_id%"
+	data-chapter_id="%chapter_id%"
+	data-orderno="%orderno%"
+	style="padding-right: 0px; padding-left: 0px"
+>
 	<!-- 1 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-1.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-1.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -22,13 +49,15 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20">{{ title.eng }} 3</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, "{{ title.jp }}") ?> 3
+									<?php echo __d($po_name, "{{ title.jp }}") ?>
+									3
 								</span>
 							</div>
 							<div>
 								<p class="fs_20">{{ heading.eng }} 1</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, "{{ heading.jp }}"); ?> 1
+									<?php echo __d($po_name, "{{ heading.jp }}"); ?>
+									1
 								</span>
 							</div>
 						</div>
@@ -39,17 +68,27 @@
 	</div>
 
 	<!-- 2 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-2.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-2.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -73,13 +112,15 @@
 							<div>
 								<p class="fs_20">03. General Question 1</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, '一般的な質問'); ?> 1
+									<?php echo __d($po_name, '一般的な質問'); ?>
+									1
 								</span>
 							</div>
 							<div class="m_b_10">
 								<p class="fs_20">04. General Question 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, '一般的な質問'); ?> 2
+									<?php echo __d($po_name, '一般的な質問'); ?>
+									2
 								</span>
 							</div>
 						</div>
@@ -90,17 +131,27 @@
 	</div>
 
 	<!-- 3 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-3.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-3.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -132,17 +183,27 @@
 	</div>
 
 	<!-- 4 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-4.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-4.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -162,17 +223,27 @@
 	</div>
 
 	<!-- 5 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-5.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-5.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -230,17 +301,27 @@
 	</div>
 
 	<!-- 6 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-6.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-6.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -249,7 +330,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20">General Question 1</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, '一般的な質問'); ?> 1
+									<?php echo __d($po_name, '一般的な質問'); ?>
+									1
 								</span>
 							</div>
 						</div>
@@ -260,17 +342,27 @@
 	</div>
 
 	<!-- 7 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-7.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-7.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -279,7 +371,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20">Task 1</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> １
+									<?php echo __d($po_name, 'タスク'); ?>
+									１
 								</span>
 								<p class="clickToToggleTranslate fs_20">Directions</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
@@ -291,7 +384,9 @@
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
 									<?php echo __d($po_name, 'まず、講師が復習カードに関連した質問をします。'); ?>
 								</span>
-								<p class="fs_20">❷ Then, the student will answer to the question.The teacher will record the student's answer.</p>
+								<p class="fs_20">
+									❷ Then, the student will answer to the question.The teacher will record the student's answer.
+								</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
 									<?php echo __d($po_name, 'その後、生徒が質問に答えます。講師は生徒の答えを録音します。'); ?>
 								</span>
@@ -304,17 +399,27 @@
 	</div>
 
 	<!-- 8 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-8.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-8.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -340,17 +445,27 @@
 	</div>
 
 	<!-- 9 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-9.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-9.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -359,7 +474,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> ２
+									<?php echo __d($po_name, 'タスク'); ?>
+									２
 								</span>
 								<p class="clickToToggleTranslate fs_20">Directions</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
@@ -379,7 +495,10 @@
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
 									<?php echo __d($po_name, 'その後、教師がフィードバックをします。'); ?>
 								</span>
-								<p class="fs_20">❹ Finally, the student will try the questions again based on self-feedback and feedback from the teacher.</p>
+								<p class="fs_20">
+									❹ Finally, the student will try the questions again based on self-feedback and feedback from the
+									teacher.
+								</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
 									<?php echo __d($po_name, '最後に、生徒は自分で行ったフィードバックと教師からのフィードバックをもとに、問題に再挑戦します。'); ?>
 								</span>
@@ -392,17 +511,27 @@
 	</div>
 
 	<!-- 10 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-10.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-10.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -411,7 +540,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20 fw_b">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> 2
+									<?php echo __d($po_name, 'タスク'); ?>
+									2
 								</span>
 							</div>
 							<div class="m_b_10">
@@ -434,17 +564,27 @@
 	</div>
 
 	<!-- 11 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-11.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-11.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -453,7 +593,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20 fw_b">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> 2
+									<?php echo __d($po_name, 'タスク'); ?>
+									2
 								</span>
 							</div>
 							<div class="m_b_10">
@@ -476,17 +617,27 @@
 	</div>
 
 	<!-- 12 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-12.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-12.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -495,7 +646,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20 fw_b">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> 2
+									<?php echo __d($po_name, 'タスク'); ?>
+									2
 								</span>
 							</div>
 							<div class="m_b_10">
@@ -518,17 +670,27 @@
 	</div>
 
 	<!-- 13 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-13.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-13.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -537,7 +699,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20 fw_b">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> 2
+									<?php echo __d($po_name, 'タスク'); ?>
+									2
 								</span>
 							</div>
 							<div class="m_b_10">
@@ -560,17 +723,27 @@
 	</div>
 
 	<!-- 14 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-14.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-14.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -579,7 +752,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20">General Question 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, '一般的な質問'); ?> 2
+									<?php echo __d($po_name, '一般的な質問'); ?>
+									2
 								</span>
 							</div>
 						</div>
@@ -590,17 +764,27 @@
 	</div>
 
 	<!-- 15 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-15.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-15.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -626,17 +810,27 @@
 	</div>
 
 	<!-- 16 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-16.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-16.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -645,7 +839,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20 fw_b">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> 2
+									<?php echo __d($po_name, 'タスク'); ?>
+									2
 								</span>
 							</div>
 							<div class="m_b_10">
@@ -668,17 +863,27 @@
 	</div>
 
 	<!-- 17 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-17.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-17.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -687,7 +892,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20 fw_b">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> 2
+									<?php echo __d($po_name, 'タスク'); ?>
+									2
 								</span>
 							</div>
 							<div class="m_b_10">
@@ -710,17 +916,27 @@
 	</div>
 
 	<!-- 18 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-18.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-18.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -729,7 +945,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20 fw_b">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> 2
+									<?php echo __d($po_name, 'タスク'); ?>
+									2
 								</span>
 							</div>
 							<div class="m_b_10">
@@ -752,17 +969,27 @@
 	</div>
 
 	<!-- 19 -->
-	<div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+	<div
+		class="webtext_page webtext_page_break no-padding native-background"
+		id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>"
+	>
 		<div class="v4--canvas-1">
 			<div class="card-img">
 				<div class="img-<?= $locale; ?>">
-					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-19.png">
+					<img src="%cdn_path%resources/speak_train_ielts_3/{{ index }}/{{ index }}-19.png" />
 				</div>
 				<div class="text-btn-con lang-scale">
 					<div class="card-text card-ex1 translation-btn-control">
 						<div class="space teacher_hide"></div>
-						<div class="trans-toggle text-off teacher_hide lang-translation display_no"><img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></div>
-						<p class="empty-paragraph"><img class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2" src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"></p>
+						<div class="trans-toggle text-off teacher_hide lang-translation display_no">
+							<img src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png" />
+						</div>
+						<p class="empty-paragraph">
+							<img
+								class="trans_btn_img_f_r lang-translation teacher_hide lang-hide-2"
+								src="%base_path%resources/native_phrase_basic_alt/icon/translate-btn-off.png"
+							/>
+						</p>
 						<div class="clearfix clear-after teacher_hide"></div>
 					</div>
 					<div class="clearfix teacher_hide"></div>
@@ -771,7 +998,8 @@
 							<div class="m_b_10">
 								<p class="clickToToggleTranslate fs_20 fw_b">Task 2</p>
 								<span class="lang-translation lang-locale lang-hide-2 fs_16 cc_grey">
-									<?php echo __d($po_name, 'タスク'); ?> 2
+									<?php echo __d($po_name, 'タスク'); ?>
+									2
 								</span>
 							</div>
 							<div class="m_b_10">
@@ -792,5 +1020,4 @@
 			</div>
 		</div>
 	</div>
-
 </article>

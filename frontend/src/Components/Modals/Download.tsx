@@ -1,5 +1,5 @@
 import { Fragment } from "react/jsx-runtime"
-import Button from "../Button"
+import Button from "../Widgets/Button"
 
 export default function Download() {
     return (

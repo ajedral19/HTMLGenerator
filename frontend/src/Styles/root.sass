@@ -1,4 +1,27 @@
+@use 'Varaibles' as var
 :root
+    --theme-background: #F4F4FB
+    --theme-field-background: #F4F4FB
+    --theme-field-text-color: #192745
+
+    --theme-text-color-default: #192745
+
+    --theme-text-color: #192745
+    --theme-text-color-cool: #148FFF
+    --theme-text-color-cool-accent: #45ADFF
+    --theme-text-color-mild: #50E3C2
+    --theme-text-color-mild-accent: #73FDE0
+    --theme-text-color-hot: #FD5436
+    --theme-text-color-hot-accent: #FD8975
+
+    --theme-color-cool: #148FFF
+    --theme-color-cool-accent: #45ADFF
+    --theme-color-mild: #50E3C2
+    --theme-color-mild-accent: #73FDE0
+    --theme-color-hot: #FD5436
+    --theme-color-hot-accent: #FD8975
+    // ---
+
     --bg-default: #ffffff
     --color-primary: #006EBD
     --color-primary-accent: #1634a0
@@ -9,7 +32,7 @@
 
     --brdr-radius: .4rem
 
-    --gap: 1.2em
+    --gap: #{var.$global-gap}#{var.$global-unit}
 
 [data-theme="light"]
     --bg-default: #ffffff
@@ -20,4 +43,22 @@
     --bg-default: #0d1117
     --text-default: #c9d1d9
     --text-default-faded: #f8f8f8
-    --panel-bg: #161b22
+    --panel-bg: #1e2c4b
+
+    // ---
+    --theme-background: #192745
+
+    --theme-text-color: #F4F4FB
+    --theme-text-color-cool: #45ADFF
+    --theme-text-color-cool-accent: #148FFF
+    --theme-text-color-mild: #73FDE0
+    --theme-text-color-mild-accent: #50E3C2
+    --theme-text-color-hot: #FD8975
+    --theme-text-color-hot-accent: #FD5436
+
+    --theme-color-cool: #45ADFF
+    --theme-color-cool-accent: #148FFF
+    --theme-color-mild: #73FDE0
+    --theme-color-mild-accent: #50E3C2
+    --theme-color-hot: #FD8975
+    --theme-color-hot-accent: #FD5436

@@ -2,17 +2,16 @@ GET http://localhost:9100/api/template/sheet-count?id=1RwTPIFQSaO6yrTR2g-auHENnr
 Content-Type: application/json
 ###
 
-GET http://localhost:9100/api/extract-sheet
+GET http://localhost:9100/api/extract?spreadsheet=https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0
 Content-Type: application/json
 # google-sheet: 1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs
-spreadsheet: https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0
 ###
 
-GET http://localhost:9100/api/templates
+GET http://localhost:9100/api/templates?page=2
 Content-Type: application/json
 ###
 
-GET http://localhost:9100/api/template/66ce9e2963a6dce7ac5e142a
+GET http://localhost:9100/api/template/66e1c6ee3c85af9c2f6c019d
 Content-Type: application/json
 ###
 
@@ -21,7 +20,7 @@ GET http://localhost:9100/api/template/66ce9e2963a6dce7ac5e142a/preview
 Content-Type: application/json
 ###
 
-GET http://localhost:9100/api/template/66ce9e2963a6dce7ac5e142a/screenshot
+GET http://localhost:9100/api/template/66e1c6ee3c85af9c2f6c019d/screenshot
 Content-Type: image/webp
 ###
 
@@ -47,3 +46,20 @@ Content-Type: application/json
     "template_id": "66ce9e2963a6dce7ac5e142a",
     "sheet_url": "https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0"
 }
+###
+
+GET http://localhost:9100/api/ai-test
+Content-Type: application/json
+###
+
+GET http://localhost:9100/api/test?id=123
+Content-Type: application/json
+###
+
+GET http://localhost:9100/html/66e6b321eee46e8b9ce59bb5/preview
+Content-Type: text/html
+###
+
+GET http://localhost:9100/api/templates/count
+Content-Type: application/json
+###

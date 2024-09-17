@@ -13,7 +13,7 @@ export default function SidePanel({ className }: { className: string }) {
                     <Link to="/templates/generate">Generate</Link>
                 </li>
                 <li className="item">
-                    <Link to="/">Playground</Link>
+                    <Link to="/templates/live-editor">Live Editor</Link>
                 </li>
             </ul>
         </div>
