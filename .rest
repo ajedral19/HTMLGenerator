@@ -7,7 +7,7 @@ Content-Type: application/json
 # google-sheet: 1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs
 ###
 
-GET http://localhost:9100/api/templates?page=2
+GET http://localhost:9100/api/templates?page=0
 Content-Type: application/json
 ###
 
@@ -61,5 +61,9 @@ Content-Type: text/html
 ###
 
 GET http://localhost:9100/api/templates/count
+Content-Type: application/json
+###
+
+GET http://localhost:9100/s3/
 Content-Type: application/json
 ###

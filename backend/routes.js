@@ -5,11 +5,13 @@ import { TemplateCount, TemplateGetOne, TemplatePreview, TemplateScreenshot } fr
 import { aiTest } from "./ai_test.js";
 import multer from "multer";
 import { HandlePreview } from "./controllers/Preview.js";
+import { handle_s3 } from "./controllers/S3.js";
 
 const upload = multer();
 
 const template_router = Router();
 const html_router = Router();
+const s3Router = Router();
 // router.get("/download/:id", DownloadFile);
 // working routes
 
@@ -27,9 +29,12 @@ template_router.get("/template/:id/preview", TemplatePreview); // use fetched da
 
 template_router.get("/ai-test", aiTest);
 
+s3Router.get("/", handle_s3);
+
 // html routes
 html_router.get("/:id/preview", HandlePreview);
 
 const TemplateRoutes = template_router;
 const HTMLRoutes = html_router;
-export { TemplateRoutes, HTMLRoutes };
+const S3Routes = s3Router;
+export { TemplateRoutes, HTMLRoutes, S3Routes };

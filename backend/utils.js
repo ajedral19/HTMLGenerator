@@ -168,20 +168,19 @@ export const extract_sheet = async (sheet_id, offset_start = 1, offset_end = 30)
 };
 
 /**
- * 
- * @param {string} url 
+ *
+ * @param {string} url
  * @returns string
  */
 export const get_sheet_id = (url) => {
     const regex = new RegExp("(/d/.*/)");
     const finds = regex.exec(url);
 
-    let id = url
+    let id = url;
 
-    if(finds)
-        id = finds[0].replace("/d/", "").replace("/", "")
-    
-    return id
+    if (finds) id = finds[0].replace("/d/", "").replace("/", "");
+
+    return id;
 };
 
 export const embed_css = () => {};
@@ -228,4 +227,9 @@ export const capture_template = async (html, cdn_uri = "__unknown_path__") => {
 // };
 export const template_uri = () => {
     return "http://localhost:9100/api/template";
+};
+
+export const get_offset = (y, x) => {
+    const z = y <= 1 ? 0 : y * x - 1;
+    return z;
 };

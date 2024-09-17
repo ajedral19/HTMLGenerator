@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import {TemplateRoutes, HTMLRoutes} from "./routes.js";
+import {TemplateRoutes, HTMLRoutes, S3Routes} from "./routes.js";
 
 import { Server } from "socket.io";
 import http from "http";
@@ -21,6 +21,7 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use("/api/", TemplateRoutes);
 app.use("/html/", HTMLRoutes);
+app.use("/s3/", S3Routes);
 
 app.use("/*", (req, res) => res.status(404).json({ message: "Oops! Page not found" }));
 

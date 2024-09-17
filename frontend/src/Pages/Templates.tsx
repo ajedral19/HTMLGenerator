@@ -22,16 +22,13 @@ export default function Templates() {
                         <Button text={isPending ? "Loading" : "Refresh"} name="refresh" type="button" variant="primary" onClick={() => MutateTemplate(page)} />
                     </div>
                 </div>
-
             </div>
             <div className="mt-1 templates col grow">
                 {
                     !isLoading || !isPending ?
                         templates?.rows.map((template: TemplateData, key: number) => (
                             <Fragment key={key}>
-
                                 <Card template={template} />
-
                             </Fragment>
                         )) : "loading..."
                 }
