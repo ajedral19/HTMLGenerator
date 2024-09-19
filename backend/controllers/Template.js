@@ -1,6 +1,6 @@
 import { AddTemplate, DeleteTemplate, GetAllTemplates, GetCount, GetScreenshot, GetTemplate, GetTemplatePreview } from "../Model.js";
 import { TemplatesFind } from "../models/templates.model.js";
-import { extract_sheet, get_sheet_id, response_handler, template_uri } from "../utils.js";
+import { extract_sheet, get_random_sheet, get_sheet_id, response_handler, template_uri } from "../utils.js";
 // import { CaptureHTML } from "../utils.js";
 
 export const TemplateAdd = async (req, res) => {
@@ -64,4 +64,14 @@ export const TemplateCount = async (req, res) => {
     console.log(count);
 
     return res.status(200).send("okay");
+};
+
+// dummy controller
+export const RandomSheet = async (req, res) => {
+    const spreadsheet = "https://docs.google.com/spreadsheets/d/1CgbIAfjgW-P8Z6te2KKiIBuUftAuwdxk9RBydm3TZr0/edit?gid=1945486897#gid=1945486897";
+    const sheet_id = get_sheet_id(spreadsheet);
+
+    const sheet = await get_random_sheet(sheet_id);
+
+    return res.status(200).json(sheet);
 };

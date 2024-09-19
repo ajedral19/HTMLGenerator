@@ -233,3 +233,43 @@ export const get_offset = (y, x) => {
     const z = y <= 1 ? 0 : y * x - 1;
     return z;
 };
+
+
+// dummy function
+export const get_random_sheet = async (sheet_id) => {
+    let response = {};
+    let result = [];
+    try {
+        const doc = new GoogleSpreadsheet(sheet_id, serviceAccountAuth);
+        await doc.loadInfo();
+        doc.sheetsApi();
+
+        const sheet_count = doc.sheetCount;
+        const target_indexes = [20, 22, 24, 26, 28, 30, 32, 34, 36, 38];
+
+        console.log(sheet_count, "printing");
+
+        for (let i = 1; i <= 30; i++) {
+            const sheet = doc.sheetsByTitle[i];
+            const rows = await sheet.getRows({ offset: 6 });
+            result = [];
+            rows.forEach((row, n) => {
+                if (target_indexes.indexOf(n) > -1) {
+                    const row_items = row._rawData;
+                    result.push([`phrase => ${row_items[2]}`, `phrase_jp => ${row_items[3]}`]);
+                }
+            });
+            response[i] = result;
+        }
+
+        return response;
+    } catch (err) {
+        console.error(err);
+        response = false;
+    } finally {
+        console.log("done executing");
+        // exucute the request timer here
+    }
+
+    return response;
+};

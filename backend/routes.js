@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet, SheetGetCount } from "./controllers/index.js";
 import { Generator } from "./controllers/Generate.js";
-import { TemplateCount, TemplateGetOne, TemplatePreview, TemplateScreenshot } from "./controllers/Template.js";
+import { RandomSheet, TemplateCount, TemplateGetOne, TemplatePreview, TemplateScreenshot } from "./controllers/Template.js";
 import { aiTest } from "./ai_test.js";
 import multer from "multer";
 import { HandlePreview } from "./controllers/Preview.js";
-import { handle_s3 } from "./controllers/S3.js";
+import { handle_s3, handle_s3_get } from "./controllers/S3Controller.js";
 
 const upload = multer();
 
@@ -23,6 +23,8 @@ template_router.get("/template/:template_id/screenshot", TemplateScreenshot);
 template_router.get("/template/:template_id/generate", Generator);
 template_router.delete("/template/:template_id", TemplateDelete);
 template_router.get("/extract", ExtractSheet);
+// dummy route
+template_router.get("/random-sheets", RandomSheet);
 
 template_router.get("/template/sheet-count", SheetGetCount);
 template_router.get("/template/:id/preview", TemplatePreview); // use fetched data instead
@@ -30,6 +32,7 @@ template_router.get("/template/:id/preview", TemplatePreview); // use fetched da
 template_router.get("/ai-test", aiTest);
 
 s3Router.get("/", handle_s3);
+s3Router.get("/get", handle_s3_get);
 
 // html routes
 html_router.get("/:id/preview", HandlePreview);

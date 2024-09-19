@@ -2,9 +2,13 @@ GET http://localhost:9100/api/template/sheet-count?id=1RwTPIFQSaO6yrTR2g-auHENnr
 Content-Type: application/json
 ###
 
-GET http://localhost:9100/api/extract?spreadsheet=https://docs.google.com/spreadsheets/d/1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs/edit?gid=0#gid=0
-Content-Type: application/json
+GET http://localhost:9100/api/random-sheets
+Content-Type: text/javascript
 # google-sheet: 1acVsraSP14boGIEes_FKXC489ZVoaZ04_uOJwbwXHXs
+###
+
+GET http://localhost:9100/api/extract
+Content-Type: application/json
 ###
 
 GET http://localhost:9100/api/templates?page=0
@@ -65,5 +69,9 @@ Content-Type: application/json
 ###
 
 GET http://localhost:9100/s3/
+Content-Type: application/json
+###
+
+GET http://localhost:9100/s3/get
 Content-Type: application/json
 ###

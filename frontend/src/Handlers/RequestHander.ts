@@ -22,7 +22,7 @@ export const DownloadFile = (id: string, filename: string) => {
 
 // generate textbook
 // migrated
-export const GenerateTexbook = (template_id: string, sheet_url: string) => {
+export const GenerateTexbook = (template_id: string, sheet_url: string, offset?: number) => {
 	const headers = {
 		// 'Content-Type': 'application/json',
 		Accept: "application/zip",
@@ -30,6 +30,7 @@ export const GenerateTexbook = (template_id: string, sheet_url: string) => {
 	const payload = {
 		template_id,
 		sheet_url,
+		offset
 	};
 
 	return api.post("/generate?offset=0", payload, { headers, responseType: "arraybuffer" });
