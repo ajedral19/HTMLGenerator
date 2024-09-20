@@ -17,6 +17,7 @@ export const TemplateAdd = async (req, res) => {
 export const TemplateDelete = async (req, res) => {
     const { template_id } = req.params;
     const template = await DeleteTemplate(template_id);
+    if (!template) return res.status(200).send("template not found");
     return res.status(200).json({ message: `template "${template.template_name}" has been deleted` });
 };
 
@@ -39,15 +40,17 @@ export const TemplateGetOne = async (req, res) => {
 
 export const TemplatePreview = async (req, res) => {
     const { id } = req.params;
-    const data = await GetTemplatePreview(id);
-    return response_handler(200, "", { row: data })(res);
+    const html = await GetTemplatePreview(id);
+    res.set("Content-Type", "text/html");
+    res.status(200).send(html);
+    // return response_handler(200, "", { row: data })(res);
 };
 
 export const ExtractSheet = async (req, res) => {
-    const { spreadsheet: google_sheet } = req.query;
+    const { spreadsheet: google_sheet, offset = 1, limit = 30 } = req.query;
 
     const sheet_id = get_sheet_id(google_sheet);
-    const data = await extract_sheet(sheet_id);
+    const data = await extract_sheet(sheet_id, offset, limit);
 
     return response_handler(200, "", { rows: data, rowCount: data.length })(res);
 };

@@ -44,7 +44,7 @@ export const archive_it = (html, data, n_start = 1) => {
         throw err;
     });
 
-    let chapter_n = 0;
+    let chapter_n = n_start + 1 || 0;
 
     if (typeof n_start == "number") {
         chapter_n = n_start;
@@ -73,9 +73,7 @@ export const archive_it = (html, data, n_start = 1) => {
 export const render_html = (template, data) => {
     if (!template || !data) return null;
     let html = "";
-
-    // Mustache.parse(template);
-
+    // Mustache.parse(template)
     // const document = Mustache.render(template, data);
     const document = Handlebars.compile(template);
     html = document(data);
@@ -108,7 +106,7 @@ export const buffer_to_string = (buffer, is_base64 = false) => {
  * @param {string} sheet_id
  * @returns Promise | null
  */
-export const extract_sheet = async (sheet_id, offset_start = 1, offset_end = 30) => {
+export const extract_sheet = async (sheet_id, offset_start = 1, offset_end = 10) => {
     let response = null;
     let result = [];
     try {
@@ -117,9 +115,11 @@ export const extract_sheet = async (sheet_id, offset_start = 1, offset_end = 30)
         doc.sheetsApi();
 
         const sheet_count = doc.sheetCount;
+        offset_end = parseInt(offset_end);
+        offset_start = parseInt(offset_start);
 
         const off_start = offset_start - 1;
-        const off_end = offset_end > sheet_count ? sheet_count : offset_end;
+        const off_end = offset_end < off_start ? off_start + offset_end : offset_end > sheet_count ? sheet_count : offset_end;
 
         for (let n = off_start; n < off_end; n++) {
             console.log("request:", n);
@@ -233,7 +233,6 @@ export const get_offset = (y, x) => {
     const z = y <= 1 ? 0 : y * x - 1;
     return z;
 };
-
 
 // dummy function
 export const get_random_sheet = async (sheet_id) => {

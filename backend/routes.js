@@ -15,19 +15,20 @@ const s3Router = Router();
 // router.get("/download/:id", DownloadFile);
 // working routes
 
-template_router.get("/templates", TemplteGetAll);
+template_router.get("/templates", TemplteGetAll); //okay
 template_router.get("/templates/count", TemplateCount);
-template_router.post("/template/add", upload.single("template"), TemplateAdd);
-template_router.get("/template/:template_id", TemplateGetOne);
+template_router.post("/template/add", upload.single("template"), TemplateAdd); //okay
+template_router.get("/template/:template_id", TemplateGetOne); //okay
 template_router.get("/template/:template_id/screenshot", TemplateScreenshot);
 template_router.get("/template/:template_id/generate", Generator);
-template_router.delete("/template/:template_id", TemplateDelete);
-template_router.get("/extract", ExtractSheet);
+template_router.delete("/template/:template_id", TemplateDelete); // okay
+
+template_router.get("/data/extract", ExtractSheet); //okay
+template_router.get("/data/sheet-count", SheetGetCount); // okay
 // dummy route
 template_router.get("/random-sheets", RandomSheet);
 
-template_router.get("/template/sheet-count", SheetGetCount);
-template_router.get("/template/:id/preview", TemplatePreview); // use fetched data instead
+template_router.get("/template/:id/preview", TemplatePreview); // oka
 
 template_router.get("/ai-test", aiTest);
 

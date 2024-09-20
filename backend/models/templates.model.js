@@ -17,14 +17,12 @@ export const TemplatesFind = async (page = 1, limit = 10) => {
         const rows = await HTMLGenerator.find({}).skip(offset).limit(limit);
 
         const data = rows.map((row) => {
-            const { id, template_name: name, template_preview: preview, template_data_url: sheet, template_screenshot: screenshot } = row;
-            const sample = Buffer.from(preview.buffer).toString("utf-8");
+            const { id, template_name: name, template_data_url: sheet } = row;
 
             return {
                 id,
                 name,
-                mockup: sample,
-                sheet
+                sheet,
             };
         });
 

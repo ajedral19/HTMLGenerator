@@ -24,14 +24,16 @@ export default function Generate() {
         const target = e.target as typeof e.target & {
             ["template-options"]: { value: string, dataset: { id: string } },
             ["document-id"]: { value: string },
+            offset?: { value?: number },
+            limit?: { value?: number }
         }
-        const { ["template-options"]: to, ["document-id"]: di } = target
+        const { ["template-options"]: to, ["document-id"]: di, offset, limit } = target
 
 
         if (to.dataset.id && di.value) {
             setErrMsg(false)
             setCaption("Fetching")
-            HTMLGenerate(to.dataset.id, di.value)
+            HTMLGenerate(to.dataset.id, di.value, offset?.value, limit?.value)
                 .then(res => {
                     if (res.data) {
                         const { headers } = res
@@ -63,7 +65,10 @@ export default function Generate() {
 
                             </div>
                             <div className="col col-2">
-                                <Input label="Start At" name="offset" id="offset" />
+                                <Input label="Offset" name="offset" id="offset" />
+                            </div>
+                            <div className="col col-2">
+                                <Input label="Limit" name="limit" id="limit" />
                             </div>
                         </div>
                         {/* <input type="range" min={1} max={} /> */}
