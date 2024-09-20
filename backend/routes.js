@@ -28,7 +28,7 @@ template_router.get("/data/sheet-count", SheetGetCount); // okay
 // dummy route
 template_router.get("/random-sheets", RandomSheet);
 
-template_router.get("/template/:id/preview", TemplatePreview); // oka
+template_router.get("/template/:id/preview", TemplatePreview); // okay
 
 template_router.get("/ai-test", aiTest);
 
