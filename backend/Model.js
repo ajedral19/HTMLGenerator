@@ -1,8 +1,8 @@
+import { Extract } from "./models/spreadsheet.model.js";
 import { HTMLGenerator } from "./Schema/index.js";
 import {
 	buffer_to_string,
 	capture_template,
-	extract_sheet,
 	get_sheet_id,
 	render_html,
 	response_handler,
@@ -15,7 +15,7 @@ export const AddTemplate = async (template_name, template, sheet_url, cdn_uri) =
 		// const template_html = buffer_to_string(template_file, true);
 		const template_file = template;
 		const document_id = get_sheet_id(sheet_url);
-		const document_data = await extract_sheet(document_id, 1, 1);
+		const document_data = await Extract(document_id, 1, 1);
 		const html_buffer = Buffer.from(template_file.buffer);
 		const template_html = html_buffer.toString("utf-8");
 
@@ -132,7 +132,7 @@ export const GetScreenshot = async (id = null, buffer = null) => {
 		const template = await HTMLGenerator.findOne({ _id: id }, "template_screenshot");
 		img = template?.template_screenshot;
 	}
-    // handle error
+	// handle error
 	return img;
 };
 

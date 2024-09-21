@@ -1,59 +1,97 @@
+import { GetCount } from "../Model.js";
 import {
-	AddTemplate,
-	DeleteTemplate,
-	GetAllTemplates,
-	GetCount,
-	GetScreenshot,
-	GetTemplate,
-	GetTemplatePreview,
-} from "../Model.js";
-import { TemplatesFind } from "../models/templates.model.js";
-import { extract_sheet, get_random_sheet, get_sheet_id, response_handler, template_uri } from "../utils.js";
+	TemplateDeleteOne,
+	TemplatePreview,
+	TemplatesAddOne,
+	TemplateScreenshot,
+	TemplatesFind,
+	TemplatesFindOne,
+} from "../models/templates.model.js";
+import { get_random_sheet, get_sheet_id, response_handler, template_uri } from "../utils.js";
+import { Extract, SheetCount } from "../models/spreadsheet.model.js";
 // import { CaptureHTML } from "../utils.js";
 
+// <okay>
 export const TemplateAdd = async (req, res) => {
 	const formData = req.body;
 	const template = req.file;
 	const { name, sheet, cdn } = formData;
 
 	if (!name || !template || !sheet || !cdn) return res.status(404).json({ message: "cannot proceed to register" });
+	const payload = { name, template, sheet, cdn };
+	const new_template = await TemplatesAddOne(payload);
 
-	const stored_template = await AddTemplate(name, template, sheet, cdn);
-	return res.status(201).json({ message: "register", data: stored_template });
+	if (new_template.error) {
+		const { error, message, status } = new_template;
+		return response_handler(status, null, { error, message })(res);
+	}
+	return response_handler(200, null, {
+		id: new_template.id,
+		name: new_template.name,
+		sheet: new_template.sheet,
+		cdn: new_template.cdn,
+	})(res);
 };
 
 export const TemplateDelete = async (req, res) => {
 	const { template_id } = req.params;
-	const template = await DeleteTemplate(template_id);
-	if (!template) return res.status(200).send("template not found");
-	return res.status(200).json({ message: `template "${template.template_name}" has been deleted` });
+	const template = await TemplateDeleteOne(template_id);
+
+	if (template.error) {
+		const { error, message, status } = template;
+		return response_handler(status, null, { error, message })(res);
+	}
+
+	return response_handler(202, null, { message: "deleted", template })(res);
+	// return should be 204 - no content
 };
 
+// <okay>
 export const TemplteGetAll = async (req, res) => {
 	const { page = 0 } = req.query;
-	// const data = await GetAllTemplates(parseInt(page));
-	const { success, rows, error = undefined, code: status_code = undefined } = await TemplatesFind(page);
+	const templates = await TemplatesFind(page);
 
-	if (success) return response_handler(200, "", { rows, rowCount: 0 })(res);
+	if (templates.error) {
+		const { error, message, status } = templates;
+		return response_handler(status, null, { error, message })(res);
+	}
 
-	return response_handler(status_code, "", { error })(res);
+	response_handler(200, null, { rows: templates.rows, rowCount: templates.rows.length })(res);
 };
 
+// <okay>
 export const TemplateGetOne = async (req, res) => {
 	const { template_id } = req.params;
-	const data = await GetTemplate(template_id);
+	const template = await TemplatesFindOne(template_id);
 
-	return response_handler(200, "", { row: data })(res);
+	if (template.error) {
+		const { error, message, status } = template;
+		return response_handler(status, null, { error, message })(res);
+	}
+
+	response_handler(200, null, { rows: template.rows, rowCount: template.rows.length })(res);
 };
 
-export const TemplatePreview = async (req, res) => {
+// <okay>
+export const TemplateGetPreview = async (req, res) => {
 	const { id } = req.params;
-	const { html, status } = await GetTemplatePreview(id);
-	res.set("Content-Type", "text/html");
-	res.status(status).send(html);
+	const preview = await TemplatePreview(id);
+
+	if (preview.error) {
+		const { error, status, message } = preview;
+		res.setHeader("Content-Type", "application/json");
+		return response_handler(status, null, { error, message })(res);
+	}
+
+	res.set({
+		"Content-Type": "text/html",
+		"Content-Disposition": `inline;filename=${preview.name}.html`,
+	});
+	return res.status(200).send(preview.html);
 	// return response_handler(200, "", { row: data })(res);
 };
 
+// <okay>
 export const ExtractSheet = async (req, res) => {
 	const { spreadsheet: google_sheet } = req.query;
 	let { offset, limit } = req.query;
@@ -62,19 +100,47 @@ export const ExtractSheet = async (req, res) => {
 	if (limit) limit = parseInt(limit);
 
 	const sheet_id = get_sheet_id(google_sheet);
-	const data = await extract_sheet(sheet_id, offset, limit);
+	const sheet = await Extract(sheet_id, offset, limit);
 
-	return response_handler(200, "", { rows: data, rowCount: data.length })(res);
+	if (sheet.error) {
+		const { error, status, message } = sheet;
+		return response_handler(status, null, { error, message })(res);
+	}
+
+	return response_handler(200, null, { rows: sheet.rows, rowCount: sheet.rowCount })(res);
 };
 
-export const TemplateScreenshot = async (req, res) => {
-	const { template_id } = req.params;
-	try {
-		const data = await GetScreenshot(template_id);
-		return res.status(200).setHeader("content-type", "image/webp").send(data);
-	} catch (err) {
-		return res.status(500).setHeader("content-type", "application/json").send([err.name, err.message]);
+// <okay>
+export const CountSheets = async (req, res) => {
+	const { spreadsheet: google_sheet } = req.query;
+	const sheet_id = get_sheet_id(google_sheet);
+	const sheet = await SheetCount(sheet_id);
+
+	if (sheet.error) {
+		const { error, status, message } = sheet;
+		return response_handler(status, null, { error, message })(res);
 	}
+
+	return response_handler(200, null, { sheetsCount: sheet.count })(res);
+};
+
+// <okay>
+export const TemplateGetScreenshot = async (req, res) => {
+	const { template_id } = req.params;
+	const screenshot = await TemplateScreenshot(template_id);
+
+	if (screenshot.error) {
+		const { error, status, message } = screenshot;
+		res.setHeader("Content-Type", "application/json");
+		return response_handler(status, null, { error, message })(res);
+	}
+
+	res.set({
+		"Content-Type": "image/webp",
+		"Content-Disposition": `inline;filename=${screenshot.name}.webp`,
+	});
+
+	return res.status(200).send(screenshot.image);
 };
 // generate screenshot
 

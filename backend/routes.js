@@ -1,7 +1,14 @@
 import { Router } from "express";
-import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet, SheetGetCount } from "./controllers/index.js";
+import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
 import { Generator } from "./controllers/Generate.js";
-import { RandomSheet, TemplateCount, TemplateGetOne, TemplatePreview, TemplateScreenshot } from "./controllers/Template.js";
+import {
+	CountSheets,
+	RandomSheet,
+	TemplateCount,
+	TemplateGetOne,
+	TemplateGetPreview,
+	TemplateGetScreenshot,
+} from "./controllers/Template.js";
 import { aiTest } from "./ai_test.js";
 import multer from "multer";
 import { HandlePreview } from "./controllers/Preview.js";
@@ -15,20 +22,21 @@ const s3Router = Router();
 // router.get("/download/:id", DownloadFile);
 // working routes
 
-template_router.get("/templates", TemplteGetAll); //okay
-template_router.get("/templates/count", TemplateCount);
-template_router.post("/template/add", upload.single("template"), TemplateAdd); //okay
-template_router.get("/template/:template_id", TemplateGetOne); //okay
-template_router.get("/template/:template_id/screenshot", TemplateScreenshot);
-template_router.get("/template/:template_id/generate", Generator);
-template_router.delete("/template/:template_id", TemplateDelete); // okay
+template_router.get("/templates", TemplteGetAll); //okay - 1
+template_router.get("/template/:id/preview", TemplateGetPreview); // okay - 1
+template_router.get("/template/:template_id/screenshot", TemplateGetScreenshot); // okay - 1
+template_router.get("/template/:template_id", TemplateGetOne); //okay - 1
+template_router.post("/template/add", upload.single("template"), TemplateAdd); //okay - 1
+template_router.delete("/template/:template_id", TemplateDelete); // okay - 1
 
-template_router.get("/data/extract", ExtractSheet); //okay
-template_router.get("/data/sheet-count", SheetGetCount); // okay
+template_router.get("/template/:template_id/generate", Generator);
+template_router.get("/templates/count", TemplateCount);
+
+template_router.get("/data/extract", ExtractSheet); //okay - 1
+template_router.get("/data/sheet-count", CountSheets); // okay - 1
+
 // dummy route
 template_router.get("/random-sheets", RandomSheet);
-
-template_router.get("/template/:id/preview", TemplatePreview); // okay
 
 template_router.get("/ai-test", aiTest);
 

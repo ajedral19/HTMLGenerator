@@ -12,12 +12,12 @@ import { serviceAccountAuth } from "./config.js";
 
 // console.log(serviceAccountAuth);
 export const response_handler =
-	(status, message, data = null) =>
+	(status, message = null, data = null) =>
 	(res) => {
 		return res.status(status).json({
 			status,
-			message,
-			...data,
+			message: message || undefined,
+			...(data || undefined),
 		});
 	};
 
@@ -68,16 +68,17 @@ export const archive_it = (html, data, n_start = 1) => {
  *
  * @param {string} template
  * @param {object} data
+ * @param {string} cdn
  * @returns HTML || null
  */
-export const render_html = (template, data) => {
+export const render_html = (template, data, cdn) => {
 	if (!template || !data) return null;
 	let html = "";
 	// Mustache.parse(template)
 	// const document = Mustache.render(template, data);
 	const document = Handlebars.compile(template);
 	html = document(data);
-	html = html.replaceAll(/\%.*_path%/g, "https://nativecamp-public-web-production.s3-ap-northeast-1.amazonaws.com/");
+	html = html.replaceAll(/\%.*_path%/g, cdn);
 
 	// html = document;
 
@@ -101,96 +102,11 @@ export const buffer_to_string = (buffer, is_base64 = false) => {
 	return decoded_html;
 };
 
-/**
- *
- * @param {string} sheet_id
- * @returns Promise | null
- */
-export const extract_sheet = async (sheet_id, offset = 1, limit = 10) => {
-	if (!offset || typeof offset !== "number" || offset <= 0) offset = 1;
-	if (!limit || typeof limit !== "number" || limit <= 0) limit = 10;
-
-	let response = null;
-
-	try {
-		const doc = new GoogleSpreadsheet(sheet_id, serviceAccountAuth);
-		await doc.loadInfo();
-		doc.sheetsApi();
-		const sheet_count = doc.sheetCount;
-
-		if (offset > sheet_count) offset = sheet_count;
-
-		let result = [];
-		let index = offset - 1;
-		for (let m = 1; m <= limit; m++) {
-			console.log("item number: ", m, "request index: ", index, "printing");
-
-			const sheet = doc.sheetsByIndex[index];
-			const rows = await sheet.getRows({ offset: 0 });
-			let content = { index: index + 1 };
-			let prev_key = "";
-			rows.forEach((row, n, arr) => {
-				let values = row._rawData;
-				let key = values.shift();
-				let eng, jp, props;
-				prev_key = !key.includes("_jp") ? key : prev_key;
-
-				if (key.includes("_jp")) {
-					let prev_values = arr[n - 1]._rawData;
-					if (values.length > 1 && prev_values.length > 1) {
-						props = [];
-						eng = prev_values;
-						jp = values;
-
-						eng.forEach((item, o) => {
-							props = [...props, { eng: item, jp: jp[o] }];
-						});
-					} else {
-						jp = values.toString();
-						eng = prev_values.toString();
-						props = { eng, jp };
-					}
-				}
-				content[prev_key] = props;
-			});
-
-			result = [...result, content];
-			response = result;
-			index += 1;
-			if (index >= sheet_count) break;
-		}
-	} catch (err) {
-		console.error(err.message);
-		response = false;
-	} finally {
-		console.log("done executing");
-		// exucute the request timer here
-	}
-
-	return response;
-};
-
-/**
- *
- * @param {string} url
- * @returns string
- */
-export const get_sheet_id = (url) => {
-	const regex = new RegExp("(/d/.*/)");
-	const finds = regex.exec(url);
-
-	let id = url;
-
-	if (finds) id = finds[0].replace("/d/", "").replace("/", "");
-
-	return id;
-};
-
 export const embed_css = () => {};
 
-export const capture_template = async (html, cdn_uri = "__unknown_path__") => {
+export const capture_template = async (html, cdn = "__unknown_path__") => {
 	if (!html) return null;
-	html = html.replaceAll(/\%.*_path%/g, cdn_uri);
+	// html = html.replaceAll(/\%.*_path%/g, cdn);
 	try {
 		const browser = await puppeteer.launch({
 			headless: "new",
@@ -274,4 +190,32 @@ export const get_random_sheet = async (sheet_id) => {
 	}
 
 	return response;
+};
+
+/**
+ *
+ * @param {string} url
+ * @returns string
+ */
+export const get_sheet_id = (url) => {
+	const regex = new RegExp("(/d/.*/)");
+	const finds = regex.exec(url);
+
+	let id = url;
+
+	if (finds) id = finds[0].replace("/d/", "").replace("/", "");
+
+	return id;
+};
+
+export const handle_error = (err) => {
+	let err_name = err.name;
+	let err_msg = err.message;
+	let err_status = 500;
+
+	return {
+		status: err_status || undefined,
+		message: err_msg || undefined,
+		error: err_name || undefined,
+	};
 };
