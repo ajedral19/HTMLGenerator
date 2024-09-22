@@ -5,7 +5,7 @@ import Handlebars from "handlebars";
 import { HTMLGenerator } from "../Schema/index.js";
 import archiver from "archiver";
 import { archive_it, buffer_to_string, get_sheet_id } from "../utils.js";
-import { Extract } from "../models/spreadsheet.model.js";
+import { Extract } from "../models/model.spreadsheet.js";
 
 // import credentials from "../html-generator-422807-694910701fb2.json" with { type: "json" };
 

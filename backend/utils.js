@@ -71,14 +71,18 @@ export const archive_it = (html, data, n_start = 1) => {
  * @param {string} cdn
  * @returns HTML || null
  */
-export const render_html = (template, data, cdn) => {
+export const render_html = (template, data, cdn = null) => {
+	console.log(data);
+
 	if (!template || !data) return null;
+	console.log("got into here 2");
+
 	let html = "";
 	// Mustache.parse(template)
 	// const document = Mustache.render(template, data);
 	const document = Handlebars.compile(template);
 	html = document(data);
-	html = html.replaceAll(/\%.*_path%/g, cdn);
+	html = cdn ? html.replaceAll(/\%.*_path%/g, cdn) : html;
 
 	// html = document;
 

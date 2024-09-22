@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
-import { Generator } from "./controllers/Generate.js";
+
 import {
 	CountSheets,
 	RandomSheet,
 	TemplateCount,
+	TemplateGenerate,
 	TemplateGetOne,
 	TemplateGetPreview,
 	TemplateGetScreenshot,
@@ -29,7 +30,7 @@ template_router.get("/template/:template_id", TemplateGetOne); //okay - 1
 template_router.post("/template/add", upload.single("template"), TemplateAdd); //okay - 1
 template_router.delete("/template/:template_id", TemplateDelete); // okay - 1
 
-template_router.get("/template/:template_id/generate", Generator);
+template_router.get("/template/:template_id/generate", TemplateGenerate);
 template_router.get("/templates/count", TemplateCount);
 
 template_router.get("/data/extract", ExtractSheet); //okay - 1

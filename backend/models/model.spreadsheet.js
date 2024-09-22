@@ -1,5 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { serviceAccountAuth } from "../config.js";
+import { handle_error } from "../utils.js";
 
 /**
  * @param {string} spreadsheet - Spreadsheet URL or ID
@@ -8,8 +9,8 @@ import { serviceAccountAuth } from "../config.js";
  * @returns Promise | null
  */
 export const Extract = async (spreadsheet, offset = 1, limit = 10) => {
-	if (!offset || typeof offset !== "number" || offset <= 0) offset = 1;
-	if (!limit || typeof limit !== "number" || limit <= 0) limit = 10;
+	if (isNaN(offset) || offset <= 0) offset = 1;
+	if (isNaN(limit) || limit <= 0) limit = 10;
 
 	let response = null;
 

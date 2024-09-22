@@ -6,9 +6,10 @@ import {
 	TemplateScreenshot,
 	TemplatesFind,
 	TemplatesFindOne,
-} from "../models/templates.model.js";
+} from "../models/model.templates.js";
 import { get_random_sheet, get_sheet_id, response_handler, template_uri } from "../utils.js";
-import { Extract, SheetCount } from "../models/spreadsheet.model.js";
+import { Extract, SheetCount } from "../models/model.spreadsheet.js";
+import { Generate } from "../models/model.generate.js";
 // import { CaptureHTML } from "../utils.js";
 
 // <okay>
@@ -42,7 +43,7 @@ export const TemplateDelete = async (req, res) => {
 		return response_handler(status, null, { error, message })(res);
 	}
 
-	return response_handler(202, null, { message: "deleted", template })(res);
+	return response_handler(204, null, null)(res);
 	// return should be 204 - no content
 };
 
@@ -160,4 +161,19 @@ export const RandomSheet = async (req, res) => {
 	const sheet = await get_random_sheet(sheet_id);
 
 	return res.status(200).json(sheet);
+};
+
+export const TemplateGenerate = async (req, res) => {
+	let { offset, limit, spreadsheet } = req.query;
+	const { template_id } = req.params;
+	offset = isNaN(offset) ? 1 : parseInt(offset);
+	limit = isNaN(limit) ? 10 : parseInt(limit);
+	const { name, archive } = await Generate(template_id, spreadsheet, offset, limit);
+
+	res.writeHead(200, {
+		"Content-Type": "application/zip",
+		"Content-Disposition": "attachment;" + name + ".zip",
+	});
+
+	archive.pipe(res);
 };

@@ -1,6 +1,6 @@
 import { HTMLGenerator } from "../Schema/index.js";
 import { capture_template, get_offset, get_sheet_id, handle_error, render_html } from "../utils.js";
-import { Extract } from "./spreadsheet.model.js";
+import { Extract } from "./model.spreadsheet.js";
 
 /**
  *

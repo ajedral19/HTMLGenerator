@@ -1,4 +1,4 @@
-import { Extract } from "./models/spreadsheet.model.js";
+import { Extract } from "./models/model.spreadsheet.js";
 import { HTMLGenerator } from "./Schema/index.js";
 import {
 	buffer_to_string,
