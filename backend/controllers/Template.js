@@ -50,7 +50,7 @@ export const TemplateDelete = async (req, res) => {
 // <okay>
 export const TemplteGetAll = async (req, res) => {
 	const { page = 0 } = req.query;
-	const templates = await TemplatesFind(page, 4);
+	const templates = await TemplatesFind(parseInt(page), 4);
 
 	if (templates?.error) {
 		const { error, message, status } = templates;

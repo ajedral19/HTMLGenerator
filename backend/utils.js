@@ -144,8 +144,9 @@ export const template_uri = () => {
 	return "http://localhost:9100/api/template";
 };
 
-export const get_offset = (y, x) => {
-	const z = y <= 1 ? 0 : y * x - 1;
+export const get_offset = (x, y) => {
+	// const z = y <= 1 ? 0 : y * x - 1;
+	const z = y * x - y;
 	return z;
 };
 
