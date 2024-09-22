@@ -22,7 +22,7 @@ export const TemplateAdd = async (req, res) => {
 	const payload = { name, template, sheet, cdn };
 	const new_template = await TemplatesAddOne(payload);
 
-	if (new_template.error) {
+	if (new_template?.error) {
 		const { error, message, status } = new_template;
 		return response_handler(status, null, { error, message })(res);
 	}
@@ -38,7 +38,7 @@ export const TemplateDelete = async (req, res) => {
 	const { template_id } = req.params;
 	const template = await TemplateDeleteOne(template_id);
 
-	if (template.error) {
+	if (template?.error) {
 		const { error, message, status } = template;
 		return response_handler(status, null, { error, message })(res);
 	}
@@ -50,9 +50,9 @@ export const TemplateDelete = async (req, res) => {
 // <okay>
 export const TemplteGetAll = async (req, res) => {
 	const { page = 0 } = req.query;
-	const templates = await TemplatesFind(page);
+	const templates = await TemplatesFind(page, 4);
 
-	if (templates.error) {
+	if (templates?.error) {
 		const { error, message, status } = templates;
 		return response_handler(status, null, { error, message })(res);
 	}
@@ -65,7 +65,7 @@ export const TemplateGetOne = async (req, res) => {
 	const { template_id } = req.params;
 	const template = await TemplatesFindOne(template_id);
 
-	if (template.error) {
+	if (template?.error) {
 		const { error, message, status } = template;
 		return response_handler(status, null, { error, message })(res);
 	}
@@ -78,7 +78,7 @@ export const TemplateGetPreview = async (req, res) => {
 	const { id } = req.params;
 	const preview = await TemplatePreview(id);
 
-	if (preview.error) {
+	if (preview?.error) {
 		const { error, status, message } = preview;
 		res.setHeader("Content-Type", "application/json");
 		return response_handler(status, null, { error, message })(res);
@@ -97,13 +97,13 @@ export const ExtractSheet = async (req, res) => {
 	const { spreadsheet: google_sheet } = req.query;
 	let { offset, limit } = req.query;
 
-	if (offset) offset = parseInt(offset);
-	if (limit) limit = parseInt(limit);
+	offset = isNaN(offset) ? 1 : parseInt(offset);
+	limit = isNaN(limit) ? 1 : parseInt(limit);
 
 	const sheet_id = get_sheet_id(google_sheet);
 	const sheet = await Extract(sheet_id, offset, limit);
 
-	if (sheet.error) {
+	if (sheet?.error) {
 		const { error, status, message } = sheet;
 		return response_handler(status, null, { error, message })(res);
 	}
@@ -117,7 +117,7 @@ export const CountSheets = async (req, res) => {
 	const sheet_id = get_sheet_id(google_sheet);
 	const sheet = await SheetCount(sheet_id);
 
-	if (sheet.error) {
+	if (sheet?.error) {
 		const { error, status, message } = sheet;
 		return response_handler(status, null, { error, message })(res);
 	}
@@ -130,7 +130,7 @@ export const TemplateGetScreenshot = async (req, res) => {
 	const { template_id } = req.params;
 	const screenshot = await TemplateScreenshot(template_id);
 
-	if (screenshot.error) {
+	if (screenshot?.error) {
 		const { error, status, message } = screenshot;
 		res.setHeader("Content-Type", "application/json");
 		return response_handler(status, null, { error, message })(res);
@@ -168,7 +168,14 @@ export const TemplateGenerate = async (req, res) => {
 	const { template_id } = req.params;
 	offset = isNaN(offset) ? 1 : parseInt(offset);
 	limit = isNaN(limit) ? 10 : parseInt(limit);
-	const { name, archive } = await Generate(template_id, spreadsheet, offset, limit);
+	const generate = await Generate(template_id, spreadsheet, offset, limit);
+
+	if (generate.error) {
+		const { error, status, message } = generate;
+		return response_handler(status, null, { error, message })(res);
+	}
+
+	const { name, archive } = generate;
 
 	res.writeHead(200, {
 		"Content-Type": "application/zip",

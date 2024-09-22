@@ -5,34 +5,38 @@ import { Extract } from "./model.spreadsheet.js";
 
 export const Generate = async (template_id, spreadsheet, offset, limit) => {
 	spreadsheet = get_sheet_id(spreadsheet);
-	const data = await Promise.all([
-		HTMLGenerator.findOne({ _id: template_id }, "template_file template_name"),
-		Extract(spreadsheet, offset, limit),
-	])
-		.then((values) => values)
-		.catch((err) => {
-			handle_error(err);
-		});
+	try {
+		const data = await Promise.all([
+			HTMLGenerator.findOne({ _id: template_id }, "template_file template_name"),
+			Extract(spreadsheet, offset, limit),
+		])
+			.then((values) => values)
+			.catch((err) => {
+				return handle_error(err);
+			});
 
-	const [template, contents] = data;
+		const [template, contents] = data;
 
-	if (!template) return null;
-	if (contents.error) return contents;
+		// if (!template) return null;
+		if (contents.error) return contents;
 
-	const archive = new Archive();
-	const { rows } = contents;
+		const archive = new Archive();
+		const { rows } = contents;
 
-	const buffer = Buffer.from(template.template_file.buffer);
-	const html = buffer.toString("utf-8");
-	let index = offset || 1;
+		const buffer = Buffer.from(template.template_file.buffer);
+		const html = buffer.toString("utf-8");
+		let index = offset || 1;
 
-	for (let n = 1; n <= rows.length; n++) {
-		const render = render_html(html, rows[n - 1]);
+		for (let n = 1; n <= rows.length; n++) {
+			const render = render_html(html, rows[n - 1]);
 
-		archive.append(render, `${index}.html`);
+			archive.append(render, `${index}.html`);
 
-		index += 1;
+			index += 1;
+		}
+
+		return { name: template.template_name, archive: archive.finalize() };
+	} catch (err) {
+		return handle_error(err);
 	}
-
-	return { name: template.template_name, archive: archive.finalize() };
 };

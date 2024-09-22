@@ -72,19 +72,11 @@ export const archive_it = (html, data, n_start = 1) => {
  * @returns HTML || null
  */
 export const render_html = (template, data, cdn = null) => {
-	console.log(data);
-
 	if (!template || !data) return null;
-	console.log("got into here 2");
-
 	let html = "";
-	// Mustache.parse(template)
-	// const document = Mustache.render(template, data);
 	const document = Handlebars.compile(template);
 	html = document(data);
 	html = cdn ? html.replaceAll(/\%.*_path%/g, cdn) : html;
-
-	// html = document;
 
 	return decodeURIComponent(escape(html));
 };
