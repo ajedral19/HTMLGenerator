@@ -5,3 +5,8 @@
 */node_modules
 **-lock.json
 credentials
+
+*/.venv
+*/__pycache__
+# /instance/
+# /.webassets-cache
