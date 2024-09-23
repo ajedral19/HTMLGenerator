@@ -14,7 +14,7 @@ export const S3Put = async (file, path = "stylesheets") => {
 	const { url } = data;
 
 	if (url)
-		await axios.put(url, file, { headers: { "Content-Type": type, "Content-Disposition": "inline;filename=" + type } });
+		await axios.put(url, file, { headers: { "Content-Type": type, "Content-Disposition": "inline;filename=" + name } });
 	// const { url } = await s3.put("/upload", payload, { headers });
 
 	// s3.put("/upload", payload, { headers })
