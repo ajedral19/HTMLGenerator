@@ -1,10 +1,16 @@
 import { Router } from "express";
 import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
 
-import { CountSheets, TemplateGenerate, TemplateGetOne, TemplateGetPreview, TemplateGetScreenshot } from "./controllers/Template.js";
+import {
+	CountSheets,
+	TemplateGenerate,
+	TemplateGetOne,
+	TemplateGetPreview,
+	TemplateGetScreenshot,
+} from "./controllers/Template.js";
 import { aiTest } from "./ai_test.js";
 import multer from "multer";
-import { handle_s3_v2 } from "./controllers/S3Controller.js";
+import { get_s3_objects, handle_s3_v2 } from "./controllers/S3Controller.js";
 
 const upload = multer();
 
@@ -28,7 +34,8 @@ template_router.get("/data/sheet-count", CountSheets); // okay - 1
 
 template_router.get("/ai-test", aiTest);
 // s3Router.get("/", handle_s3);
-s3Router.put("/upload", upload.single("file"), handle_s3_v2);
+s3Router.get("/get-secure-url", handle_s3_v2);
+s3Router.get("/get-contents", get_s3_objects);
 
 const TemplateRoutes = template_router;
 const S3Routes = s3Router;

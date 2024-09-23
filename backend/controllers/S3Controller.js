@@ -6,24 +6,25 @@ const randomBytes = promisify(crypto.randomBytes);
 const bucketName = "learning-s3-bucket-v2";
 
 export const handle_s3_v2 = async (req, res) => {
-    const { filename } = req.body;
-    const file = req.file;
+	const { path, filename } = req.query;
 
-    // const { filename } = formData;
-    // const filename = "some_stylesheet.css";
-    // const file = req.file;
+	const params = {
+		Bucket: bucketName,
+		Key: path ? `${path}/${filename}` : filename,
+		Expires: 60,
+	};
 
-    const params = {
-        Bucket: bucketName,
-        Key: filename,
-        Expires: 60,
-    };
-    
-    const url = await s3.getSignedUrlPromise("putObject", params);
-    
-    return res.send(url);
+	const uploadurl = await s3.getSignedUrlPromise("putObject", params);
+	return res.send({ url: uploadurl });
+};
 
-    return res.send("nothing happened");
+export const get_s3_objects = async (req, res) => {
+	await s3
+		.listObjects({ Bucket: bucketName })
+		.promise()
+		.then((data) => console.log(data.Contents));
+
+	return res.send("okay");
 };
 
 // export const handle_s3 = async (req, res) => {

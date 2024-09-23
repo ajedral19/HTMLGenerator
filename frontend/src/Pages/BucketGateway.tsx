@@ -23,7 +23,7 @@ export default function BucketGateway() {
     return <Fragment>
         <h1>S3 bucket</h1>
         <form onSubmit={handleSubmit}>
-            <FileUpload name="field_file" accept="text/css" />
+            <FileUpload name="field_file" accept="text/css;text/sass;text/scss" />
             <Button type="submit" text="Upload" />
         </form>
     </Fragment>
