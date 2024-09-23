@@ -19,12 +19,12 @@ export const handle_s3_v2 = async (req, res) => {
 };
 
 export const get_s3_objects = async (req, res) => {
-	await s3
+	const contents = await s3
 		.listObjects({ Bucket: bucketName })
 		.promise()
-		.then((data) => console.log(data.Contents));
+		.then((data) => data.Contents);
 
-	return res.send("okay");
+	return res.json({ contents });
 };
 
 // export const handle_s3 = async (req, res) => {
