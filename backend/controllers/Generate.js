@@ -4,7 +4,8 @@ import { fileURLToPath } from "url";
 import Handlebars from "handlebars";
 import { HTMLGenerator } from "../Schema/index.js";
 import archiver from "archiver";
-import { archive_it, buffer_to_string, extract_sheet, get_sheet_id } from "../utils.js";
+import { archive_it, buffer_to_string, get_sheet_id } from "../utils.js";
+import { Extract } from "../models/model.spreadsheet.js";
 
 // import credentials from "../html-generator-422807-694910701fb2.json" with { type: "json" };
 
@@ -140,12 +141,11 @@ export const GenerateHTML = async (template, data) => {
 // new generator
 export const Generator = async (req, res) => {
 	const { template_id } = req.params;
-	const { spreadsheet } = req.query;
+	const { spreadsheet, offset = 1, limit = 10 } = req.query;
+
 	const sheet_id = get_sheet_id(spreadsheet);
 
 	try {
-		const sheetData = await extract_sheet(sheet_id, 1, 10);
-
 		// console.log(sheet_id);
 		// return
 
@@ -154,10 +154,19 @@ export const Generator = async (req, res) => {
 		// return
 		// const id = new ObjectId
 		const template = await HTMLGenerator.findOne({ _id: template_id }, "template_file template_name");
+
+		if (!template) return res.status(500).send("template not found");
 		const { template_file: file, template_name: name } = template;
 		const { buffer } = file;
 		let html_template = Buffer.from(buffer);
 		html_template = html_template.toString("utf-8");
+
+		const loop_start = parseInt(offset);
+		const loop_count = parseInt(limit);
+
+		// return res.status(200).json([loop_start, loop_count]);
+
+		const sheetData = await Extract(sheet_id, loop_start, loop_count);
 
 		// console.log(template)
 		// const template = await HTMLGenerator.findById(template_id, "template_html");
@@ -170,7 +179,7 @@ export const Generator = async (req, res) => {
 
 		if (!sheetData) return res.status(500).send("oops! got some error");
 
-		const archive = archive_it(html_template, sheetData, 1);
+		const archive = archive_it(html_template, sheetData, loop_start);
 
 		res.writeHead(200, {
 			"Content-Type": "application/zip",

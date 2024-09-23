@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify'
 import Input from '../Components/Form/Input';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import useExtract from '../Hooks/useExtract';
-import Button from '../Components/Widgets/Button';
+import { Button } from '../Components/Widgets';
 export default function LiveEditor() {
     const [html, setHtml] = useState<string>("<h1>hello</h1>")
     const [url, setUrl] = useState<string>("")

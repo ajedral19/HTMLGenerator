@@ -38,6 +38,7 @@ const templatesSchema = new Schema({
 	// template_preview: { type: String },
 	template_preview: { type: Document, required: true },
 	template_data_url: { type: String, required: true },
+	template_cdn_url: { type: String },
 	template_screenshot: { type: Buffer, contentType: String },
 });
 

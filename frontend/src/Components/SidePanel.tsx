@@ -15,6 +15,9 @@ export default function SidePanel({ className }: { className: string }) {
                 <li className="item">
                     <Link to="/templates/live-editor">Live Editor</Link>
                 </li>
+                <li className="item">
+                    <Link to="/templates/bucket">Bucket</Link>
+                </li>
             </ul>
         </div>
     </Fragment>

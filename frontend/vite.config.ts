@@ -26,6 +26,13 @@ export default defineConfig({
 				ws: true,
 				rewrite: (path) => path.replace(/^\/html/, "/html"),
 			},
+			"/bucket/api": {
+				target: BASE_URL,
+				changeOrigin: true,
+				secure: false,
+				ws: true,
+				rewrite: (path) => path.replace(/^\/bucket\/api/, "/bucket/api"),
+			},
 		},
 		watch: {
 			usePolling: true,

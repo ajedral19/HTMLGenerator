@@ -19,3 +19,47 @@ routes
 
 
 /templates?page
+
+
+<script async>
+            // const imgs = document.querySelector('.img-list')
+            // const li = document.createElement('li')
+            // const img = document.createElement('img')
+
+            // imgs.appendChild(li).appendChild(img)
+
+            // get base url
+
+            const form = document.querySelector("form");
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const { url } = await getUrl();
+
+                const file = e.srcElement.file_src.files[0];
+                if (file) {
+                    await putUrl(url, file);
+                }
+
+                const file_type = file.type.split("/")[1];
+                const imgUrl = url.split("?")[0];
+
+                const img = document.querySelector("img");
+                img.setAttribute("src", imgUrl);
+
+                document.body.appendChild(img);
+            });
+
+            const getUrl = async () => {
+                return await fetch("http://localhost:9100/s3").then((res) => res.json());
+            };
+
+            const putUrl = async (url, file) => {
+                fetch(url, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                    body: file,
+                });
+            };
+        </script>

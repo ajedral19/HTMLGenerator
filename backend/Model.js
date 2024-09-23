@@ -1,8 +1,8 @@
+import { Extract } from "./models/model.spreadsheet.js";
 import { HTMLGenerator } from "./Schema/index.js";
 import {
 	buffer_to_string,
 	capture_template,
-	extract_sheet,
 	get_sheet_id,
 	render_html,
 	response_handler,
@@ -15,7 +15,7 @@ export const AddTemplate = async (template_name, template, sheet_url, cdn_uri) =
 		// const template_html = buffer_to_string(template_file, true);
 		const template_file = template;
 		const document_id = get_sheet_id(sheet_url);
-		const document_data = await extract_sheet(document_id);
+		const document_data = await Extract(document_id, 1, 1);
 		const html_buffer = Buffer.from(template_file.buffer);
 		const template_html = html_buffer.toString("utf-8");
 
@@ -44,7 +44,13 @@ export const AddTemplate = async (template_name, template, sheet_url, cdn_uri) =
 
 // removers
 export const DeleteTemplate = async (id) => {
-	return await HTMLGenerator.findByIdAndDelete({ _id: id });
+	try {
+		return await HTMLGenerator.findByIdAndDelete({ _id: id });
+	} catch (err) {
+		console.log(err.name);
+		console.log(err.message);
+		return false;
+	}
 };
 
 // getters
@@ -62,20 +68,16 @@ export const GetAllTemplates = async (page = 1, limit = 10) => {
 		// const uri = req ? template_uri(req) : null;
 
 		const templates = rows.map((row) => {
-			const {
-				id,
-				template_name: name,
-				template_html: template,
-				template_preview: mockup,
-				template_document: sheet,
-			} = row;
+			const { id, template_name: name, template_document: sheet } = row;
 			const html = template;
-			return { id, name, template: html, mockup, sheet, screenshot: `/${id}/screenshot` };
+			return { id, name, sheet };
 		});
 
 		return templates;
 		// return response_handler(1, "", { templates: [...templates] });
 	} catch (err) {
+		console.log(err);
+
 		return false;
 		// return response_handler(0, err.message);
 	}
@@ -105,17 +107,21 @@ export const GetTemplate = async (template_id) => {
 };
 
 export const GetTemplatePreview = async (id) => {
-	const template = await HTMLGenerator.findOne({ _id: id }, "template_html template_document template_name");
+	try {
+		const template = await HTMLGenerator.findById({ _id: id }, "template_preview template_name");
 
-	const sheet_id = get_sheet_id(template.template_document);
-	const html = template.template_html;
-	const data = await extract_sheet(sheet_id);
-	const rendered = render_html(html, data[0]);
+		let html = template.template_preview;
+		html = Buffer.from(html.buffer);
+		html = html.toString("utf-8");
 
-	if (!rendered) return false;
-	return { id: template.id, name: template.template_name, template: rendered };
-
-	// once rendered, create cache for faster loading
+		if (!html) return { status: 400, html: "<pre>no content</pre>" };
+		return { status: 200, html };
+		// once rendered, create cache for faster loading
+	} catch (err) {
+		if (err.name.toLowerCase() === "casterror") return { status: 400, html: "<pre>Oops! invalid template id.</pre>" };
+		if (err.name.toLowerCase() === "typeerror") return { status: 404, html: "<pre>Oops! Template not found.</pre>" };
+		return { status: 500, html: `<pre> ${err.name} ${err.message}</pre>` };
+	}
 };
 
 export const GetScreenshot = async (id = null, buffer = null) => {
@@ -126,12 +132,13 @@ export const GetScreenshot = async (id = null, buffer = null) => {
 		const template = await HTMLGenerator.findOne({ _id: id }, "template_screenshot");
 		img = template?.template_screenshot;
 	}
+	// handle error
 	return img;
 };
 
-export const GetCount = async() => {
-	return await HTMLGenerator.countDocuments()
-}
+export const GetCount = async () => {
+	return await HTMLGenerator.countDocuments();
+};
 
 // ```
 // getting n of pages

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TemplateData } from "../../types";
 import { TemplateDelete } from "../../Handlers/HandleTemplate";
 import { showModal } from "../../Redux/Slices/modal";
-import Button from "./Button";
+import Button from "./button.widget";
 
 type card = {
     template: TemplateData
@@ -29,7 +29,7 @@ export default function Card({ template }: card) {
     }
 
     const handleScreenshotPreivew = () => {
-        dispatch(showModal({ show: true, data: { img: screenshot, alt: name }, modal: { type: "previewScreenshot" } }))
+        dispatch(showModal({ show: true, data: { id: id, alt: name }, modal: { type: "previewScreenshot" } }))
     }
 
     return <Fragment>
@@ -43,7 +43,7 @@ export default function Card({ template }: card) {
                 </Button>
             </div>
             <div className="card__img-wrap" role="button" onClick={handleScreenshotPreivew}>
-                <img src={`api/template/${screenshot}`} alt={name} />
+                <img src={`api/template/${id}/screenshot`} alt={name} />
             </div>
             <div className="card__body">
                 <h4 className="title title--6 card__title">{name}</h4>

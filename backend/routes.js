@@ -1,35 +1,35 @@
 import { Router } from "express";
-import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet, SheetGetCount } from "./controllers/index.js";
-import { Generator } from "./controllers/Generate.js";
-import { TemplateCount, TemplateGetOne, TemplatePreview, TemplateScreenshot } from "./controllers/Template.js";
+import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
+
+import { CountSheets, TemplateGenerate, TemplateGetOne, TemplateGetPreview, TemplateGetScreenshot } from "./controllers/Template.js";
 import { aiTest } from "./ai_test.js";
 import multer from "multer";
-import { HandlePreview } from "./controllers/Preview.js";
+import { handle_s3_v2 } from "./controllers/S3Controller.js";
 
 const upload = multer();
 
 const template_router = Router();
-const html_router = Router();
+const s3Router = Router();
 // router.get("/download/:id", DownloadFile);
 // working routes
 
-template_router.get("/templates", TemplteGetAll);
-template_router.get("/templates/count", TemplateCount);
-template_router.post("/template/add", upload.single("template"), TemplateAdd);
-template_router.get("/template/:template_id", TemplateGetOne);
-template_router.get("/template/:template_id/screenshot", TemplateScreenshot);
-template_router.get("/template/:template_id/generate", Generator);
-template_router.delete("/template/:template_id", TemplateDelete);
-template_router.get("/extract", ExtractSheet);
+template_router.get("/templates", TemplteGetAll); //okay - 1
+template_router.get("/template/:id/preview", TemplateGetPreview); // okay - 1
+template_router.get("/template/:template_id/screenshot", TemplateGetScreenshot); // okay - 1
+template_router.get("/template/:template_id", TemplateGetOne); //okay - 1
+template_router.post("/template/add", upload.single("template"), TemplateAdd); //okay - 1
+template_router.delete("/template/:template_id", TemplateDelete); // okay - 1
+template_router.get("/template/:template_id/generate", TemplateGenerate); // okay - 1
+template_router.get("/data/extract", ExtractSheet); //okay - 1
+template_router.get("/data/sheet-count", CountSheets); // okay - 1
 
-template_router.get("/template/sheet-count", SheetGetCount);
-template_router.get("/template/:id/preview", TemplatePreview); // use fetched data instead
+// extract unstructured documents
+// template_router.get("/random-sheets", RandomSheet);
 
 template_router.get("/ai-test", aiTest);
-
-// html routes
-html_router.get("/:id/preview", HandlePreview);
+// s3Router.get("/", handle_s3);
+s3Router.put("/upload", upload.single("file"), handle_s3_v2);
 
 const TemplateRoutes = template_router;
-const HTMLRoutes = html_router;
-export { TemplateRoutes, HTMLRoutes };
+const S3Routes = s3Router;
+export { TemplateRoutes, S3Routes };

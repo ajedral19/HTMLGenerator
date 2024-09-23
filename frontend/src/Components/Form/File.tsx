@@ -4,8 +4,9 @@ import cn from 'classnames'
 
 type FileUpload = {
     name: string
+    accept?: string
 }
-export default function FileUpload({ name }: FileUpload) {
+export default function FileUpload({ name, accept }: FileUpload) {
     const [file, setFile] = useState<string | undefined>("")
     const preview_init = {
         generated: false,
@@ -23,13 +24,13 @@ export default function FileUpload({ name }: FileUpload) {
 
     }
 
-    const triggerFileInput = () => fileinput.current?.click();
+    const triggerFileInput = () => { fileinput.current?.click() }
 
     return (
         <Fragment>
             <div className="file-field">
                 <div className="file-field__thumbnail mb-3">
-                    <button className={cn("btn file-upload-button", file ? 'primary' : 'secondary')} onClick={triggerFileInput}>
+                    <button className={cn("btn file-upload-button", file ? 'primary' : 'secondary')} onClick={triggerFileInput} type="button">
                         {
                             file ?
                                 <p>{file}</p>
@@ -44,7 +45,7 @@ export default function FileUpload({ name }: FileUpload) {
                         }
                     </figure>
                 </div>
-                <input onChange={handleOnChange} ref={fileinput} type="file" name={name} id={name.split('-').join('_')} accept="text/html" aria-hidden="true" />
+                <input onChange={handleOnChange} ref={fileinput} type="file" name={name} id={name.split('-').join('_')} accept={accept || "text/html"} aria-hidden="true" />
             </div>
         </Fragment>
     )
