@@ -29,6 +29,7 @@ export type FieldInput = {
 	label?: string;
 	name: string;
 	id: string;
+	disabled?: boolean
 	type?: "select";
 	options?: TemplateData[];
 	className?: string;

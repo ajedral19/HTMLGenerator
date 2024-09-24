@@ -6,6 +6,8 @@ import { S3Put } from "../Handlers/HandleS3";
 export default function BucketGateway() {
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
+        // alert('function disable ATM')
+        // return
 
 
         if (e.target) {

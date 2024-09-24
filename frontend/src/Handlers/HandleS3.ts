@@ -8,7 +8,7 @@ export const S3Put = async (file, path = "stylesheets") => {
 
 	const headers = { "Content-Type": "application/json" };
 	const query = path ? `path=${path}&filename=${name}` : `filename=${name}`;
-	const { data } = await axios.get("/bucket/api/get-secure-url?" + query, {
+	const { data } = await axios.get("/bucket/api/request?" + query, {
 		headers,
 	});
 	const { url } = data;

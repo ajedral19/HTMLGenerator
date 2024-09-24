@@ -11,12 +11,13 @@ type Button = {
     icon?: boolean
     children?: React.ReactNode
     className?: string
+    disabled?: boolean
     onClick?: () => void
 }
 
-export default function Button({ text, title, id, name, type, variant, icon, onClick, className, children }: Button) {
+export default function Button({ text, title, id, name, type, variant, icon, onClick, className, children, disabled = false }: Button) {
     return <Fragment>
-        <button onClick={onClick} type={type} title={title} className={cn("btn", { [variant || ""]: variant }, { icon: icon }, className)} id={id} name={name}>
+        <button disabled={disabled} onClick={onClick} type={type} title={title} className={cn("btn", { [variant || ""]: variant }, { icon: icon }, className)} id={id} name={name}>
             {
                 text || children
             }

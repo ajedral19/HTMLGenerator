@@ -65,8 +65,6 @@ export const TemplateDeleteOne = async (template_id) => {
  */
 export const TemplatesFind = async (page = 1, limit = 10) => {
     const offset = get_offset(page, limit);
-    console.log(offset);
-
     try {
         const rows = await HTMLGenerator.find({}).skip(offset).limit(limit);
         const data = rows.map((row) => {

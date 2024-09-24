@@ -63,8 +63,14 @@ export default function Template() {
                             {/* <input type="file" name="template-file" id="template_file" /> */}
                             <Input label="Template Name" name='template_name' id='template_name' />
                             <Input label="Document Template URL" name='document_template_url' id='document_template_url' />
-                            <Input label="Add CDN URI" name='template_resource_cdn' id='template_resource_cdn' />
-                            e.g. https://nativecamp-public-web-production.s3-ap-northeast-1.amazonaws.com/
+
+                            <div className="fields mt-2">
+                                <blockquote className="mb-1">Choose stylesheet and add cdn to inject. (only applies to screenshot and preview generation)</blockquote>
+                                <Input label="Select Stylesheet (WIP)" type="select" name="stylesheet_cdn" id="stylesheet_cdn" disabled />
+                                <Input label="Enter a CDN" name='template_resource_cdn' id='template_resource_cdn' />
+                                e.g. https://nativecamp-public-web-production.s3-ap-northeast-1.amazonaws.com/
+
+                            </div>
                         </div>
                         <div className="commands">
                             <Button type="submit" text='Submit' id='save_template' variant='primary' />
