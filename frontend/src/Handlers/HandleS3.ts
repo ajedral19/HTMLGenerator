@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API } from "./handle.config";
 
-export const S3Put = async (file, path = "stylesheets") => {
+export const S3Put = async (file, path = "") => {
 	let { name, type } = file;
 
 	if (!type) type = "text/plain";

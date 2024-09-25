@@ -6,40 +6,40 @@ const randomBytes = promisify(crypto.randomBytes);
 const bucketName = "learning-s3-bucket-v2";
 
 export const handle_s3_v2 = async (req, res) => {
-    const { path, filename } = req.query;
-    let rawBytes = await randomBytes(6);
-    rawBytes = rawBytes.toString("hex");
+	const { path, filename } = req.query;
+	let rawBytes = await randomBytes(6);
+	rawBytes = rawBytes.toString("hex");
 
-    const params = {
-        Bucket: bucketName,
-        Key: rawBytes + "::" + (path ? `${path}/${filename}` : filename),
-        Expires: 60,
-    };
+	const params = {
+		Bucket: bucketName,
+		Key: rawBytes + "::" + (path ? `${path}/${filename}` : filename),
+		Expires: 60,
+	};
 
-    const uploadurl = await s3.getSignedUrlPromise("putObject", params);
-    return res.send({ url: uploadurl });
+	const uploadurl = await s3.getSignedUrlPromise("putObject", params);
+	return res.send({ url: uploadurl });
 };
 
 export const get_s3_objects = async (req, res) => {
-    const contents = await s3
-        .listObjects({ Bucket: bucketName, Prefix: 'stylesheets' })
-        .promise()
-        .then((data) => {
-            return data.Contents.map((content) => {
-                console.log(content);
-                const [key, file_path] = content.Key.split("::");
+	const contents = await s3
+		.listObjects({ Bucket: bucketName, Prefix: "" })
+		.promise()
+		.then((data) => {
+			return data.Contents.map((content) => {
+				
+				// let [key, name] = content.Key.match(/!?\/(\d+.*)/)[1].split("::");
 
-                return {
-                    key,
-                    file_path,
+				return {
+					key:content.Key,
+					// name,
 					url: "",
-                    size: content.Size,
-                    last_modified: content.LastModified,
-                };
-            });
-        });
+					size: content.Size,
+					last_modified: content.LastModified,
+				};
+			});
+		});
 
-    return res.json({ contents });
+	return res.json({ contents });
 };
 
 // export const handle_s3 = async (req, res) => {
