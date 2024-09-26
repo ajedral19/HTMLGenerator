@@ -21,3 +21,11 @@ export const S3Put = async (file, path = "") => {
 	// 	.then((response) => response.data)
 	// 	.catch((err) => err);
 };
+
+export const S3Fetch = async () => {
+	const bucket = API("/bucket/api", 6000);
+	return bucket
+		.get("/resources")
+		.then((response) => response.data)
+		.catch((err) => err);
+};

@@ -25,7 +25,7 @@ export default function Card({ template }: card) {
 
     const handlePreview = () => {
         // dispatch(showModal({ show: true, data: template, modal: { type: "previewTemplate" } }))
-        window.open(`/html/${id}/preview`, 'rel=noopener noreferrer')
+        window.open(`/api/template/${id}/preview`, 'rel=noopener noreferrer')
     }
 
     const handleScreenshotPreivew = () => {
