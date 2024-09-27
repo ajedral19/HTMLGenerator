@@ -67,7 +67,7 @@ const SiteRoutes = createBrowserRouter([
         ]
     },
     {
-        path: 'helper',
+        path: 'ai-helper',
         children: [
             {
                 index: true,

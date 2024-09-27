@@ -6,7 +6,7 @@ import useS3Objects from "../Hooks/useS3Objects";
 
 export default function BucketGateway() {
 
-    const { data, isLoading } = useS3Objects()
+    const { data, isLoading, MutateBucket, isPending } = useS3Objects()
     console.log(data, isLoading);
 
     const handleSubmit = (e: React.SyntheticEvent) => {
@@ -20,6 +20,7 @@ export default function BucketGateway() {
             const file = form.field_file.files[0]
             // const { name } = file
             S3Put(file)
+            MutateBucket()
         }
 
         // console.log(e.target?.field_file.files[0]);
@@ -28,6 +29,8 @@ export default function BucketGateway() {
     const gotoOnClick = (cdn: string) => {
         window.open(cdn, 'rel=noopener noreferrer')
     }
+
+
     return <Fragment>
         <h1>S3 bucket</h1>
         <form onSubmit={handleSubmit}>
@@ -39,7 +42,7 @@ export default function BucketGateway() {
                     !isLoading ? (
                         data.objects.map((row, key) => (
                             <li key={key}>
-                                <a role="button" onClick={() => gotoOnClick(row.url)} >{row.fileName}</a>
+                                <a role="button" onClick={() => gotoOnClick(row.Key)} >{row.Key}</a>
                             </li>
                         ))
                     ) :
