@@ -6,6 +6,7 @@ import fileDownload from "js-file-download";
 import useGetTemplates from "../Hooks/useGetTemplates";
 import { HTMLGenerate } from "../Handlers/HandleHTML";
 import { Button } from "../Components/Widgets";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Input = {
     document: string,
@@ -13,10 +14,11 @@ type Input = {
 }
 
 export default function Generate() {
+    const queryClient = useQueryClient()
     const [caption, setCaption] = useState("Generate")
     const [errMsg, setErrMsg] = useState(false)
 
-    const { templates, isLoading } = useGetTemplates()
+    const templates = queryClient.getQueryData(['templates'])
 
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
@@ -61,7 +63,7 @@ export default function Generate() {
                         <code>if Spreadsheet url is valid, enable template selection</code>
                         <div className="flex">
                             <div className="col grow">
-                                <Input label="Choose Template" name='template-options' id='template_options' type="select" options={!isLoading ? templates.rows : []} />
+                                <Input label="Choose Template" name='template-options' id='template_options' type="select" options={templates.rows || []} />
 
                             </div>
                             <div className="col col-2">

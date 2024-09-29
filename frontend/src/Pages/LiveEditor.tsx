@@ -102,7 +102,7 @@ export default function LiveEditor() {
             </div>
             <div className='col col-12'>
                 <h4 className='mb-1'>Structured Data from Spreadsheet {data?.rows ? null : "(test data you can play with)"}</h4>
-                <MarkdownPreview style={{ width: "auto", maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json \nloading...` : `\`\`\`json \n${JSON.stringify(data?.rows || testData, null, " ")}`} />
+                <MarkdownPreview style={{ width: "inherit", maxWidth: '1200px', maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json \nloading...` : `\`\`\`json \n${JSON.stringify(data?.rows || testData, null, " ")}`} />
             </div>
         </div>
         <div className="flex">

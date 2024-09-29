@@ -1,5 +1,5 @@
-import ApplicationLayout from "./ApplicationLayout";
+import TemplateApp from "./TemplateApp";
 import Layout from "./Layout";
 import Modal from "./Modal";
 
-export { ApplicationLayout, Layout, Modal }
+export { TemplateApp, Layout, Modal }

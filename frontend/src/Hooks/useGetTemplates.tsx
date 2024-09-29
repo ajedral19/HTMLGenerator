@@ -9,10 +9,10 @@ export default function useGetTemplates() {
     const queryClient = useQueryClient()
     const { page }: { page?: string } = useGetParams()
 
-    const { data: templates, isLoading } = useQuery({
-        queryFn: () => GetTemplates(page),
-        queryKey: ["templates"],
-    })
+    // const { data: templates, isLoading } = useQuery({
+    //     queryFn: () => GetTemplates(page),
+    //     queryKey: ["templates"],
+    // })
 
     const { mutateAsync: MutateTemplate, isPending } = useMutation({
         mutationFn: GetTemplates,
@@ -24,6 +24,6 @@ export default function useGetTemplates() {
     }, [page])
 
 
-    return { templates, isLoading, isPending, MutateTemplate }
+    return { isPending, MutateTemplate }
 
 }

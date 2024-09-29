@@ -7,7 +7,7 @@ import Documentation from "./Pages/Documentation";
 import LiveEditor from "./Pages/LiveEditor";
 import Backlog from "./Pages/Backlog";
 import Helper from "./Pages/Helper";
-import { ApplicationLayout } from "./Components/Layouts";
+import { TemplateApp } from "./Components/Layouts";
 import BucketGateway from "./Pages/BucketGateway";
 
 // export default function SiteRoutes() {
@@ -41,19 +41,19 @@ const SiteRoutes = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Layout><ApplicationLayout><Templates /></ApplicationLayout></Layout>,
+                element: <Layout><TemplateApp><Templates /></TemplateApp></Layout>,
             },
             {
                 path: 'live-editor',
-                element: <Layout><ApplicationLayout><LiveEditor /></ApplicationLayout></Layout>
+                element: <Layout><TemplateApp><LiveEditor /></TemplateApp></Layout>
             },
             {
                 path: 'generate',
-                element: <Layout><ApplicationLayout><Generate /></ApplicationLayout></Layout>
+                element: <Layout><TemplateApp><Generate /></TemplateApp></Layout>
             },
             {
                 path: 'bucket',
-                element: <Layout><ApplicationLayout><BucketGateway /></ApplicationLayout></Layout>
+                element: <Layout><TemplateApp><BucketGateway /></TemplateApp></Layout>
             }
         ]
     },

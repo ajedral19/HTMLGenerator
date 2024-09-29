@@ -10,7 +10,7 @@ const api = axios.create({
 		"X-Custom-Header": "Hello",
 	},
 });
-const socket = io("http://localhost:9100/");
+// const socket = io("http://localhost:9100/");
 
 // donwload files
 export const DownloadFile = (id: string, filename: string) => {
