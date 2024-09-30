@@ -31,7 +31,7 @@ export default function Navbar({ className }: { className: string }) {
                         <Link to="/backlog">Backlog</Link>
                     </li>
                     <li className="menu__item">
-                        <Link to="/ai-helper">Helper</Link>
+                        <Link to="/helper">Helper</Link>
                     </li>
                     {/* <li className="menu__item">
                         <Button variant="primary" text="Switch Theme" onClick={() => { }} />
