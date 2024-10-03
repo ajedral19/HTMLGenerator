@@ -21,6 +21,8 @@ body
 p
     --__fs: 1.6rem
     font-size: var(--__fs)
+    word-break: break-all
+    widows: 3
 
     span
         font-size: var(--__fs)
@@ -122,6 +124,8 @@ button
         flex-wrap: nowrap
     &.items-center
         align-items: center
+    &.space-between
+        justify-content: space-between
     @include mxn.flexbox(12)
 
 .container
@@ -147,6 +151,10 @@ button
 
 .t-center
     text-align: center
+
+.label
+    color: #ABAEB9
+    font-size: 1.4rem
 
 .block
     display: block

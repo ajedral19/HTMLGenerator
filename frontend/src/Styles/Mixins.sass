@@ -3,6 +3,9 @@
 @mixin white_space
     $types: (m: margin, p: padding)
     $directions: (l: left, r: right, t: top, b: bottom)
+    @each $key, $val in $directions
+        .m#{$key}-auto
+            margin-#{$val}: auto
     @each $type_key, $type in $types
         @each $dir_key, $dir in $directions
             @for $n from 0 through 12
@@ -11,7 +14,7 @@
 
 @mixin flexbox($n_grid: 12, $breakpoint: null)
     $cn: col
-    @if $breakpoint 
+    @if $breakpoint
         $cn: col-#{$breakpoint}
     @for $n from 1 through $n_grid
         .#{$cn}-#{$n}

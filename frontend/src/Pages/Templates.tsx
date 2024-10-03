@@ -1,6 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 // import useGetParams from "../Hooks/useGetParams";
 import { Card } from "../Components/Widgets";
+import Details from "../Components/Details";
 
 const card = {
     id: "1234",
@@ -18,6 +19,14 @@ const card = {
 export default function Templates() {
 
     return <Fragment>
-        <Card data={card} />
+        <div className="grid">
+            <div className="grid-item">
+                <Card data={card} />
+            </div>
+            <div className="grid-item">
+                <Details />
+            </div>
+
+        </div>
     </Fragment>
 }

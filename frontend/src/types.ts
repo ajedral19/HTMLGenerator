@@ -1,13 +1,13 @@
 import { SetStateAction } from "react";
 
-export type TemplateData = {
-	id: string;
-	name: string;
-	temaplte: string;
-	mockup: string;
-	sheet: string;
-	screenshot: string;
-};
+// export type TemplateData = {
+// 	id: string;
+// 	name: string;
+// 	temaplte: string;
+// 	mockup: string;
+// 	sheet: string;
+// 	screenshot: string;
+// };
 
 export type Templates = {
 	status: number;
@@ -36,6 +36,25 @@ export type FieldInput = {
 	onChange?: (e: Target) => void;
 };
 
+
 export type Target = {
 	target: { value: SetStateAction<string> };
 };
+
+
+// Proper types
+type Ticket = { id: string, url: string }
+
+export type TemplateData = {
+	id: string,
+	name: string,
+	author: string,
+	ticket: Ticket,
+	spreadsheetURL: string,
+	isFavorite: boolean,
+	image: string
+}
+
+export type CardContent = {
+	data: TemplateData
+}
