@@ -2,6 +2,11 @@ import { Fragment } from "react/jsx-runtime";
 // import useGetParams from "../Hooks/useGetParams";
 import { Card } from "../Components/Widgets";
 import Details from "../Components/Details";
+import { TemplateData, TemplateDetails } from "../types";
+import { url } from "inspector";
+
+const date = new Date()
+
 
 const card = {
     id: "1234",
@@ -16,6 +21,19 @@ const card = {
     image: '/images/template-placeholder.png'
 }
 
+const details = {
+    ...card,
+    stylesheets:
+        [
+            {
+                name: "stylesheet.css",
+                url: "example.com/stylesheet.css"
+            },
+        ]
+    ,
+    uploadDate: date.toLocaleString()
+}
+
 export default function Templates() {
 
     return <Fragment>
@@ -24,7 +42,7 @@ export default function Templates() {
                 <Card data={card} />
             </div>
             <div className="grid-item">
-                <Details />
+                <Details data={details} />
             </div>
 
         </div>

@@ -133,6 +133,7 @@
 .btn
     --__color: var(--theme-text-color-default)
     background: var(--__bg)
+    border-radius: 20em
     &.primary, &.icon-primary
         --__bg: var(--theme-color-cool)
         --__bg-hover: var(--theme-color-cool-accent)
@@ -142,18 +143,19 @@
         --__bg: var(--theme-color-mild)
         --__bg-hover: var(--theme-color-mild-accent)
         --__color: #ffffff
-        &:hover
-            --__bg: #f1af35
+        // &:hover
+            // --__bg: #f1af35
 
     &.danger, &.icon-danger
         --__bg: var(--theme-color-hot)
         --__bg-hover: var(--theme-color-hot-accent)
         --__color: #ffffff
-        &:hover
-            --__bg: #f05368
+        // &:hover
+            // --__bg: #f05368
 
     &.transparent
-        --__bg: transparent
+        --__bg: unset
+        --__bg-hover: unset
         --__color: var(--theme-text-color-cool)
 
         &:hover
@@ -172,8 +174,9 @@
             vertical-align: middle
             --__color: #ffffff
 
-    &:hover
-        background: var(--__bg-hover)
+    // &:hover
+    //     background: var(--__bg-hover)
+    //     box-shadow: 0 2px 8px -2px var(--__bg)
 
 // DownloadStrip
 .download-strip

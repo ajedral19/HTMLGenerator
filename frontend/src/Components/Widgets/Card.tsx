@@ -1,9 +1,12 @@
 import { Fragment } from "react";
-import { MdOutlineStar, MdOutlineStarBorder, MdPerson4 } from 'react-icons/md'
-import StripTag from "./stripTag.widget";
+import { MdPerson4 } from 'react-icons/md'
+import StripTag from "./StripTag";
 import cn from 'classnames'
-import style from '../../Styles/card.module.sass'
 import { CardContent } from "../../types";
+import Favotite from "./favorite.widget";
+
+import global_style from '../../Styles/global.module.sass'
+import style from '../../Styles/card.module.sass'
 
 export default function Card({ data }: CardContent) {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image } = data
@@ -17,15 +20,16 @@ export default function Card({ data }: CardContent) {
             <div className={cn(style.card__body)}>
                 <div className={cn(style.card__body__overlay)}>
                     <span role="button" className={cn(style.favorite)}>
-                        {
-                            isFavorite ?
-                                <MdOutlineStar color="#F9C53F" />
-                                :
-                                <MdOutlineStarBorder color="#00000099" />
-                        }
+                        <Favotite isFavorite={isFavorite} />
                     </span>
                     <p className={cn(style.card__tags)}>
-                        <StripTag size="small" text={ticket.id} url={ticket.url} />
+                        {
+                            Array.isArray(ticket) ?
+                                ticket.map((item, key) =>
+                                    <StripTag size="small" text={item.id} url={item.url} key={key} />
+                                ) :
+                                <StripTag size="small" text={ticket.id} url={ticket.url} />
+                        }
                         <StripTag size="small" text="Spreadsheet Data" url={spreadsheetURL} variant="teal" />
                     </p>
                 </div>
@@ -34,7 +38,7 @@ export default function Card({ data }: CardContent) {
             </div>
             <div className={cn(style.card__meta)}>
                 <p className={cn(style.name)}>{name}</p>
-                <p className={cn(style.author)}><MdPerson4 /> {author}</p>
+                <p className={cn(global_style.icon_text)}><MdPerson4 fontSize="1.6rem" /> {author}</p>
             </div>
 
         </div>

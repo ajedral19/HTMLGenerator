@@ -9,6 +9,13 @@
     padding: 0
     box-sizing: border-box
 
+    &[role="button"]
+        cursor: pointer
+
+    &::selection
+        background: #890d8fd2
+        color: #fff
+
 html
     font-size: 62.5%
 
@@ -70,13 +77,18 @@ input[type="text"]
 
 button
     --__color: var(--theme-text-color-default)
-    --__pad-x: 1.2em
-    --__pad-y: .6em
+    --__pad-x: 1.8em
+    --__pad-y: .8em
+    --__bg-hover: #c9c9c9
     cursor: pointer
-    transition: color, background .2s ease-in-out
+    vertical-align: middle
+    display: inline-block
+    padding: var(--__pad-y) var(--__pad-x)
+    transition: color, background .2s ease-out, box-shadow .1s ease-in
 
     &:hover
-        --__bg-hover: #c9c9c9
+        background: var(--__bg-hover)
+        box-shadow: 0 0 6px -2px var(--__bg)
 
 .h-100
     height: 100%

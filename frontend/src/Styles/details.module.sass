@@ -4,8 +4,9 @@
     &__tabs
         display: flex
         flex-flow: row nowrap
+        justify-content: flex-starts
         li
-            flex: 1
+            flex: 0
             padding: .8em
             text-align: center
             cursor: pointer
@@ -17,8 +18,11 @@
         object-fit: cover
         border-radius: 0 0 .8rem .8rem
 
+    &__content
+        padding: 1.8em 1.4em
+
     &__meta
         display: flex
         flex-flow: column
         gap: 1.6em
-        padding: 1.8em 1.4em
+        height: 100%

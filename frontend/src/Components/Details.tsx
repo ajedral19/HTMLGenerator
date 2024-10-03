@@ -1,12 +1,20 @@
 import { Fragment } from "react";
 import cn from 'classnames'
-import style from '../Styles/details.module.sass'
-import StripTag from "./Widgets/stripTag.widget";
-import { MdOutlineStar, MdPerson4 } from "react-icons/md";
+import StripTag from "./Widgets/StripTag";
+import { MdOutlineStar, MdOutlineStarBorder, MdPerson4 } from "react-icons/md";
+import { TemplateData, TemplateDetails } from "../types";
+import { Button } from "./Widgets";
+import Favotite from "./Widgets/favorite.widget";
 
-export default function Details() {
+import global_style from '../Styles/global.module.sass'
+import style from '../Styles/details.module.sass'
+
+
+
+export default function Details({ data }: TemplateDetails) {
+    const { id, name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
     return <Fragment>
-        <div className={cn(style.details)}>
+        <section className={cn(style.details)}>
             <ul className={cn(style.details__tabs)}>
                 <li role="button">
                     Details
@@ -16,41 +24,61 @@ export default function Details() {
                 </li>
             </ul>
 
-            <img src="/images/template-placeholder.png" alt="Awesome Template" />
+            <img src={image} alt={name} />
+            <div className={cn(style.details__content)}>
+                <div className={cn(style.details__meta)}>
+                    <div className="flex items-center space-between pb-1">
+                        {
+                            Array.isArray(ticket) ?
+                                ticket.map((item, key) => (
+                                    <StripTag text={item.id} url={item.url} key={key} />
+                                ))
+                                :
+                                <StripTag text={ticket.id} url={ticket.url} />
+                        }
+                        <Favotite isFavorite={isFavorite} fontSize="2.4rem" />
+                    </div>
+                    <div>
+                        <h4>{name}</h4>
+                        <p className={cn(global_style.icon_text)}><MdPerson4 fontSize="1.6rem" /> {author}</p>
+                    </div>
 
-            <div className={cn(style.details__meta)}>
-                <div className="flex items-center space-between pb-1">
-                    <StripTag text="TK-123" url="example.com" />
-                    <MdOutlineStar color="#F9C53F" fontSize="2.4rem" />
-                </div>
-                <div>
-                    <h4>Awesome Template</h4>
-                    <p className={cn(style.author)}><MdPerson4 /> Jane Doe</p>
-                </div>
+                    <div>
+                        <p className="label">Date uploaded</p>
+                        <p>{uploadDate}</p>
+                    </div>
 
-                <div>
-                    <p className="label">Date uploaded</p>
-                    <p>September 17, 2024</p>
-                </div>
+                    <div>
+                        <p className="label">Spreadsheet URL</p>
+                        <p>
+                            <a href="example.com">
+                                {spreadsheetURL}
+                            </a>
+                        </p>
+                    </div>
 
-                <div>
-                    <p className="label">Spreadsheet URL</p>
-                    <p>
-                        <a href="example.com">
-                            https://docs.google.com/spreadsheets/d/1RwTPIFQSaO6yrTR2g-auHENnr1JMFYbTfQGA4iMF12w/edit?gid=0#gid=0
-                        </a>
-                    </p>
-                </div>
+                    <div>
+                        <p className="label">Stylesheet in use</p>
+                        <ul>
+                            {
+                                Array.isArray(stylesheets) ?
+                                    stylesheets.map((style, key) => (
+                                        <li key={key}>
+                                            <a href={style.url}>{style.name}</a>
+                                        </li>
 
-                <div>
-                    <p className="label">Stylesheet in use</p>
-                    <ul>
-                        <li>
-                            <a href="exmaple.com">stylessheet.css</a>
-                        </li>
-                    </ul>
+                                    )) :
+                                    <li >
+                                        <a href={stylesheets.url}>{stylesheets.name}</a>
+                                    </li>
+                            }
+                        </ul>
+                    </div>
+                    <div className="mt-auto">
+                        <Button />
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </Fragment>
 }

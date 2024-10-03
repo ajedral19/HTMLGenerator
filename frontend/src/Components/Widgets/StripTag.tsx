@@ -1,12 +1,6 @@
 import cn from 'classnames'
 import style from '../../Styles/stripTags.module.sass'
-type StripTag = {
-    text: string,
-    url?: string,
-    variant?: "purple" | "teal",
-    size?: "normal" | "small"
-    className?: string
-}
+import { StripTag } from '../../types'
 
 export default function StripTag({ text, url, variant = "purple", size = "normal", className }: StripTag) {
 
