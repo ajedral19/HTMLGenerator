@@ -1,20 +1,20 @@
 import cn from 'classnames'
-import style from '../../Styles/stripTags.module.sass'
-import { StripTag } from '../../types'
+import style from '../../Styles/stripTag.module.sass'
+import { Tag } from '../../types'
 
-export default function StripTag({ text, url, variant = "purple", size = "normal", className }: StripTag) {
+export default function StripTag({ text, url, variant = "purple", size = "normal", className }: Tag) {
 
     if (url) return (
         <a href={url}>
-            <blockquote className={cn(style['strip-tag'], style[variant], style[size], className)}>
+            <span className={cn(style['strip-tag'], style[variant], style[size], className)}>
                 {text}
-            </blockquote>
+            </span>
         </a>
     )
 
     return (
-        <blockquote role='link' className={cn(style['strip-tag'], style[variant])}>
+        <span role='link' className={cn(style['strip-tag'], style[variant])}>
             {text}
-        </blockquote>
+        </span>
     )
 }

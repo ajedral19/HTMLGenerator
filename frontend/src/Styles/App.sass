@@ -133,7 +133,14 @@
 .btn
     --__color: var(--theme-text-color-default)
     background: var(--__bg)
+    --__dimension: 2.8em
+    --__pad-y: 0
+    --__pad-x: var(--__dimension)
+    height: var(--__dimension)
+    width: fit-content
     border-radius: 20em
+    vertical-align: middle
+    line-height: 1.2
     &.primary, &.icon-primary
         --__bg: var(--theme-color-cool)
         --__bg-hover: var(--theme-color-cool-accent)
@@ -162,17 +169,21 @@
             --__color: var(--theme-text-color-cool-accent)
 
     &--icon, &.icon
-        padding: unset
-        width: 2.4rem
-        height: 2.4rem
+        --__pad-x: 0
+        width: var(--__dimension)
         transition: color .2s ease-in-out
 
-        svg
-            line-height: 0
-            display: block
-            margin: auto
+    &.icon-text
+        span
             vertical-align: middle
-            --__color: #ffffff
+            display: inline-block
+        svg
+            display: inline-block
+    svg
+        line-height: inherit
+        display: block
+        margin: auto
+        vertical-align: middle
 
     // &:hover
     //     background: var(--__bg-hover)

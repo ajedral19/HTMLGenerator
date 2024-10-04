@@ -17,7 +17,7 @@ const card = {
         url: "wwww.example.com"
     },
     spreadsheetURL: "wwww.example.com",
-    isFavorite: true,
+    isFavorite: false,
     image: '/images/template-placeholder.png'
 }
 

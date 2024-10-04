@@ -65,7 +65,7 @@ export type TemplateDetails = {
 	};
 };
 
-export type StripTag = {
+export type Tag = {
 	text: string;
 	url?: string;
 	variant?: "purple" | "teal";

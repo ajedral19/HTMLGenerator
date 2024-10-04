@@ -9,7 +9,7 @@ export default function Favotite({ isFavorite, fontSize, onClick }: Favotite) {
                 isFavorite ?
                     <MdOutlineStar color="#F9C53F" fontSize={fontSize} />
                     :
-                    <MdOutlineStarBorder color="#00000099" fontSize={fontSize} />
+                    <MdOutlineStarBorder color="#ffffff90" fontSize={fontSize} />
             }
         </i>
 

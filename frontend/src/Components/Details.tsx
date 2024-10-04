@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import cn from 'classnames'
 import StripTag from "./Widgets/StripTag";
-import { MdOutlineStar, MdOutlineStarBorder, MdPerson4 } from "react-icons/md";
+import { Md10K, MdAdd, MdOutlineSportsHockey, MdOutlineStar, MdOutlineStarBorder, MdPerson4 } from "react-icons/md";
 import { TemplateData, TemplateDetails } from "../types";
 import { Button } from "./Widgets";
 import Favotite from "./Widgets/favorite.widget";
@@ -27,7 +27,7 @@ export default function Details({ data }: TemplateDetails) {
             <img src={image} alt={name} />
             <div className={cn(style.details__content)}>
                 <div className={cn(style.details__meta)}>
-                    <div className="flex items-center space-between pb-1">
+                    <div className="flex items-center space-between no-gap mb-1">
                         {
                             Array.isArray(ticket) ?
                                 ticket.map((item, key) => (
@@ -75,7 +75,9 @@ export default function Details({ data }: TemplateDetails) {
                         </ul>
                     </div>
                     <div className="mt-auto">
-                        <Button />
+                        <Button text="Generate" />
+                        <Button icon={<MdOutlineStar />} text="test" />
+                        <Button icon={<MdAdd fontSize="2rem" />} />
                     </div>
                 </div>
             </div>
