@@ -1,5 +1,5 @@
 import { Fragment } from "react/jsx-runtime";
-import { Button, Card } from "../Components/Widgets";
+import { Button } from "../Components/Widgets";
 import Details from "../Components/Details";
 import cn from 'classnames'
 import style from '../Styles/templates.module.sass'
@@ -7,10 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { showSidePane } from "../Redux/Slices/sidePane";
 import { TemplateDetails } from "../types";
 import { init_details } from "../Utils/initialStates";
-import { MdClose, MdTitle } from "react-icons/md";
-import Field from "../Components/Widgets/field.widget";
-import { IoMdCloseCircle } from "react-icons/io";
+import { MdClose } from "react-icons/md";
 import TemplateForm from "../Components/Form/TemplateForm";
+import TemplatesGrid from "../Components/TemplatesGrid";
 
 const templatesData: TemplateDetails[] = [
     {
@@ -226,36 +225,17 @@ const templatesData: TemplateDetails[] = [
 ]
 
 export default function Templates() {
-    const isLoading = false
-
-    const sidePane = useSelector((state: { sidePane: { isVisible: boolean, visibleState?: string, details?: TemplateDetails } }) => state.sidePane)
-    const isGrid = useSelector((state: { headerOptions: { display: { isGrid: boolean } } }) => state.headerOptions.display.isGrid)
-
     const dispatch = useDispatch()
+    const sidePane = useSelector((state: { sidePane: { isVisible: boolean, visibleState?: string, details?: TemplateDetails } }) => state.sidePane)
 
-    const getDetailsOnClick = (details: TemplateDetails) => {
-        dispatch(showSidePane({ isVisible: true, visibleState: "themeDetails", details: details }))
-    }
-
-    const handleClose = () => {
+    const handleClose = () =>
         dispatch(showSidePane({ isVisible: false, visibleState: undefined, details: init_details }))
-    }
+
 
     return <Fragment>
         <div className={cn(style.templates_layout, { [style['templates_layout--side_pane_visible']]: sidePane.isVisible })}>
             <div className={cn(style.templates_layout__templates)}>
-                <div className="flex">
-                    {
-                        !isLoading ?
-                            templatesData.map((template, key) => (
-                                <div className={cn("col", isGrid ? "col-3" : "col-12")} key={key}>
-                                    <Card data={template.data} onClick={() => getDetailsOnClick(template)} layout={isGrid ? "grid" : "list"} />
-                                </div>
-                            ))
-                            :
-                            "...loading"
-                    }
-                </div>
+                <TemplatesGrid data={templatesData} />
             </div>
             <div className={cn(style.templates_layout__sidepane)}>
                 <Button icon={<MdClose />} className={cn("small mild-opaque", style.btn_close)} onClick={handleClose} />
