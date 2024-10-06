@@ -20,20 +20,23 @@ type Input = {
 
 const Field = forwardRef(({ id, name, label, className, icon, placeholder, disabled, defaultValue, onChange, onBlur, type = "text" }: Input, ref: ForwardedRef<HTMLInputElement>) => {
     return <Fragment>
-        <div className={cn(style.field, { "pr-1": icon }, className)}>
-            {label && <label className={cn(style.field__label)} htmlFor={id}>{label}</label>}
-            <input
-                ref={ref}
-                name={name || id}
-                defaultValue={defaultValue}
-                type={type}
-                id={id}
-                placeholder={placeholder}
-                className={style.type_text}
-                disabled={disabled}
-                onChange={onChange}
-                onBlur={onBlur} />
-            {icon}
+        <div className={cn(style.field)}>
+
+            {label && <label className={cn(style.field__label, "label")} htmlFor={id}>{label}</label>}
+            <div className={cn(style.field__input, { "pr-1": icon }, className)}>
+                <input
+                    ref={ref}
+                    name={name || id}
+                    defaultValue={defaultValue}
+                    type={type}
+                    id={id}
+                    placeholder={placeholder}
+                    className={style.type_text}
+                    disabled={disabled}
+                    onChange={onChange}
+                    onBlur={onBlur} />
+                {icon}
+            </div>
         </div>
     </Fragment>
 })

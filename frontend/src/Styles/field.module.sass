@@ -1,15 +1,24 @@
 .type_text
     width: 100%
 .field
-    background: var(--theme-field-background)
-    display: flex
-    flex-flow: row nowrap
-    align-items: center
-    border-radius: 2em
-    overflow: hidden
-    outline: 1px solid var(--theme-field-border)
-    transition: box-shadow .2s ease-in
+    &__input
+        background: var(--theme-field-background)
+        display: flex
+        flex-flow: row nowrap
+        align-items: center
+        border-radius: 2em
+        overflow: hidden
+        outline: 1px solid var(--theme-field-border)
+        transition: box-shadow .2s ease-in
 
     &:focus-within
-        box-shadow: 0 0 8px -2px #3a466c90
+        .field__input
+            box-shadow: 0 0 8px -2px #3a466c90
+        .field__label
+            color: var(--theme-text-color)
+            // .field__label
 
+    &__label
+        font-size: 1.4rem
+        padding: .4em
+        display: block

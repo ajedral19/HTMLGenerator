@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { showSidePane } from "../Redux/Slices/sidePane";
 import { TemplateDetails } from "../types";
 import { init_details } from "../Utils/initialStates";
-import { MdClose } from "react-icons/md";
+import { MdClose, MdTitle } from "react-icons/md";
 import Field from "../Components/Widgets/field.widget";
+import { IoMdCloseCircle } from "react-icons/io";
+import TemplateForm from "../Components/Form/TemplateForm";
 
 const templatesData: TemplateDetails[] = [
     {
@@ -259,15 +261,10 @@ export default function Templates() {
                 <Button icon={<MdClose />} className={cn("small mild-opaque", style.btn_close)} onClick={handleClose} />
                 {
                     sidePane.visibleState === 'themeDetails' ?
-                        <Details data={sidePane.details?.data || init_details.data} />
-                        : sidePane.visibleState === "newThemeForm" ?
-                        <form>
-                            <Field label="Template Name" />
-                            <Button type="submit" text="Store" />
-                            <Button type="reset" text="Clear" />
-                        </form>
-                        :
-                        <h1>Unknow Actions has been triggered</h1>
+                        <Details data={sidePane.details?.data || init_details.data} /> :
+                        sidePane.visibleState === "newThemeForm" ?
+                            <TemplateForm /> :
+                            <h1>Unknow Actions has been triggered</h1>
                 }
             </div>
 
