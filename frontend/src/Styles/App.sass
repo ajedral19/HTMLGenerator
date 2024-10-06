@@ -130,15 +130,16 @@
                         &__action
                             display: unset
 // button
-.btn
+.btn, a[role="button"].btn
     --__color: var(--theme-text-color-default)
-    background: var(--__bg)
-    --__dimension: 2.8em
+    --__dimension: var(--control-size)
     --__pad-y: 0
-    --__pad-x: var(--__dimension)
+    --__pad-x: 1.8em
+    --__radius: 20em
+    background: var(--__bg)
     height: var(--__dimension)
     width: fit-content
-    border-radius: 20em
+    // border-radius: 20em
     vertical-align: middle
     line-height: 1.2
     &.primary, &.icon-primary
@@ -150,40 +151,53 @@
         --__bg: var(--theme-color-mild)
         --__bg-hover: var(--theme-color-mild-accent)
         --__color: #ffffff
-        // &:hover
-            // --__bg: #f1af35
 
     &.danger, &.icon-danger
         --__bg: var(--theme-color-hot)
         --__bg-hover: var(--theme-color-hot-accent)
         --__color: #ffffff
-        // &:hover
-            // --__bg: #f05368
 
     &.transparent
         --__bg: unset
         --__bg-hover: unset
-        --__color: var(--theme-text-color-cool)
 
-        &:hover
-            --__color: var(--theme-text-color-cool-accent)
+        // &:hover
+        //     --__color: var(--theme-text-color-cool-accent)
+
+    &.mild-opaque
+        --__bg: #F4F4FB7c
+        --__bg-hover: #F4F4FB
 
     &--icon, &.icon
         --__pad-x: 0
         width: var(--__dimension)
+        min-width: var(--__dimension)
         transition: color .2s ease-in-out
 
+        &.small
+            --__dimension: 1.6em
+
     &.icon-text
-        span
-            vertical-align: middle
+        display: inline-flex
+        flex-flow: row nowrap
+        align-items: center
+        padding: var(--__pad-y) var(--__pad-x) var(--__pad-y) calc(var(--__pad-x) / 1.25)
+        gap: .5rem
+        span, svg
             display: inline-block
-        svg
-            display: inline-block
+
+        &.rtl
+            padding: var(--__pad-y) calc(var(--__pad-x) / 1.25) var(--__pad-y) var(--__pad-x)
+            
     svg
         line-height: inherit
         display: block
         margin: auto
         vertical-align: middle
+
+a[role="button"].btn
+    display: flex
+    align-items: center
 
     // &:hover
     //     background: var(--__bg-hover)

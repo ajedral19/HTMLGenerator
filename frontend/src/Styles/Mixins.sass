@@ -12,10 +12,16 @@
                 .#{$type_key}#{$dir_key}-#{$n}
                     #{$type}-#{$dir}: #{$n}em
 
-@mixin flexbox($n_grid: 12, $breakpoint: null)
+@mixin flexbox($n_columns: 12, $breakpoint: null)
     $cn: col
     @if $breakpoint
         $cn: col-#{$breakpoint}
-    @for $n from 1 through $n_grid
+    @for $n from 1 through $n_columns
         .#{$cn}-#{$n}
-            flex-basis: math.percentage(math.div($n, $n_grid))
+            flex-basis: math.percentage(math.div($n, $n_columns))
+
+@mixin grid($n_columns: 12)
+    grid-template-columns: repeat(#{$n_columns}, 1fr)
+    @for $n from 1 through $n_columns
+        .grid-item.span-#{$n}
+            grid-column: span #{$n}

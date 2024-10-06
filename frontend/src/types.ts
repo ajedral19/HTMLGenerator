@@ -72,9 +72,3 @@ export type Tag = {
 	size?: "normal" | "small";
 	className?: string;
 };
-
-export type Favotite = {
-	isFavorite: boolean;
-	fontSize?: string;
-	onClick?: (...args: any[]) => void;
-};

@@ -1,0 +1,35 @@
+.templates_layout
+    --__gap: 0
+    --__fr1: 12fr
+    --__fr2: 0
+    display: grid
+    grid-template-columns: var(--__fr1) var(--__fr2)
+    grid-template-areas: "templates sidebar"
+    gap: var(--__gap)
+    transition: all .4s linear
+
+    &__templates
+        grid-area: templates
+    &__sidepane
+        position: relative
+        background: #1F263D
+        grid-area: sidebar
+        overflow: hidden
+        display: none
+        border-radius: .6em
+        isolation: isolate
+
+    &--side_pane_visible
+        --__gap: var(--gap)
+        --__fr1: 9fr
+        --__fr2: 3fr
+
+        .templates_layout__sidepane
+            display: block
+
+    .btn_close
+        position: absolute
+        right: .6em
+        top: .6em
+        color: var(--theme-text-color-default)
+        z-index: 99
