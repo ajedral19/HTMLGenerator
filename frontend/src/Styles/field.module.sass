@@ -1,6 +1,8 @@
 .type_text
     width: 100%
 .field
+    position: relative
+    isolation: isolate
     &__input
         background: var(--theme-field-background)
         display: flex
@@ -13,7 +15,7 @@
 
     &:focus-within
         .field__input
-            box-shadow: 0 0 8px -2px #3a466c90
+            box-shadow: 0 0 6px -1px #4050859f
         .field__label
             color: var(--theme-text-color)
             // .field__label
@@ -22,3 +24,5 @@
         font-size: 1.4rem
         padding: .4em
         display: block
+
+        

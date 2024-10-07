@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { showSidePane } from "../Redux/Slices/sidePane";
 import { init_details } from "../Utils/initialStates";
 import { Link } from "react-router-dom";
+import Field from "./Widgets/field.widget";
 
 const editButton = [
     {
@@ -97,7 +98,13 @@ export default function Details({ data }: TemplateDetails) {
                         </ul>
                     </div>
                     <div className="mt-auto flex no-gap">
-                        <Button text="Generate" className="mr-auto" />
+                        <div>
+                            <div className="">
+                                <Field placeholder="start index" />
+                                <Field placeholder="count" />
+                            </div>
+                            <Button text="Generate" className="mr-auto" />
+                        </div>
                         <Button icon={<MdMoreHoriz />} title="More" options={editButton} />
                     </div>
                 </div>

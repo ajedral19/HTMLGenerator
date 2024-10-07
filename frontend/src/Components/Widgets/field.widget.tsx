@@ -3,6 +3,7 @@ import { ForwardedRef, forwardRef } from "react";
 import cn from 'classnames'
 import style from '../../Styles/field.module.sass'
 import { ChangeHandler } from "react-hook-form";
+import Tooltip from "./tooltip.widget";
 
 type Input = {
     id?: string
@@ -14,11 +15,12 @@ type Input = {
     icon?: JSX.Element
     disabled?: boolean
     defaultValue?: string
+    tip?: string
     onChange?: ChangeHandler
     onBlur?: ChangeHandler
 }
 
-const Field = forwardRef(({ id, name, label, className, icon, placeholder, disabled, defaultValue, onChange, onBlur, type = "text" }: Input, ref: ForwardedRef<HTMLInputElement>) => {
+const Field = forwardRef(({ id, name, label, className, icon, placeholder, disabled, defaultValue, tip, onChange, onBlur, type = "text" }: Input, ref: ForwardedRef<HTMLInputElement>) => {
     return <Fragment>
         <div className={cn(style.field)}>
 
@@ -38,7 +40,7 @@ const Field = forwardRef(({ id, name, label, className, icon, placeholder, disab
                 {icon}
             </div>
         </div>
-    </Fragment>
+    </Fragment >
 })
 
 export default Field
