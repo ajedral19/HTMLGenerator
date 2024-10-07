@@ -7,27 +7,64 @@ import { MdClose } from "react-icons/md";
 import FileInputField from "../Widgets/fileInputField.widget";
 import { useForm } from "react-hook-form";
 
+const spreadsheet_pattern = /docs\.google\.com\/spreadsheets\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+const cdn_pattern = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
+
 export default function TemplateForm() {
-    const { register, watch, setValue, setFocus } = useForm()
+    const { register, watch, setValue, setFocus, getValues, formState: { errors }, handleSubmit } = useForm()
+
+    console.log(errors);
 
 
-    const handleDrag = (e: React.DragEvent<HTMLElement>) => {
-        e.preventDefault()
+    const onSubmit = () => {
+        const values = getValues()
+        console.log(values);
+
     }
-
-    const handleDrop = (e: React.DragEvent<HTMLElement>) => {
-        const data = e.dataTransfer.files
-        setValue("file", data)
-        e.preventDefault()
-    }
-7
     return <Fragment>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className={cn(style.template_form)}>
-                <FileInputField {...register('file')} onDragOver={handleDrag} onDragEnter={handleDrag} onDrop={handleDrop} />
-                <Field {...register("templateName")} id="templateName" label="Template Name" />
-                <Field {...register("spreadsheetURL")} id="spreadsheetURL" label="Enter a spreadsheet URL or choose from the existine ones" />
-                <Field {...register("cdn")} id="cdn" label="Enter a CDN URL or choose from the existine ones" />
+                <FileInputField {...register('file', { required: "Upload your HTML template file." })} />
+                <Field
+                    {
+                    ...register("templateName",
+                        {
+                            required: "Template name is required.",
+                        })
+                    }
+                    id="templateName"
+                    label="Template Name"
+                    error={errors?.templateName}
+                />
+                <Field
+                    {
+                    ...register("spreadsheetURL",
+                        {
+                            required: "Spreadsheet URL is required.",
+                            pattern: {
+                                value: spreadsheet_pattern,
+                                message: "You have enterned an invalid URL"
+                            }
+                        })
+                    }
+                    id="spreadsheetURL"
+                    label="Enter a spreadsheet URL or choose from the existine ones"
+                    error={errors?.spreadsheetURL}
+                />
+                <Field
+                    {
+                    ...register("cdn",
+                        {
+                            pattern: {
+                                value: cdn_pattern,
+                                message: "You have enterned an invalid URL"
+                            }
+                        })
+                    }
+                    id="cdn"
+                    label="Enter a CDN URL or choose from the existine ones"
+                    error={errors?.cdn}
+                />
                 <div className={cn(style.template_form__btns, "pt-1")}>
                     <Button type="submit" text="Store" />
                     <Button type="reset" icon={<MdClose />} title="Clear" />

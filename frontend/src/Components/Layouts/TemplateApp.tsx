@@ -8,6 +8,7 @@ export default function TemplateApp({ children }: { children: React.ReactNode })
     const { isLoading } = useQuery({
         queryFn: () => GetTemplates(),
         queryKey: ["templates"],
+        refetchOnWindowFocus: false
     })
 
     return <Fragment>
@@ -18,7 +19,7 @@ export default function TemplateApp({ children }: { children: React.ReactNode })
                         <Fragment>
                             <Header />
                             <main className="pt-2">
-                            {children}
+                                {children}
                             </main>
                         </Fragment>
                         : "Loading Templates..."

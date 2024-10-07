@@ -11,6 +11,7 @@
     transition: all .2s ease-in
     background: var(--__bg)
     gap: .4em .8em
+    height: 100%
 
     &__img
         position: relative
@@ -35,7 +36,9 @@
         .tags
             grid-area: tags
             display: flex
+            flex-flow: row wrap
             gap: .6em
+            
         .favorite
             align-self: start
             grid-area: favorite

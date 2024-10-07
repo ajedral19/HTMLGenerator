@@ -1,6 +1,9 @@
 .type_text
     width: 100%
 .field
+    --__err-color: #ea5144
+    --__border-color: var(--theme-field-border)
+    --__border-width: 2px
     position: relative
     isolation: isolate
     &__input
@@ -10,8 +13,11 @@
         align-items: center
         border-radius: 2em
         overflow: hidden
-        outline: 1px solid var(--theme-field-border)
+        outline: var(--__border-width) solid var(--__border-color)
         transition: box-shadow .2s ease-in
+
+        &.error
+            // --__border-color: var(--__err-color)
 
     &:focus-within
         .field__input
@@ -20,9 +26,14 @@
             color: var(--theme-text-color)
             // .field__label
 
-    &__label
+    &__label,
+    &__error
         font-size: 1.4rem
+
+    &__label
         padding: .4em
         display: block
 
-        
+    &__error
+        color: var(--__err-color)
+        padding: .8em .4em 0 .4em
