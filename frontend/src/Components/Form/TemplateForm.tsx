@@ -24,7 +24,7 @@ export default function TemplateForm() {
     return <Fragment>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className={cn(style.template_form)}>
-                <FileInputField {...register('file', { required: "Upload your HTML template file." })} />
+                <FileInputField {...register('file', { required: "Upload your HTML template file." })}  className="mb-1"/>
                 <Field
                     {
                     ...register("templateName",

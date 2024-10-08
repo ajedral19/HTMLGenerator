@@ -28,7 +28,7 @@ const Field = forwardRef(({ id, name, label, className, icon, placeholder, disab
     return <Fragment>
         <div className={cn(style.field)}>
 
-            {label && <label className={cn(style.field__label, "label")} htmlFor={id}>{label}</label>}
+            {label && <label className={cn(style.field__label)} htmlFor={id}>{label}</label>}
             <div className={cn(style.field__input, { [style.error]: error }, { "pr-1": icon }, className)}>
                 <input
                     ref={ref}
