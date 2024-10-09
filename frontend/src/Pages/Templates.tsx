@@ -235,7 +235,7 @@ export default function Templates() {
     return <Fragment>
         <div className={cn(style.templates_layout, { [style['templates_layout--side_pane_visible']]: sidePane.isVisible })}>
             <div className={cn(style.templates_layout__templates)}>
-                <TemplatesGrid data={templatesData} />
+                {/* <TemplatesGrid data={templatesData} /> */}
             </div>
             <div className={cn(style.templates_layout__sidepane)}>
                 <Button icon={<MdClose />} className={cn("small mild-opaque", style.btn_close)} onClick={handleClose} />

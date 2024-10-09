@@ -13,18 +13,36 @@ const cdn_pattern = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-
 export default function TemplateForm() {
     const { register, watch, setValue, setFocus, getValues, formState: { errors }, handleSubmit } = useForm()
 
-    console.log(errors);
+    // const { ref, ...rest } = register('file', { required: "Upload your HTML template file." })
 
+
+    // TODO handle input file
+    const handlefiles = (files: FileList, max: number = 2) => {
+        const { length } = files
+        // console.log(fileFIeld.current?.value)
+        console.log(files, length, 'handlefiles');
+    }
+
+    const handleDrop = (e: React.DragEvent<HTMLElement>) => {
+        console.log(e.dataTransfer.files);
+        setValue('files', e.dataTransfer.files)
+
+        e.preventDefault()
+    }
 
     const onSubmit = () => {
         const values = getValues()
         console.log(values);
-
     }
     return <Fragment>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className={cn(style.template_form)}>
-                <FileInputField {...register('file', { required: "Upload your HTML template file." })}  className="mb-1"/>
+                <FileInputField
+                    {...register('files', { required: "need some files to upload" })}
+                    className="mb-1"
+                    onDrop={handleDrop}
+                // error={errors?.file}
+                />
                 <Field
                     {
                     ...register("templateName",
