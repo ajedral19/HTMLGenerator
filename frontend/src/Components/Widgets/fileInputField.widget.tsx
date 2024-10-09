@@ -18,29 +18,23 @@ type FileInput = {
 }
 
 const FileInputField = forwardRef(({ id, name, className, error, onDragOver, onDragEnter, onDrop, onChange }: FileInput, ref: ForwardedRef<HTMLInputElement>) => {
-
-    const { ...rest } = ref
-
     const handleDrag = (e: React.DragEvent<HTMLElement>) => {
         e.preventDefault()
     }
-
-    console.log(rest);
-
 
     return <Fragment>
 
         {/* onDragOver={onDragOver} onDragEnter={onDragEnter} onDrop={onDrop} onClick={onClick} */}
         <label className={cn(style.drop_area, className)} htmlFor={id} onDragOver={handleDrag} onDragEnter={handleDrag} onDrop={onDrop} >
             <input
-                {...rest}
+                {...ref}
                 id={id}
-                // name={name || id}
-                ref={ref}
+                name={name || id}
+                // ref={{ref}}
                 type="file"
                 accept="text/html, text/htm"
-                multiple
                 onChange={onChange}
+                // multiple
                 hidden />
             <div className={cn(style.drop_area__block)}>
                 <BiSolidCloudUpload fontSize="4em" className="mt-auto" />

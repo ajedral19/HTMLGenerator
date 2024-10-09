@@ -6,15 +6,29 @@ import style from '../../Styles/templateForm.module.sass'
 import { MdClose } from "react-icons/md";
 import FileInputField from "../Widgets/fileInputField.widget";
 import { useForm } from "react-hook-form";
+import { TemplateSave } from "../../Handlers/HandleTemplate";
 
 const spreadsheet_pattern = /docs\.google\.com\/spreadsheets\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
 const cdn_pattern = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
 
 export default function TemplateForm() {
-    const { register, watch, setValue, setFocus, getValues, formState: { errors }, handleSubmit } = useForm()
+    const { register, watch, setValue, setFocus, getValues, formState: { errors }, handleSubmit } = useForm<{
+        files: any
+        templateName: string
+        spreadsheetURL: string
+        cdn: string
+    }>({
+        defaultValues: {
 
-    // const { ref, ...rest } = register('file', { required: "Upload your HTML template file." })
+            templateName: "Just a template",
+            spreadsheetURL: "https://docs.google.com/spreadsheets/d/1-VH-PUDKBmF5R7j_BTrb32dMLXlZJqjNR6GjzK3a9qE/edit?gid=1179657384#gid=1179657384",
+            cdn: "https://cdn.jsdelivr.net/npm/mockjs@1.1.0/dist/mock.min.js"
+        }
+    })
 
+    const { ref, ...rest } = register('files', { required: "Upload your HTML template file." })
+
+    const inputRef = useRef<HTMLInputElement | null>(null)
 
     // TODO handle input file
     const handlefiles = (files: FileList, max: number = 2) => {
@@ -24,23 +38,41 @@ export default function TemplateForm() {
     }
 
     const handleDrop = (e: React.DragEvent<HTMLElement>) => {
-        console.log(e.dataTransfer.files);
-        setValue('files', e.dataTransfer.files)
-
+        console.log(e.dataTransfer.files[0]);
+        setValue('files', e.dataTransfer.files[0])
         e.preventDefault()
     }
 
+    const handleChange = (e) => {
+        const files = e.target?.files[0]
+        console.log(files, 'onchange');
+        
+        // setValue('files', files[0])
+    }
+
+
     const onSubmit = () => {
-        const values = getValues()
-        console.log(values);
+        const { files, templateName, spreadsheetURL, cdn } = getValues()
+        const payload = {
+            templateFiles: files,
+            templateName: templateName,
+            spreadsheet: spreadsheetURL,
+            cdn,
+            stylesheetId: ""
+        }
+        TemplateSave(payload)
+        // console.log(values);
     }
     return <Fragment>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className={cn(style.template_form)}>
                 <FileInputField
-                    {...register('files', { required: "need some files to upload" })}
+                    ref={register}
+                    // name="files"
+                    // {...register('files', { required: "need some files to upload" })}
                     className="mb-1"
                     onDrop={handleDrop}
+                    onChange={handleChange}
                 // error={errors?.file}
                 />
                 <Field
