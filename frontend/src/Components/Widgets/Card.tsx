@@ -8,11 +8,36 @@ import Favotite from "./favorite.widget";
 import global_style from '../../Styles/global.module.sass'
 import style from '../../Styles/card.module.sass'
 import { useSelector } from "react-redux";
+import { Buffer } from 'buffer'
 
 export default function Card({ data, onClick, layout = "grid" }: CardContent & { onClick?: () => void, layout?: "grid" | "list" }) {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image } = data
     const [active, setActive] = useState(false)
     const current = useSelector((state: { sidePane: { details?: TemplateDetails } }) => state.sidePane.details?.data.id)
+
+    const [myImg, setMyImg] = useState()
+
+
+    useEffect(() => {
+        const buffer = Buffer.from(image)
+        const blob = new Blob([buffer])
+
+        const reader = new FileReader()
+
+        const controller = new AbortController()
+
+        reader.addEventListener('load', () => {
+            const img = new Image()
+            img.height = 800
+            img.title = name
+            setMyImg(reader.result)
+        }, false)
+
+        reader.readAsDataURL(blob)
+
+        return () => controller.abort()
+    }, [])
+
 
     useEffect(() => {
         if (current == id)
@@ -27,7 +52,7 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
         <div className={cn(style.card, style[layout], { [style.focused]: active })} onClick={onClick}>
 
             <div className={cn(style.card__img)}>
-                <img src={image || '/images/template-placeholder.png'} alt={name} />
+                <img src={myImg || '/images/template-placeholder.png'} alt={name} />
             </div>
 
             <div className={cn(style.card__meta)}>
