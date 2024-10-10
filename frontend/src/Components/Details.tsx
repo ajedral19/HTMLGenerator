@@ -31,7 +31,10 @@ const editButton = [
 ]
 
 export default function Details({ data }: TemplateDetails) {
-    const { name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
+    // const { name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
+    console.log(data);
+    
+    return <h1>test</h1>
 
     return <Fragment>
         <section className={cn(style.details)}>

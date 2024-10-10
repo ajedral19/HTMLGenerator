@@ -51,7 +51,7 @@ export type TemplateData = {
 	ticket: Ticket | Ticket[];
 	spreadsheetURL: string;
 	isFavorite: boolean;
-	image: string;
+	image: Buffer | string;
 };
 
 export type CardContent = {

@@ -19,37 +19,13 @@ export default function TemplateForm() {
         cdn: string
     }>({
         defaultValues: {
-
             templateName: "Just a template",
             spreadsheetURL: "https://docs.google.com/spreadsheets/d/1-VH-PUDKBmF5R7j_BTrb32dMLXlZJqjNR6GjzK3a9qE/edit?gid=1179657384#gid=1179657384",
             cdn: "https://cdn.jsdelivr.net/npm/mockjs@1.1.0/dist/mock.min.js"
         }
     })
 
-    const { ref, ...rest } = register('files', { required: "Upload your HTML template file." })
-
-    const inputRef = useRef<HTMLInputElement | null>(null)
-
-    // TODO handle input file
-    const handlefiles = (files: FileList, max: number = 2) => {
-        const { length } = files
-        // console.log(fileFIeld.current?.value)
-        console.log(files, length, 'handlefiles');
-    }
-
-    const handleDrop = (e: React.DragEvent<HTMLElement>) => {
-        console.log(e.dataTransfer.files[0]);
-        setValue('files', e.dataTransfer.files[0])
-        e.preventDefault()
-    }
-
-    const handleChange = (e) => {
-        const files = e.target?.files[0]
-        console.log(files, 'onchange');
-        
-        // setValue('files', files[0])
-    }
-
+    const inputRef = useRef<FileList | null>(null)
 
     const onSubmit = () => {
         const { files, templateName, spreadsheetURL, cdn } = getValues()
@@ -61,19 +37,24 @@ export default function TemplateForm() {
             stylesheetId: ""
         }
         TemplateSave(payload)
-        // console.log(values);
     }
+
+    const handleDrop = (e: React.DragEvent<HTMLInputElement>) => {
+        const file = e.dataTransfer.files
+        setValue("files", file)
+        inputRef.current = file
+
+        e.preventDefault()
+    }
+
+
     return <Fragment>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className={cn(style.template_form)}>
                 <FileInputField
-                    ref={register}
-                    // name="files"
-                    // {...register('files', { required: "need some files to upload" })}
+                    {...register('files')}
                     className="mb-1"
                     onDrop={handleDrop}
-                    onChange={handleChange}
-                // error={errors?.file}
                 />
                 <Field
                     {

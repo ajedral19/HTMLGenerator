@@ -5,11 +5,13 @@ import cn from 'classnames'
 import style from '../Styles/templates.module.sass'
 import { useDispatch, useSelector } from "react-redux";
 import { showSidePane } from "../Redux/Slices/sidePane";
-import { TemplateDetails } from "../types";
+import { TemplateData, TemplateDetails } from "../types";
 import { init_details } from "../Utils/initialStates";
 import { MdClose } from "react-icons/md";
 import TemplateForm from "../Components/Form/TemplateForm";
 import TemplatesGrid from "../Components/TemplatesGrid";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const templatesData: TemplateDetails[] = [
     {
@@ -225,23 +227,36 @@ const templatesData: TemplateDetails[] = [
 ]
 
 export default function Templates() {
+
+    const quertClient = useQueryClient()
+
+    const templates: { rows: TemplateDetails[] } = quertClient.getQueryData(['templates']) || { rows: [] }
+
+
     const dispatch = useDispatch()
     const sidePane = useSelector((state: { sidePane: { isVisible: boolean, visibleState?: string, details?: TemplateDetails } }) => state.sidePane)
 
     const handleClose = () =>
         dispatch(showSidePane({ isVisible: false, visibleState: undefined, details: init_details }))
 
+    useEffect(() => {
+        console.log(sidePane.details);
+        
+    }, [sidePane.visibleState])
+
 
     return <Fragment>
         <div className={cn(style.templates_layout, { [style['templates_layout--side_pane_visible']]: sidePane.isVisible })}>
             <div className={cn(style.templates_layout__templates)}>
-                {/* <TemplatesGrid data={templatesData} /> */}
+                <TemplatesGrid data={templates.rows} />
             </div>
             <div className={cn(style.templates_layout__sidepane)}>
                 <Button icon={<MdClose />} className={cn("small mild-opaque", style.btn_close)} onClick={handleClose} />
                 {
                     sidePane.visibleState === 'themeDetails' ?
-                        <Details data={sidePane.details?.data || init_details.data} /> :
+                        <Details data={sidePane.details?.data || init_details.data} /> 
+                        // <h1>test</h1>
+                        :
                         sidePane.visibleState === "newThemeForm" ?
                             <TemplateForm /> :
                             <h1>Unknow Actions has been triggered</h1>

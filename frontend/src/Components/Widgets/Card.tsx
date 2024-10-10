@@ -27,24 +27,29 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
         <div className={cn(style.card, style[layout], { [style.focused]: active })} onClick={onClick}>
 
             <div className={cn(style.card__img)}>
-                <img src={image} alt={name} />
+                <img src={image || '/images/template-placeholder.png'} alt={name} />
             </div>
 
             <div className={cn(style.card__meta)}>
                 <div className={cn(style.info)}>
                     <p className={cn(style.name)}>{name}</p>
-                    <p className={cn(global_style.icon_text, style.author)}><MdPerson4 fontSize="1.6rem" /> {author}</p>
+                    {author && <p className={cn(global_style.icon_text, style.author)}><MdPerson4 fontSize="1.6rem" /> {author}</p>}
                 </div>
-                <p className={cn(style.tags)}>
-                    {
-                        Array.isArray(ticket) ?
-                            ticket.map((item, key) =>
-                                <StripTag size="small" text={item.id} url={item.url} key={key} />
-                            ) :
-                            <StripTag size="small" text={ticket.id} url={ticket.url} />
-                    }
-                    <StripTag size="small" text="Spreadsheet Data" url={spreadsheetURL} variant="teal" />
-                </p>
+                {
+                    (ticket || spreadsheetURL) &&
+                    <p className={cn(style.tags)}>
+                        {
+                            ticket && (
+                                Array.isArray(ticket) ?
+                                    ticket.map((item, key) =>
+                                        <StripTag size="small" text={item.id} url={item.url} key={key} />
+                                    ) :
+                                    <StripTag size="small" text={ticket.id} url={ticket.url} />
+                            )
+                        }
+                        <StripTag size="small" text="Spreadsheet Data" url={spreadsheetURL} variant="teal" />
+                    </p>
+                }
 
                 <span role="button" className={cn(style.favorite)}>
                     <Favotite isFavorite={isFavorite} fontSize="2rem" />

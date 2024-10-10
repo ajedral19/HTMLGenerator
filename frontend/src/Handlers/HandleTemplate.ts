@@ -3,7 +3,7 @@ import { api } from "./handle.config";
 
 type Template = {
 	// templateFiles: file | files[] // maximum of two
-	templateFiles: File | File[];
+	templateFiles: FileList; // | File
 	templateName: string;
 	spreadsheet: string;
 	cdn: string;
@@ -14,16 +14,17 @@ export const TemplateSave = async (template_prop: Template) => {
 	const { templateFiles, templateName, spreadsheet, cdn, stylesheetId } = template_prop;
 	const headers = { "Content-Type": "multipart/form-data" };
 	const payload = {
-		template: templateFiles,
+		template: templateFiles[0],
 		name: templateName,
 		sheet: spreadsheet,
 		cdn: cdn,
-		stylesheetId,
+		// stylesheetId,
 	};
 
-	console.log(payload, 'payload');
+	// console.log(payload);
+	
+	// return
 
-	return;
 	return api
 		.post("/template/add", payload, { headers })
 		.then((response) => response.data)
