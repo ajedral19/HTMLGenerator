@@ -1,0 +1,19 @@
+<h1 style="margin-bottom: 12px">{{ name }}</h1>
+<blockquote><em>{{ job.title }} at <b>{{ job.company }}</b></em></blockquote>
+<br />
+<ul>
+    {{#biography}}
+        <li style="margin-bottom: 12px">{{ . }}</li>
+    {{/biography}}
+</ul>
+<hr>
+<br />
+<h2>{{ name }} also have siblings</h2>
+<ol style="margin-top: 10px">
+    {{#siblings}}
+        <li style="margin-bottom: 10px">
+            name: {{ this.name }}<br />
+            age: {{ this.age }}
+        </li>
+    {{/siblings}}
+</ol>

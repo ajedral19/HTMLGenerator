@@ -8,7 +8,7 @@ import Input from '../Components/Form/Input';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import useExtract from '../Hooks/useExtract';
 import { Button } from '../Components/Widgets';
-export default function LiveEditor() {
+export default function Fiddle() {
     const [html, setHtml] = useState<string>("<h1>hello</h1>")
     const [url, setUrl] = useState<string>("")
 
@@ -28,11 +28,10 @@ export default function LiveEditor() {
 
 
     return <>
-        <div className="flex">
-            <h2 className="title title--3 col grow">Template Playground</h2>
-            {/* <p className="col">Request Timer</p> */}
-        </div>
-        <div className="flex">
+        {/* <div className="flex">
+            <h2 className="title title--2 col grow">Template Fiddle</h2>
+        </div> */}
+        {/* <div className="flex">
             <div className='col grow'>
                 <Input name='sheet_url' id='sheet_url' ref={ref} />
             </div>
@@ -43,7 +42,7 @@ export default function LiveEditor() {
                 <h4 className='mb-1'>Structured Data from Spreadsheet</h4>
                 <MarkdownPreview style={{ width: "auto", maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json \nloading...` : `\`\`\`json \n${JSON.stringify(data?.rows, null, " ")}`} />
             </div>
-        </div>
+        </div> */}
         <div className="flex">
             <div className="col col-6">
                 <AceEditor

@@ -68,8 +68,8 @@ export const TemplatesFind = async (page = 1, limit = 10) => {
     try {
         const rows = await HTMLGenerator.find({}).skip(offset).limit(limit);
         const data = rows.map((row) => {
-            const { id, template_name: name, template_data_url: sheet, template_cdn_url: cdn } = row;
-            return { id, name, sheet, cdn };
+            const { id, template_name: name, template_data_url: spreadsheetURL, template_screenshot } = row;
+            return { data: { id, name, author: "", ticket: "", spreadsheetURL, isFavorite: false, image: template_screenshot } };
         });
 
         return { rows: [...data] };

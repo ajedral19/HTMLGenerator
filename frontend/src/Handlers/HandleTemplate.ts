@@ -2,21 +2,28 @@ import { error } from "console";
 import { api } from "./handle.config";
 
 type Template = {
-	template: string | unknown;
-	name: string;
-	sheet: string;
+	// templateFiles: file | files[] // maximum of two
+	templateFiles: FileList; // | File
+	templateName: string;
+	spreadsheet: string;
 	cdn: string;
+	stylesheetId: string | string[];
 };
 
 export const TemplateSave = async (template_prop: Template) => {
-	const { template, name, sheet, cdn } = template_prop;
+	const { templateFiles, templateName, spreadsheet, cdn, stylesheetId } = template_prop;
 	const headers = { "Content-Type": "multipart/form-data" };
 	const payload = {
-		template,
-		name,
-		sheet,
-		cdn,
+		template: templateFiles[0],
+		name: templateName,
+		sheet: spreadsheet,
+		cdn: cdn,
+		// stylesheetId,
 	};
+
+	// console.log(payload);
+	
+	// return
 
 	return api
 		.post("/template/add", payload, { headers })

@@ -1,0 +1,21 @@
+[
+    {
+        "name": "Jane Doe",
+        "age": 24,
+        "job": {
+            "title": "Marketing Associate | SEO Specialist",
+            "company": "InnoVertex Corp."
+        },
+        "biography": [
+            " Passionate about digital marketing and search engine optimization, I currently serve as a Marketing Associate at InnoVertex Corp, where I focus on driving online visibility and enhancing brand engagement. With a keen analytical mindset, I thrive on developing data-driven strategies that elevate company performance.",
+            "A proud middle child in a vibrant family, I have three siblings: Jannah (22), Jack (18), and John (15). Our diverse interests keep life exciting, and we often bond over outdoor adventures and community volunteering.",
+            "Always eager to learn and adapt, I stay current with the latest marketing trends to ensure I contribute effectively to our team's goals. Let’s connect and explore new opportunities together!"
+        ],
+
+        "siblings": [
+            { "name": "John", "age": 15 },
+            { "name": "Jannah", "age": 22 },
+            { "name": "Jack", "age": 18 }
+        ]
+    }
+]
