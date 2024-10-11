@@ -239,16 +239,11 @@ export default function Templates() {
     const handleClose = () =>
         dispatch(showSidePane({ isVisible: false, visibleState: undefined, details: init_details }))
 
-    useEffect(() => {
-        console.log(sidePane.details);
-        
-    }, [sidePane.visibleState])
-
 
     return <Fragment>
         <div className={cn(style.templates_layout, { [style['templates_layout--side_pane_visible']]: sidePane.isVisible })}>
             <div className={cn(style.templates_layout__templates)}>
-                <TemplatesGrid data={templates.rows} />
+                <TemplatesGrid data={[...templates.rows]} />
             </div>
             <div className={cn(style.templates_layout__sidepane)}>
                 <Button icon={<MdClose />} className={cn("small mild-opaque", style.btn_close)} onClick={handleClose} />

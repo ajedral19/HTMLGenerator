@@ -18,10 +18,37 @@
         aspect-ratio: var(--__ratio)
         overflow: hidden
         border-radius: .3em
+        isolation: isolate
+        .expand
+            position: absolute
+            cursor: pointer
+            right: .6rem
+            top: .6rem
+            color: var(--theme-text-color)
+            font-size: 1.6rem
+            background: #29314E80
+            width: 2.6rem
+            height: 2.6rem
+            padding: .6rem
+            border-radius: 2em
+            z-index: 10
+            opacity: .5
+            &:hover
+                opacity: 1
         img
             object-fit: cover
             height: var(--__img-size)
             width: var(--__img-size)
+            object-position: top center
+            z-index: 0
+
+        &::before
+            content: ''
+            position: absolute
+            inset: 0
+            height: 50%
+            background: linear-gradient(0deg, transparent 0%, #00000040 180%)
+            mix-blend-mode: multiply
 
     &__meta
         display: grid

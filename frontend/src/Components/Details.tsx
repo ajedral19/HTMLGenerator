@@ -15,6 +15,7 @@ import { init_details } from "../Utils/initialStates";
 import { Link } from "react-router-dom";
 import Field from "./Widgets/field.widget";
 import { Buffer } from 'buffer'
+import { useImage } from "../Hooks/useImage";
 
 const editButton = [
     {
@@ -34,33 +35,11 @@ const editButton = [
 export default function Details({ data }: TemplateDetails) {
     const { name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
 
-
-    const [myImg, setMyImg] = useState()
-
-
-    useEffect(() => {
-        const buffer = Buffer.from(image)
-        const blob = new Blob([buffer])
-
-        const reader = new FileReader()
-
-        const controller = new AbortController()
-
-        reader.addEventListener('load', () => {
-            const img = new Image()
-            img.height = 800
-            img.title = name
-            setMyImg(reader.result)
-        }, false)
-
-        reader.readAsDataURL(blob)
-
-        return () => controller.abort()
-    }, [data])
+    const myImg = useImage(image)
 
     return <Fragment>
         <section className={cn(style.details)}>
-            <img src={myImg} alt={name} />
+            <img src={myImg?.toString()} alt={name} />
             <ul className={cn(style.details__tabs)}>
                 <li role="button">
                     Details
@@ -72,65 +51,76 @@ export default function Details({ data }: TemplateDetails) {
             <div className={cn(style.details__content)}>
                 <div className={cn(style.details__meta)}>
                     <div className="flex items-center space-between no-gap mb-1">
-                        {/* {
-                            ticket &&
+                        {
+
+                            ticket ?
                                 Array.isArray(ticket) ?
-                                ticket.map((item, key) => (
-                                    <StripTag text={item.id} url={item.url} key={key} />
-                                ))
-                                :
-                                <StripTag text={ticket.id} url={ticket.url} />
-                        } */}
+                                    ticket.map((item, key) => (
+                                        <StripTag text={item.id} url={item.url} key={key} />
+                                    ))
+                                    :
+                                    <StripTag text={ticket.id} url={ticket.url} />
+                                : null
+                        }
                         <Favotite isFavorite={isFavorite} fontSize="2.4rem" />
                     </div>
                     <div>
                         <h4 className={cn("title title--2")}>{name}</h4>
-                        <p className={cn(global_style.icon_text)}><MdPerson4 fontSize="1.6rem" /> {author}</p>
+                        {author && <p className={cn(global_style.icon_text)}><MdPerson4 fontSize="1.6rem" /> {author}</p>}
                     </div>
 
-                    <div>
-                        <p className="label">Date uploaded</p>
-                        <p>{uploadDate}</p>
-                    </div>
-
-                    <div>
-                        <p className="label">Spreadsheet URL</p>
-                        <p>
-                            <Link to={spreadsheetURL} target="_blank">
-                                {spreadsheetURL}
-                            </Link>
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="label">Stylesheet in use</p>
-                        <ul>
-                            {
-                                Array.isArray(stylesheets) ?
-                                    stylesheets.map((style, key) => (
-                                        <li key={key}>
-                                            {/* <Link to={style.url || ""} target="_blank">{style.name || ""}</Link> */}
-                                        </li>
-
-                                    )) :
-                                    <li >
-                                        {/* <Link
-                                            to={stylesheets.url || ""}
-                                            target="_blank">
-                                            {stylesheets.name || ""}
-                                        </Link> */}
-                                    </li>
-                            }
-                        </ul>
-                    </div>
-                    <div className="mt-auto flex no-gap">
+                    {
+                        uploadDate &&
                         <div>
+                            <p className="label">Date uploaded</p>
+                            <p>{uploadDate}</p>
+                        </div>
+                    }
+
+                    {spreadsheetURL &&
+                        <div>
+                            <p className="label">Spreadsheet URL</p>
+                            <p>
+                                <Link to={spreadsheetURL} target="_blank">
+                                    {spreadsheetURL}
+                                </Link>
+                            </p>
+                        </div>
+                    }
+
+                    {
+                        stylesheets &&
+                        <div>
+                            <p className="label">Stylesheet in use</p>
+                            <ul>
+                                {
+                                    Array.isArray(stylesheets) ?
+                                        stylesheets.map((style, key) => (
+                                            style &&
+                                            <li key={key}>
+                                                <Link to={style.url || ""} target="_blank">
+                                                    {style.name || ""}
+                                                </Link>
+                                            </li>
+
+                                        )) :
+                                        <li >
+                                            <Link to={stylesheets.url || ""} target="_blank">
+                                                {stylesheets.name || ""}
+                                            </Link>
+                                        </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    <div className="mt-auto flex no-gap">
+                        {/* <div>
                             <div className="">
                                 <Field placeholder="start index" />
                                 <Field placeholder="count" />
                             </div>
-                            <Button text="Generate" className="mr-auto" />
-                        </div>
+                        </div> */}
+                        <Button text="Generate" className="mr-auto" />
                         <Button icon={<MdMoreHoriz />} title="More" options={editButton} />
                     </div>
                 </div>

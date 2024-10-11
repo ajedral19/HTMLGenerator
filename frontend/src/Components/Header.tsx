@@ -28,9 +28,11 @@ type state = {
     },
     textField?: {
         placeholder?: string
-        icon?: ReactElement
+        isValid?: boolean
     }
 }
+
+const pattern = /docs\.google\.com\/spreadsheets\/d\/\b([-a-zA-Z0-9()@:%_\+.~#?&//=]\/*)/
 
 export default function Header() {
     const currentRoute = useLocation()
@@ -40,13 +42,12 @@ export default function Header() {
         showTemplateForm: false
     })
 
+    const { register, getValues, handleSubmit } = useForm<{ headerField: string }>({ defaultValues: { headerField: "" } })
+    const dispatch = useDispatch()
+
     const sidePane = useSelector((state: { sidePane: { visibleState?: "newThemeForm" | "themeDetails", isVisible: boolean } }) => state.sidePane)
     const { visibleState, isVisible } = sidePane
-
-
-    const { register } = useForm<{ headerField: string }>({ defaultValues: { headerField: "" } })
     const isGrid = useSelector((state: { headerOptions: { display: { isGrid: boolean } } }) => state.headerOptions.display.isGrid)
-    const dispatch = useDispatch()
 
     const handleDisplay = (state: boolean) =>
         dispatch(headerOptions({ display: { isGrid: state } }))
@@ -73,9 +74,6 @@ export default function Header() {
                 ...state.textField,
                 placeholder: isRouteMatch('/templates') ? "Looking for a template? Find by typing here"
                     : "Enter a Spreadsheet URL or ID",
-                icon: isRouteMatch('/templates') ?
-                    <LuSearch cursor="pointer" fontSize="2rem" color="#3A466C" />
-                    : <PiTreeStructureFill cursor="pointer" fontSize="2rem" color="#3A466C" />
             }
         }))
     }, [currentRoute])
@@ -87,6 +85,29 @@ export default function Header() {
             setState(state => ({ ...state, showTemplateForm: false }))
     }, [isVisible, visibleState])
 
+    const handleOnChange = () => {
+        let isValid = false
+
+        const field = getValues('headerField') || ""
+
+        isValid = isRouteMatch('/templates')
+            ? field.length ? true : false
+            : pattern.test(field)
+
+        setState((state) => ({
+            ...state,
+            textField: {
+                ...state.textField,
+                isValid: isValid
+            }
+        }))
+    }
+
+    const onSubmit = (e) => {
+        console.log(e);
+
+    }
+
     return <Fragment>
         <div className={cn(style.header)}>
             {
@@ -96,13 +117,36 @@ export default function Header() {
                     <Button icon={<FaThList />} className={cn({ ["transparent"]: isGrid })} onClick={() => handleDisplay(false)} />
                 </div>
             }
-            <Field
-                {...register("headerField")}
-                id="finder"
-                className={cn(style.search_field)}
-                placeholder={state.textField?.placeholder}
-                icon={state.textField?.icon}
-            />
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Field
+                    {
+                    ...register("headerField", {
+                        required: !isRouteMatch('/templates') ? "invalid url" : undefined,
+                        pattern: !isRouteMatch('/templates') ? pattern : undefined,
+                        onChange: handleOnChange
+                    }
+                    )
+                    }
+
+                    id="finder"
+                    className={cn(style.search_field)}
+                    placeholder={state.textField?.placeholder}
+                    icon={isRouteMatch('/templates') ?
+                        <LuSearch
+                            role="button"
+                            cursor="pointer"
+                            fontSize="2rem"
+                            color={state.textField?.isValid ? "#fff" : "#3A466C"}
+                            className={cn(style.field_icon, { [style['active']]: state.textField?.isValid })} /> :
+                        <PiTreeStructureFill
+                            role="button"
+                            cursor="pointer"
+                            fontSize="2rem"
+                            color={state.textField?.isValid ? "#fff" : "#3A466C"}
+                            title="extract"
+                            className={cn(style.field_icon, { [style['active']]: state.textField?.isValid })} />}
+                />
+            </form>
             {
                 isRouteMatch('/templates') &&
                 <Button

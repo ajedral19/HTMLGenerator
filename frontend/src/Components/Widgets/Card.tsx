@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { MdPerson4 } from 'react-icons/md'
 import StripTag from "./StripTag";
 import cn from 'classnames'
@@ -8,35 +8,18 @@ import Favotite from "./favorite.widget";
 import global_style from '../../Styles/global.module.sass'
 import style from '../../Styles/card.module.sass'
 import { useSelector } from "react-redux";
-import { Buffer } from 'buffer'
+import { useImage } from "../../Hooks/useImage";
+import { BiExpandAlt } from "react-icons/bi";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function Card({ data, onClick, layout = "grid" }: CardContent & { onClick?: () => void, layout?: "grid" | "list" }) {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image } = data
     const [active, setActive] = useState(false)
     const current = useSelector((state: { sidePane: { details?: TemplateDetails } }) => state.sidePane.details?.data.id)
+    const navigate = useNavigate()
 
-    const [myImg, setMyImg] = useState()
-
-
-    useEffect(() => {
-        const buffer = Buffer.from(image)
-        const blob = new Blob([buffer])
-
-        const reader = new FileReader()
-
-        const controller = new AbortController()
-
-        reader.addEventListener('load', () => {
-            const img = new Image()
-            img.height = 800
-            img.title = name
-            setMyImg(reader.result)
-        }, false)
-
-        reader.readAsDataURL(blob)
-
-        return () => controller.abort()
-    }, [])
+    const myImg = useImage(image)
 
 
     useEffect(() => {
@@ -44,15 +27,25 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
             setActive(true);
         else
             setActive(false);
-
     }, [current])
+
+    const expandTemplate = (e: React.SyntheticEvent, id: string) => {
+        e.stopPropagation()
+        // navigate(`api/template/${id}/preview`)
+        // do request
+    }
 
 
     return <Fragment>
         <div className={cn(style.card, style[layout], { [style.focused]: active })} onClick={onClick}>
 
             <div className={cn(style.card__img)}>
-                <img src={myImg || '/images/template-placeholder.png'} alt={name} />
+                {active &&
+                    <Link to={`/api/template/${id}/preview`} target="_blank" rel="noopener noreferrer">
+                        <BiExpandAlt className={style.expand} onClick={(e) => expandTemplate(e, id)} />
+                    </Link>
+                }
+                <img src={myImg?.toString()} alt={name} />
             </div>
 
             <div className={cn(style.card__meta)}>
