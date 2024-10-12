@@ -1,18 +1,19 @@
 import { Fragment } from "react/jsx-runtime";
-import SidePanel from "../SidePanel";
 import { useQuery } from "@tanstack/react-query";
-import { GetTemplates } from "../../Handlers/RequestHander";
 import Header from "../Header";
+import ProgressBar from "../Widgets/progressBar.widget";
+import { TemplateFindAll } from "../../Handlers/HandleTemplate";
 
 export default function TemplateApp({ children }: { children: React.ReactNode }) {
     const { isLoading } = useQuery({
-        queryFn: () => GetTemplates(),
+        queryFn: () => TemplateFindAll(),
         queryKey: ["templates"],
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
     })
 
     return <Fragment>
         <div className="h-100">
+            <ProgressBar />
             <div className="panel panel--main rounded">
                 {
                     !isLoading ?

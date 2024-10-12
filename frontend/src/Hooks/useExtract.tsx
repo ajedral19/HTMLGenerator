@@ -6,7 +6,7 @@ export default function useExtract(url: string) {
     const { data, isLoading } = useQuery({
         queryFn: async () => await DocumentExtract(url),
         queryKey: ["jsonData", url],
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
     })
     return { data, isLoading }
 }

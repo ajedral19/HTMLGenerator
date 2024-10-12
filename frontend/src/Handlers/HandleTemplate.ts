@@ -22,13 +22,13 @@ export const TemplateSave = async (template_prop: Template) => {
 	};
 
 	// console.log(payload);
-	
+
 	// return
 
 	return api
 		.post("/template/add", payload, { headers })
 		.then((response) => response.data)
-		.catch((err) => err);
+		.catch((err) => console.log(err));
 };
 
 export const TemplateDelete = async (id: string) => {
@@ -37,26 +37,26 @@ export const TemplateDelete = async (id: string) => {
 	return api
 		.delete(`/template/${id}`, { headers })
 		.then((response) => response.data)
-		.catch((err) => err);
+		.catch((err) => console.log(err));
 };
 
-export const TemplateFindAll = async (page?: number) => {
+export const TemplateFindAll = async (page?: number, signal?: AbortSignal) => {
 	return api
-		.get(`/templates${page ? "?page=" + page : ""}`)
+		.get(`/templates${page ? "?page=" + page : ""}`, {signal})
 		.then((response) => response.data)
-		.catch((err) => err);
+		.catch((err) => console.log(err));
 };
 
 export const TemplateFindOne = async (id: string) => {
 	return api
 		.get(`/template/${id}`)
 		.then((response) => response.data)
-		.catch((err) => err);
+		.catch((err) => console.log(err));
 };
 
 export const TemplateCountPages = async () => {
 	return api
 		.get("/template/count")
 		.then((response) => response.data)
-		.catch((err) => err);
+		.catch((err) => console.log(err));
 };

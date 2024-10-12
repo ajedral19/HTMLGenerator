@@ -8,7 +8,7 @@ import MarkdownPreview from '@uiw/react-markdown-preview';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import useExtract from '../Hooks/useExtract';
-import Handlebars from 'handlebars'
+import Handlebars, { registerHelper } from 'handlebars'
 
 export default function Fiddle() {
     const [html, setHtml] = useState<string>("<h1>hello</h1>")
@@ -17,6 +17,7 @@ export default function Fiddle() {
     const { data, isLoading } = useExtract(spreadsheet.url)
 
     useEffect(() => {
+        Handlebars.registerHelper("loud", (text: string) => text.toUpperCase())
         const compile = Handlebars.compile(html)
         try {
             if (data.rows) {
@@ -36,9 +37,12 @@ export default function Fiddle() {
     }
 
     return <>
-        <MarkdownPreview style={{ width: "auto", maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json\n["loading"]` : `\`\`\`json\n${JSON.stringify(data.rows ? data.rows[0] : data, null, "  ")}`} />
         <div className="flex">
-            <div className="col col-6">
+            <div className="col col-4">
+                <MarkdownPreview style={{ width: "auto", maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json\n["loading"]` : `\`\`\`json\n${JSON.stringify(data.rows ? data.rows[0] : data, null, "  ")}`} />
+
+            </div>
+            <div className="col col-4">
                 <AceEditor
                     placeholder='Play here'
                     // mode="html"
@@ -62,7 +66,7 @@ export default function Fiddle() {
                 />
 
             </div>
-            <div className="col col-6">
+            <div className="col col-4">
                 <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlOutput, { IN_PLACE: true, FORBID_TAGS: ['style', 'script'], }) }}></div>
             </div>
         </div>
