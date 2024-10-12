@@ -3,6 +3,7 @@ import modalSliceReducer from "./Redux/Slices/modal";
 import templatesReducer from "./Redux/Slices/templates";
 import sidePaneReducer from "./Redux/Slices/sidePane";
 import headerReducer from "./Redux/Slices/header";
+import spreadsheetUrlReducer from "./Redux/Slices/spreadsheetUrl";
 
 export default configureStore({
 	reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
 		templates: templatesReducer,
 		sidePane: sidePaneReducer,
 		headerOptions: headerReducer,
+		spreadsheet: spreadsheetUrlReducer,
 	},
 });

@@ -14,6 +14,11 @@ import { useLocation, matchRoutes } from "react-router-dom";
 import { showSidePane } from "../Redux/Slices/sidePane";
 import { PiTreeStructureFill } from "react-icons/pi";
 import { init_details } from "../Utils/initialStates";
+import { DocumentExtract } from "../Handlers/HandleDocument";
+import useExtract from "../Hooks/useExtract";
+
+import SearchField from "./Widgets/search_field.widget";
+import { spreadsheetUrl } from "../Redux/Slices/spreadsheetUrl";
 
 type state = {
     hasTemplates: boolean
@@ -29,21 +34,23 @@ type state = {
     textField?: {
         placeholder?: string
         isValid?: boolean
+        url?: string
     }
 }
 
-const pattern = /docs\.google\.com\/spreadsheets\/d\/\b([-a-zA-Z0-9()@:%_\+.~#?&//=]\/*)/
+// sheet id only -> /([-a-zA-Z0-9()@:%_\+.~#?&\=]){44}/
+// sheet url -> /docs\.google\.com\/spreadsheets\/d\/\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]){44}/
+const pattern = /docs\.google\.com\/spreadsheets\/d\/\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]){44}/
 
 export default function Header() {
+    const dispatch = useDispatch()
     const currentRoute = useLocation()
+
     const [state, setState] = useState<state>({
         hasTemplates: false,
         isFiddle: false,
         showTemplateForm: false
     })
-
-    const { register, getValues, handleSubmit } = useForm<{ headerField: string }>({ defaultValues: { headerField: "" } })
-    const dispatch = useDispatch()
 
     const sidePane = useSelector((state: { sidePane: { visibleState?: "newThemeForm" | "themeDetails", isVisible: boolean } }) => state.sidePane)
     const { visibleState, isVisible } = sidePane
@@ -74,8 +81,10 @@ export default function Header() {
                 ...state.textField,
                 placeholder: isRouteMatch('/templates') ? "Looking for a template? Find by typing here"
                     : "Enter a Spreadsheet URL or ID",
+                isValid: false
             }
         }))
+
     }, [currentRoute])
 
     useEffect(() => {
@@ -85,28 +94,12 @@ export default function Header() {
             setState(state => ({ ...state, showTemplateForm: false }))
     }, [isVisible, visibleState])
 
-    const handleOnChange = () => {
-        let isValid = false
-
-        const field = getValues('headerField') || ""
-
-        isValid = isRouteMatch('/templates')
-            ? field.length ? true : false
-            : pattern.test(field)
-
-        setState((state) => ({
-            ...state,
-            textField: {
-                ...state.textField,
-                isValid: isValid
-            }
-        }))
+    const handleSubmit = (e: { headerField: string }) => {
+        if (!isRouteMatch('/templates')) {
+            dispatch(spreadsheetUrl(e.headerField))
+        }
     }
 
-    const onSubmit = (e) => {
-        console.log(e);
-
-    }
 
     return <Fragment>
         <div className={cn(style.header)}>
@@ -117,36 +110,23 @@ export default function Header() {
                     <Button icon={<FaThList />} className={cn({ ["transparent"]: isGrid })} onClick={() => handleDisplay(false)} />
                 </div>
             }
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Field
-                    {
-                    ...register("headerField", {
-                        required: !isRouteMatch('/templates') ? "invalid url" : undefined,
-                        pattern: !isRouteMatch('/templates') ? pattern : undefined,
-                        onChange: handleOnChange
-                    }
-                    )
-                    }
-
-                    id="finder"
-                    className={cn(style.search_field)}
-                    placeholder={state.textField?.placeholder}
-                    icon={isRouteMatch('/templates') ?
-                        <LuSearch
-                            role="button"
-                            cursor="pointer"
-                            fontSize="2rem"
-                            color={state.textField?.isValid ? "#fff" : "#3A466C"}
-                            className={cn(style.field_icon, { [style['active']]: state.textField?.isValid })} /> :
-                        <PiTreeStructureFill
-                            role="button"
-                            cursor="pointer"
-                            fontSize="2rem"
-                            color={state.textField?.isValid ? "#fff" : "#3A466C"}
-                            title="extract"
-                            className={cn(style.field_icon, { [style['active']]: state.textField?.isValid })} />}
-                />
-            </form>
+            <SearchField
+                onSubmit={handleSubmit}
+                placeholder={!isRouteMatch('/templates') ? "enter spreadsheet url to extract" : "find a template"}
+                pattern={!isRouteMatch('/templates') ? pattern : undefined}
+                invalidInputMsg={!isRouteMatch('/templates') ? "invalid url" : undefined}
+                icon={isRouteMatch('/templates') ?
+                    <LuSearch
+                        role="button"
+                        cursor="pointer"
+                        fontSize="2rem"
+                    /> :
+                    <PiTreeStructureFill
+                        role="button"
+                        cursor="pointer"
+                        fontSize="2rem"
+                    />}
+            />
             {
                 isRouteMatch('/templates') &&
                 <Button

@@ -2,58 +2,52 @@ import AceEditor from 'react-ace'
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/theme-twilight";
 import "ace-builds/src-noconflict/ext-language_tools";
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify'
-import Input from '../Components/Form/Input';
 import MarkdownPreview from '@uiw/react-markdown-preview';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 import useExtract from '../Hooks/useExtract';
-import { Button } from '../Components/Widgets';
+import Handlebars from 'handlebars'
+
 export default function Fiddle() {
     const [html, setHtml] = useState<string>("<h1>hello</h1>")
-    const [url, setUrl] = useState<string>("")
+    const [htmlOutput, setHtmlOutput] = useState<string>("")
+    const { spreadsheet } = useSelector((state: { spreadsheet: { url: string } }) => state)
+    const { data, isLoading } = useExtract(spreadsheet.url)
 
-    const { data, isLoading } = useExtract(url)
+    useEffect(() => {
+        const compile = Handlebars.compile(html)
+        try {
+            if (data.rows) {
+                const render = compile(data.rows[0])
+                setHtmlOutput(render)
+            } else {
+                setHtmlOutput(html)
+            }
+        } catch (e) {
+            setHtmlOutput(html)
+        }
+    }, [html, data])
 
-    const ref = useRef()
+    const handleOnChange = (e: string) => {
+        setHtml(e)
 
-    const handleOnChange = (value: string) => {
-        setHtml(value)
     }
-
-
-    const handleRequest = () => {
-        const value = ref.current.value
-        setUrl(() => value)
-    }
-
 
     return <>
-        {/* <div className="flex">
-            <h2 className="title title--2 col grow">Template Fiddle</h2>
-        </div> */}
-        {/* <div className="flex">
-            <div className='col grow'>
-                <Input name='sheet_url' id='sheet_url' ref={ref} />
-            </div>
-            <div className="col">
-                <Button name='extract' text='Extract' onClick={handleRequest} />
-            </div>
-            <div className='col col-12'>
-                <h4 className='mb-1'>Structured Data from Spreadsheet</h4>
-                <MarkdownPreview style={{ width: "auto", maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json \nloading...` : `\`\`\`json \n${JSON.stringify(data?.rows, null, " ")}`} />
-            </div>
-        </div> */}
+        <MarkdownPreview style={{ width: "auto", maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json\n["loading"]` : `\`\`\`json\n${JSON.stringify(data.rows ? data.rows[0] : data, null, "  ")}`} />
         <div className="flex">
             <div className="col col-6">
                 <AceEditor
                     placeholder='Play here'
-                    mode="html"
+                    // mode="html"
                     theme="twilight"
                     name='test_editor'
                     showPrintMargin={true}
                     showGutter={true}
                     highlightActiveLine={true}
-                    onChange={handleOnChange}
+                    onChange={(e) => handleOnChange(e)}
                     value={html}
                     width='auto'
                     setOptions={{
@@ -69,7 +63,7 @@ export default function Fiddle() {
 
             </div>
             <div className="col col-6">
-                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html, { IN_PLACE: true, FORBID_TAGS: ['style', 'script'], }) }}></div>
+                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlOutput, { IN_PLACE: true, FORBID_TAGS: ['style', 'script'], }) }}></div>
             </div>
         </div>
 
