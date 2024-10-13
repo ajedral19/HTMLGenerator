@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import Field from "./Widgets/field.widget";
 import { Buffer } from 'buffer'
 import { useImage } from "../Hooks/useImage";
+import GenerateForm from "./Form/GenerateForm";
 
 const editButton = [
     {
@@ -36,6 +37,11 @@ export default function Details({ data }: TemplateDetails) {
     const { name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
 
     const myImg = useImage(image)
+
+    const handleGenerate = (payload: { spreadsheet: string, offset: number, iteration: number }) => {
+        console.log(payload);
+
+    }
 
     return <Fragment>
         <section className={cn(style.details)}>
@@ -113,15 +119,10 @@ export default function Details({ data }: TemplateDetails) {
                             </ul>
                         </div>
                     }
-                    <div className="mt-auto flex no-gap">
-                        {/* <div>
-                            <div className="">
-                                <Field placeholder="start index" />
-                                <Field placeholder="count" />
-                            </div>
-                        </div> */}
-                        <Button text="Generate" className="mr-auto" />
-                        <Button icon={<MdMoreHoriz />} title="More" options={editButton} />
+                    <GenerateForm spreadsheet={spreadsheetURL} />
+                    <div className="mt-auto no-gap flex">
+                        <Button className="mr-auto" text="Generate" onClick={() => handleGenerate({ spreadsheet: spreadsheetURL, offset: 1, iteration: 1 })} />
+                        <Button className="" icon={<MdMoreHoriz />} title="More" options={editButton} />
                     </div>
                 </div>
             </div>

@@ -38,11 +38,9 @@ export default function Fiddle() {
 
     return <>
         <div className="flex">
-            <div className="col col-4">
-                <MarkdownPreview style={{ width: "auto", maxHeight: '400px', overflow: 'auto' }} source={isLoading ? `\`\`\`json\n["loading"]` : `\`\`\`json\n${JSON.stringify(data.rows ? data.rows[0] : data, null, "  ")}`} />
+            <MarkdownPreview wrapperElement={<div className='col col-12'></div>} style={{ width: "auto", maxHeight: '200px', overflow: 'auto' }} source={isLoading ? `\`\`\`json\n["loading"]` : `\`\`\`json\n${JSON.stringify(data.rows ? data.rows[0] : data, null, "  ")}`} />
 
-            </div>
-            <div className="col col-4">
+            <div className="col col-8">
                 <AceEditor
                     placeholder='Play here'
                     // mode="html"

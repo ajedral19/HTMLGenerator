@@ -3,7 +3,6 @@ import { ForwardedRef, forwardRef } from "react";
 import cn from 'classnames'
 import style from '../../Styles/field.module.sass'
 import { ChangeHandler, FieldError } from "react-hook-form";
-import Tooltip from "./tooltip.widget";
 
 type Input = {
     id?: string
@@ -11,7 +10,7 @@ type Input = {
     label?: string
     className?: string
     placeholder?: string
-    type?: "text"
+    type?: "text" | "number"
     icon?: JSX.Element
     disabled?: boolean
     defaultValue?: string
@@ -26,11 +25,13 @@ const Field = forwardRef(({ id, name, label, className, icon, placeholder, disab
 
 
     return <Fragment>
-        <div className={cn(style.field)}>
+        <div className={cn(style.field, className)}>
 
             {label && <label className={cn(style.field__label)} htmlFor={id}>{label}</label>}
-            <div className={cn(style.field__input, { [style.error]: error }, { "pr-1": icon }, className)}>
+            <div className={cn(style.field__input, { [style[type]]: type }, { [style.error]: error }, { "pr-1": icon })}>
                 <input
+                    min={type == 'number' ? 1 : undefined}
+                    max={type == 'number' ? 60 : undefined}
                     ref={ref}
                     name={name || id}
                     defaultValue={defaultValue}

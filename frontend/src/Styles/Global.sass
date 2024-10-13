@@ -60,7 +60,7 @@ label, input, button
     font-size: var(--__fs)
     font-family: inherit
 
-input[type="text"], button
+input[type="text"], input[type="number"], button
     border: none
     outline: none
     display: inline-block
@@ -86,20 +86,24 @@ button, a[role="button"]
         background: var(--__bg-hover)
         box-shadow: 0 0 6px -2px var(--__bg)
 
-input[type="text"]
-    --__bg: var(--theme-field-background)
-    --__color: var(--theme-field-color)
-    --__border: var(--theme-field-border)
-    height: var(--control-size)
-    padding-inline: 1em
-    background: var(--__bg)
-    color: var(--__color)
-    &::placeholder
+input
+    &[type="text"], &[type="number"]
+        --__bg: var(--theme-field-background)
+        --__color: var(--theme-field-color)
+        --__border: var(--theme-field-border)
+        height: var(--control-size)
+        padding-inline: 1em
+        background: var(--__bg)
         color: var(--__color)
-        opacity: .3
+        &::placeholder
+            color: var(--__color)
+            opacity: .3
 
 .h-100
     height: 100%
+
+.w-full
+    width: 100%
 
 .bg-unset
     background: unset
