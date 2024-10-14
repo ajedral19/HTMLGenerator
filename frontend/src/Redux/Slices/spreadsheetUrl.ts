@@ -1,13 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const spreadsheet = (state: any, action: { payload: string }) => ({
+type spreadsheet = (
+	state: {
+		url: string,
+		data?: any[]
+	},
+	action: {
+		payload: {
+			url: string
+			data?: any[]
+		}
+	}
+) => void
+
+const spreadsheet: spreadsheet = (state, action) => ({
 	...state,
-	url: action.payload,
-});
+	url: action.payload.url,
+	data: action.payload.data
+})
 
 export const spreadsheetUrlSlice = createSlice({
 	name: "spreadsheet_url",
-	initialState: [],
+	initialState: {
+		url: "",
+		data: []
+	},
 	reducers: {
 		spreadsheetUrl: spreadsheet,
 	},

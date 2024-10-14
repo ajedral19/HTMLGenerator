@@ -1,5 +1,7 @@
 import { error } from "console";
 import { api } from "./handle.config";
+import store from "../store";
+import { loaderState } from "../Redux/Slices/loader";
 
 type Template = {
 	// templateFiles: file | files[] // maximum of two
@@ -42,7 +44,12 @@ export const TemplateDelete = async (id: string) => {
 
 export const TemplateFindAll = async (page?: number, signal?: AbortSignal) => {
 	return api
-		.get(`/templates${page ? "?page=" + page : ""}`, {signal})
+		.get(`/templates${page ? "?page=" + page : ""}`, {
+			signal, onDownloadProgress: (progressEvent) => {
+				const { loaded, total, bytes } = progressEvent;
+				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes }));
+			}
+		})
 		.then((response) => response.data)
 		.catch((err) => console.log(err));
 };

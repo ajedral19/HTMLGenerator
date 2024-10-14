@@ -32,6 +32,7 @@ type state = {
         placeholder?: string
         isValid?: boolean
         url?: string
+        value?: string
     }
 }
 
@@ -65,6 +66,26 @@ export default function Header() {
 
     const isRouteMatch = (path: string) => matchRoutes([{ path }], currentRoute) ? true : false
 
+    const handleRefesh = () => {
+        if (!isRouteMatch('/templates')) {
+            if (!queryClient.isFetching({ queryKey: ['jsonData'] })) {
+                queryClient.invalidateQueries({ queryKey: ["jsonData"] })
+            }
+        }
+        else {
+            if (!queryClient.isFetching({ queryKey: ['templates'] })) {
+                queryClient.invalidateQueries({ queryKey: ['templates'] })
+            }
+        }
+    }
+
+    const handleSubmit = (e: { headerField: string }) => {
+        if (!isRouteMatch('/templates')) {
+            dispatch(spreadsheetUrl({ url: e.headerField }))
+        }
+    }
+
+    // ANCHOR useEffects
     useEffect(() => {
         setState((state: state) => ({
             ...state,
@@ -91,18 +112,6 @@ export default function Header() {
         else
             setState(state => ({ ...state, showTemplateForm: false }))
     }, [isVisible, visibleState])
-
-    const handleSubmit = (e: { headerField: string }) => {
-        if (!isRouteMatch('/templates')) {
-            dispatch(spreadsheetUrl(e.headerField))
-        }
-    }
-
-    const handleRefesh = () => {
-        // queryClient.cancelQueries(['templates'])
-        queryClient.invalidateQueries({ queryKey: ['templates'] })
-    }
-
 
     return <Fragment>
         <div className={cn(style.header)}>

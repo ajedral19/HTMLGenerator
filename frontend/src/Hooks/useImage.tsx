@@ -26,6 +26,5 @@ export const useImage = (image: Buffer | string) => {
         return () => controller.abort()
     }, [image])
 
-    console.log(typeof img);
     return img
 }

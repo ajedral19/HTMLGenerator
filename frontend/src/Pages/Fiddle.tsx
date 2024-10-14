@@ -13,11 +13,12 @@ import Handlebars, { registerHelper } from 'handlebars'
 export default function Fiddle() {
     const [html, setHtml] = useState<string>("<h1>hello</h1>")
     const [htmlOutput, setHtmlOutput] = useState<string>("")
-    const { spreadsheet } = useSelector((state: { spreadsheet: { url: string } }) => state)
-    const { data, isLoading } = useExtract(spreadsheet.url)
+    const { url } = useSelector((state: { spreadsheet: { url: string } }) => state.spreadsheet)
+    const { data, isLoading } = useExtract(url)
 
     useEffect(() => {
         Handlebars.registerHelper("loud", (text: string) => text.toUpperCase())
+
         const compile = Handlebars.compile(html)
         try {
             if (data.rows) {
@@ -33,7 +34,6 @@ export default function Fiddle() {
 
     const handleOnChange = (e: string) => {
         setHtml(e)
-
     }
 
     return <>

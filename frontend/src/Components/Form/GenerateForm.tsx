@@ -17,12 +17,17 @@ export default function GenerateForm({ spreadsheet, className }: { spreadsheet: 
     return <Fragment>
         <div className={cn(style.generate_form, className)}>
             <form onSubmit={handleSubmit((e) => onSubmit(e, spreadsheet))} >
+                <div className="flex">
+                    <Field className={cn("col col-6", style.input_offset)} defaultValue="1" min={1} {...register("offset")} type="number" label="Offset" />
+                    <Field className={cn("col col-6", style.input_iteration)} defaultValue="1" min={1} max={60} {...register("iteration")} type="number" label="Iteration" />
+
+                    <div className="col col-12">
+                        <Button className={cn("w-full", style.btn_submit)} type="submit" text="Submit" />
+                    </div>
+                </div>
                 <div className={cn(style.form_grid)}>
-                    
-                    <Field className={cn(style.input_offset)} defaultValue="1" min={1} {...register("offset")} type="number" label="Offset" />
-                    <Field className={cn(style.input_iteration)} defaultValue="1" min={1} max={60} {...register("iteration")} type="number" label="Iteration" />
-                    <Button className={cn(style.btn_submit)} type="submit" text="Submit" />
-                    <Button className={cn(style.btn_cancel)} type="button" text="Cancel" />
+
+                    {/* <Button className={cn(style.btn_cancel)} type="button" text="Cancel" /> */}
                 </div>
             </form>
         </div>

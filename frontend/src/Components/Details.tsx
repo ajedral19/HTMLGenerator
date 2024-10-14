@@ -1,7 +1,7 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useReducer, useState } from "react";
 import cn from 'classnames'
 import StripTag from "./Widgets/StripTag";
-import { MdArchive, MdClose, MdEdit, MdMoreHoriz, MdPerson4 } from "react-icons/md";
+import { MdArchive, MdEdit, MdMoreHoriz, MdPerson4 } from "react-icons/md";
 import { FaShare } from "react-icons/fa6";
 import { TemplateDetails } from "../types";
 import { Button } from "./Widgets";
@@ -9,14 +9,13 @@ import Favotite from "./Widgets/favorite.widget";
 
 import global_style from '../Styles/global.module.sass'
 import style from '../Styles/details.module.sass'
-import { useDispatch } from "react-redux";
-import { showSidePane } from "../Redux/Slices/sidePane";
-import { init_details } from "../Utils/initialStates";
 import { Link } from "react-router-dom";
 import Field from "./Widgets/field.widget";
-import { Buffer } from 'buffer'
 import { useImage } from "../Hooks/useImage";
-import GenerateForm from "./Form/GenerateForm";
+import { useForm } from "react-hook-form";
+import { HTMLGenerate } from "../Handlers/HandleHTML";
+import fileDownload from "js-file-download";
+import { indexStore } from "../Utils/IndexedDB";
 
 const editButton = [
     {
@@ -33,15 +32,75 @@ const editButton = [
     },
 ]
 
+type state = {
+    status: "Generate" | "Submit" | "Download",
+    isLoading: boolean,
+    file?: [ArrayBuffer, string]
+}
+
 export default function Details({ data }: TemplateDetails) {
     const { name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
+    const { register, getValues, reset } = useForm({ defaultValues: { offset: "1", limit: "10" } })
+    const [state, setState] = useState<state>({
+        status: "Generate",
+        isLoading: false,
+        file: undefined
+    })
 
     const myImg = useImage(image)
 
-    const handleGenerate = (payload: { spreadsheet: string, offset: number, iteration: number }) => {
-        console.log(payload);
+    const handleGenerate = () => {
+        setState((state) => ({ ...state, isLoading: true }))
+        const { offset, limit } = getValues()
+        const { spreadsheetURL, id } = data
 
+        HTMLGenerate(id, spreadsheetURL, parseInt(offset), parseInt(limit))
+            .then(response => {
+                if (response) {
+                    const attachment = response.headers['content-disposition'].split(';')[1]
+                    if (attachment) {
+                        const attachment = response.headers['content-disposition'].split(';')[1]
+                        setState((state) => ({
+                            ...state,
+                            isLoading: false,
+                            status: "Download",
+                            file: [response.data, attachment]
+                        }))
+                        // indexStore(id)
+                    }
+                }
+            }).catch(err => console.log(err))
     }
+
+    const handleDownload = () => {
+        if (state.file) {
+            const [file, attachment] = state.file
+            fileDownload(file, attachment)
+        }
+    }
+
+    const handleOnClick = () => {
+        switch (state.status) {
+            case "Submit":
+                handleGenerate()
+                return
+            case "Download":
+                handleDownload()
+                return
+            default:
+                setState((state) => ({ ...state, status: "Submit" }))
+        }
+        // setGenerate(true)
+    }
+
+    useEffect(() => {
+        setState((state) => ({
+            ...state,
+            status: "Generate",
+            isLoading: false,
+            file: undefined
+        }))
+    }, [data])
 
     return <Fragment>
         <section className={cn(style.details)}>
@@ -119,9 +178,17 @@ export default function Details({ data }: TemplateDetails) {
                             </ul>
                         </div>
                     }
-                    <GenerateForm spreadsheet={spreadsheetURL} />
+                    {/* <GenerateForm spreadsheet={spreadsheetURL} /> */}
+                    {
+                        state.status == "Submit" &&
+                        <div className="flex">
+                            <Field className={cn("col col-6", style.input_offset)} defaultValue="1" min={1} {...register("offset")} type="number" label="Offset" />
+                            <Field className={cn("col col-6", style.input_limit)} defaultValue="1" min={1} max={60} {...register("limit")} type="number" label="Limit" />
+                            {state.isLoading && "loading..."}
+                        </div>
+                    }
                     <div className="mt-auto no-gap flex">
-                        <Button className="mr-auto" text="Generate" onClick={() => handleGenerate({ spreadsheet: spreadsheetURL, offset: 1, iteration: 1 })} />
+                        <Button className="mr-auto" text={state.status} onClick={handleOnClick} disabled={state.isLoading} />
                         <Button className="" icon={<MdMoreHoriz />} title="More" options={editButton} />
                     </div>
                 </div>
