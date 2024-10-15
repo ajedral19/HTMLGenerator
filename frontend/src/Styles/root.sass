@@ -35,39 +35,43 @@
     --gap: #{var.$global-gap}#{var.$global-unit}
     --control-size: 2.8em
 
-[data-theme="light"]
+[app-theme="light"]
     --bg-default: #ffffff
     --text-default: #1D1D1D
     --text-default-faded: #1d1d1daf
     --panel-bg: #f2f2f2
-[data-theme="dark"]
+[app-theme="dark"]
     --bg-default: #0d1117
     --text-default: #c9d1d9
     --text-default-faded: #f8f8f8
     --panel-bg: #0f1425
 
     // ANCHOR
-    --theme-background: #090d17
 
-    --theme-text-color: #F4F4FB
-    --theme-text-color-accent: #9c9faa
-    --theme-text-color-cool: #45ADFF
-    --theme-text-color-cool-accent: #148FFF
-    --theme-text-color-mild: #73FDE0
-    --theme-text-color-mild-accent: #50E3C2
-    --theme-text-color-hot: #FD8975
-    --theme-text-color-hot-accent: #FD5436
+    @media(prefers-color-scheme: dark)
+        --theme-background: #090d17
 
-    --theme-color-cool: #173BAE
-    --theme-color-cool-accent: #2246ba
-    --theme-color-mild: #068AA7
-    --theme-color-mild-accent: #1997B2
-    --theme-color-hot: #FD8975
-    --theme-color-hot-accent: #FD5436
+        --theme-text-color: #F4F4FB
+        --theme-text-color-accent: #9c9faa
+        --theme-text-color-cool: #45ADFF
+        --theme-text-color-cool-accent: #148FFF
+        --theme-text-color-mild: #73FDE0
+        --theme-text-color-mild-accent: #50E3C2
+        --theme-text-color-hot: #FD8975
+        --theme-text-color-hot-accent: #FD5436
 
-    --theme-border: #f4f4fb22
+        --theme-color-cool: #173BAE
+        --theme-color-cool-accent: #2246ba
+        --theme-color-mild: #068AA7
+        --theme-color-mild-accent: #1997B2
+        --theme-color-hot: #FD8975
+        --theme-color-hot-accent: #FD5436
 
-    --theme-field-background: #070e27
-    --theme-field-color: #FFFFFF
-    --theme-field-border: #1F2741
-    --theme-field-icon-color: #3A466C
+        --theme-border: #f4f4fb22
+
+        --theme-field-background: #070e27
+        --theme-field-color: #FFFFFF
+        --theme-field-border: #1F2741
+        --theme-field-icon-color: #3A466C
+    @media(prefers-color-scheme: light)
+        --theme-background: green

@@ -21,7 +21,7 @@ const TemplatesGrid = ({ data }: { data?: TemplateDetails[] }) => {
                 data &&
                     data.length ?
                     data.map((template: TemplateDetails, key: number) => (
-                        <div className={cn("col", isGrid ? isVisible ? "col-3" : "col-2" : "col-12")} key={key}>
+                        <div className={cn("col", isGrid ? isVisible ? "col-3" : "col-2" : "col-4")} key={key}>
                             <Card data={template.data} onClick={() => getDetailsOnClick(template)} layout={isGrid ? "grid" : "list"} />
                         </div>
                     ))
