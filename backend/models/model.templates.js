@@ -17,6 +17,8 @@ export const TemplatesAddOne = async (template_data) => {
         const html = buffer.toString("utf-8");
 
         const render = render_html(html, contents.rows[0], cdn);
+        // if (render?.error) return handle_error(render.error);
+
         const screenshot = await capture_template(render);
 
         const payload = {

@@ -1,4 +1,9 @@
 @use 'sass:math'
+
+@keyframes loading
+    0%
+        transform: translate(-50%, -50%) rotate(4turn)
+
 // button
 .btn, a[role="button"].btn
     --__color: var(--theme-text-color-default)
@@ -11,6 +16,9 @@
     width: fit-content
     vertical-align: middle
     line-height: 1.2
+    position: relative
+    isolation: isolate
+    overflow: hidden
     &.primary, &.icon-primary
         --__bg: var(--theme-color-cool)
         --__bg-hover: var(--theme-color-cool-accent)
@@ -57,7 +65,34 @@
 
         &.rtl
             padding: var(--__pad-y) calc(var(--__pad-x) / 1.25) var(--__pad-y) var(--__pad-x)
-            
+
+    &:disabled, &.disabled
+        --__bg: #1a2448
+        --__bg-hover: var(--__bg)
+        --__color: #ffffff
+        pointer-events: none
+
+    &.loading
+        &::before,&::after
+            position: absolute
+            content: ''
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            z-index: -1
+
+        &:before
+            width: 200%
+            height: 200%
+            background: linear-gradient(90deg, white 50%, transparent 50%, white 40%, black 20%)
+            animation: loading 1s 0s ease-in-out infinite both
+
+        &::after
+            height: 90%
+            width: 90%
+            background: var(--__bg)
+            border-radius: inherit
+
     svg
         line-height: inherit
         display: block

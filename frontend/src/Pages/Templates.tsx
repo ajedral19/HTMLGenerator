@@ -11,38 +11,42 @@ import { MdClose } from "react-icons/md";
 import TemplateForm from "../Components/Form/TemplateForm";
 import TemplatesGrid from "../Components/TemplatesGrid";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const templatesData: TemplateDetails[] = [
-    {
-        data: {
-            "id": "C1D2E3",
-            "name": "Template Eleven",
-            "author": "Luna Lovegood",
-            "ticket": {
-                "id": "TK-1112",
-                "url": "www.example11.com"
-            },
-            "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1A2B3C4D5E6F7G8H9I0J/edit",
-            "isFavorite": true,
-            "image": "/images/template-placeholder.png",
-            "stylesheets": [
-                {
-                    "name": "style11.css",
-                    "url": "example11.com/style11.css"
-                }
-            ],
-            "uploadDate": "2024-10-06T12:00:00Z"
-        }
-    }
-]
+// const templatesData: TemplateDetails[] = [
+//     {
+//         data: {
+//             "id": "C1D2E3",
+//             "name": "Template Eleven",
+//             "author": "Luna Lovegood",
+//             "ticket": {
+//                 "id": "TK-1112",
+//                 "url": "www.example11.com"
+//             },
+//             "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1A2B3C4D5E6F7G8H9I0J/edit",
+//             "isFavorite": true,
+//             "image": "/images/template-placeholder.png",
+//             "stylesheets": [
+//                 {
+//                     "name": "style11.css",
+//                     "url": "example11.com/style11.css"
+//                 }
+//             ],
+//             "uploadDate": "2024-10-06T12:00:00Z"
+//         }
+//     }
+// ]
 
 export default function Templates() {
 
     const quertClient = useQueryClient()
+    const [templates, setTemplates] = useState<{ rows: TemplateDetails[] }>({ rows: [] })
+    const state = useSelector((state: { loader: { state: string } }) => state.loader.state)
 
-    const templates: { rows: TemplateDetails[] } = quertClient.getQueryData(['templates']) || { rows: [] }
-
+    useEffect(() => {
+        const data: { rows: TemplateDetails[] } = quertClient.getQueryData(["templates"]) || { rows: [] }
+        setTemplates(data);
+    }, [state])
 
     const dispatch = useDispatch()
     const sidePane = useSelector((state: { sidePane: { isVisible: boolean, visibleState?: string, details?: TemplateDetails } }) => state.sidePane)
@@ -61,7 +65,6 @@ export default function Templates() {
                 {
                     sidePane.visibleState === 'themeDetails' ?
                         <Details data={sidePane.details?.data || init_details.data} />
-                        // <h1>test</h1>
                         :
                         sidePane.visibleState === "newThemeForm" ?
                             <TemplateForm /> :

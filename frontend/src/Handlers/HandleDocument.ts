@@ -8,7 +8,7 @@ export const DocumentExtract = async (src: string) => {
 		.get(`/data/extract?spreadsheet=${src}`, {
 			onDownloadProgress: (progressEvent) => {
 				const { loaded, total, bytes } = progressEvent;
-				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes }));
+				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes, state:"jsonData" }));
 			}
 		})
 		.then((response) => response.data)

@@ -92,6 +92,8 @@ Visit [Handlebars](https://handlebarsjs.com/), we'll be using this tool to creat
  {{/items}}
  ```
 
+ ## Helpers
+ blank
 
 <!-- ### Template Creation
 ```html

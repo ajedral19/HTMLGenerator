@@ -22,13 +22,13 @@ export default function Navbar({ className }: { className: string }) {
 
                 </div>
                 <ul className="menu">
-                    {/* <li className="menu__item">
+                    <li className="menu__item">
                         <Link to="/documentation">Documentation</Link>
                     </li>
                     <li className="menu__item">
                         <Link to="/templates">Templates</Link>
                     </li>
-                    <li className="menu__item">
+                    {/* <li className="menu__item">
                         <Link to="/backlog">Backlog</Link>
                     </li>
                     <li className="menu__item">

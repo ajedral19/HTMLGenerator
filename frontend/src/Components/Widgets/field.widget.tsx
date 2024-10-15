@@ -21,9 +21,7 @@ type Input = {
 }
 
 const Field = forwardRef(({ id, name, label, className, icon, placeholder, disabled, defaultValue, tip, error, onChange, onBlur, type = "text" }: Input, ref: ForwardedRef<HTMLInputElement>) => {
-
-
-
+    
     return <Fragment>
         <div className={cn(style.field, className)}>
 

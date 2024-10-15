@@ -30,7 +30,7 @@ export default function Button({ text, icon, title, name, href, id, className, r
 
     if (href)
         return <Fragment>
-            <Link role="button" to={href} className={cn("btn primary", { ['icon']: icon && !text }, { ['icon-text']: icon && text }, { ["rtl"]: rtl }, className, variant)} title={title} >
+            <Link role="button" to={href} className={cn("btn primary", { ['icon']: icon && !text }, { ['icon-text']: icon && text }, { ["rtl"]: rtl }, { disabled }, className, variant)} title={title} >
                 {
                     icon && text ?
                         <Fragment>
@@ -69,7 +69,7 @@ export default function Button({ text, icon, title, name, href, id, className, r
                 </button>
                 <div className={cn(style.btn_select__options)}>
                     {
-                        options.map((option, key) => <Button key={key} type={type} text={option.text} icon={option.icon} title={option.title} name={name} href={href} id={id} variant={variant} className={option.className} rtl={rtl} disabled={option.disabled} onClick={onClick} />)
+                        options.map((option, key) => <Button key={key} type={type} text={option.text} icon={option.icon} title={option.title} name={name} href={href} id={id} variant={variant} className={option.className} rtl={rtl} disabled={option.disabled} onClick={option.onClick} />)
                     }
                 </div>
             </div>

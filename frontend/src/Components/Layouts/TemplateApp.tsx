@@ -20,7 +20,7 @@ export default function TemplateApp({ children }: { children: React.ReactNode })
                     !isLoading ?
                         <Fragment>
                             <Header />
-                            <main className="pt-2">
+                            <main className="main">
                                 {children}
                             </main>
                         </Fragment>

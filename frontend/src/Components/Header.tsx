@@ -5,7 +5,7 @@ import { LuSearch } from "react-icons/lu";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
 import { Button } from "./Widgets";
-import { MdAdd, MdArrowBack, MdArrowForward, MdClose } from "react-icons/md";
+import { MdAdd, MdArrowBack, MdArrowForward, MdClose, MdRefresh } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { headerOptions } from "../Redux/Slices/header";
 import { useLocation, matchRoutes } from "react-router-dom";
@@ -21,6 +21,7 @@ type state = {
     hasTemplates: boolean
     isFiddle: boolean
     showTemplateForm: boolean,
+    isFetching: boolean,
     navigation?: {
         text?: string
         rtl?: boolean
@@ -48,7 +49,8 @@ export default function Header() {
     const [state, setState] = useState<state>({
         hasTemplates: false,
         isFiddle: false,
-        showTemplateForm: false
+        showTemplateForm: false,
+        isFetching: false
     })
 
     const sidePane = useSelector((state: { sidePane: { visibleState?: "newThemeForm" | "themeDetails", isVisible: boolean } }) => state.sidePane)
@@ -139,7 +141,11 @@ export default function Header() {
                         fontSize="2rem"
                     />}
             />
-            <Button text="Refresh" onClick={handleRefesh} />
+            <Button
+                icon={<MdRefresh fontSize="2rem" />}
+                title="Refresh"
+                onClick={handleRefesh}
+                disabled={state.isFetching} />
             {
                 isRouteMatch('/templates') &&
                 <Button

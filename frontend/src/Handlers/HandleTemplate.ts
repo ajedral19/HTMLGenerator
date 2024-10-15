@@ -47,7 +47,7 @@ export const TemplateFindAll = async (page?: number, signal?: AbortSignal) => {
 		.get(`/templates${page ? "?page=" + page : ""}`, {
 			signal, onDownloadProgress: (progressEvent) => {
 				const { loaded, total, bytes } = progressEvent;
-				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes }));
+				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes, state: "templates" }));
 			}
 		})
 		.then((response) => response.data)

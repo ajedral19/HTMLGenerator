@@ -17,9 +17,8 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image } = data
     const [active, setActive] = useState(false)
     const current = useSelector((state: { sidePane: { details?: TemplateDetails } }) => state.sidePane.details?.data.id)
-    const navigate = useNavigate()
 
-    const myImg = useImage(image)
+    const myImg = useImage(image) || "/images/template-placeholder.png"
 
 
     useEffect(() => {

@@ -43,8 +43,16 @@ export default function TemplateForm() {
         const file = e.dataTransfer.files
         setValue("files", file)
         inputRef.current = file
+        // TODO validate Handlebars
 
         e.preventDefault()
+    }
+
+    const onchange = (e) => {
+        // console.log(e);
+        const file = e.target.files
+        setValue("files", file)
+        inputRef.current = file
     }
 
 
@@ -55,6 +63,7 @@ export default function TemplateForm() {
                     {...register('files')}
                     className="mb-1"
                     onDrop={handleDrop}
+                    onChange={onchange}
                 />
                 <Field
                     {

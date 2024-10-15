@@ -4,11 +4,13 @@ type loader = (
 	state: {
 		progress: number;
 		max: number;
+		state?: "templates" | "jsonData"
 	},
 	action: {
 		payload: {
-			progress: number;
-			max: number;
+			progress: number
+			max: number
+			state?: "templates" | "jsonData"
 		};
 	}
 ) => void;
@@ -17,6 +19,7 @@ const loader: loader = (state, action) => ({
 	...state,
 	progress: action.payload.progress,
 	max: action.payload.max,
+	state: action.payload.state
 });
 
 export const loaderSlice = createSlice({
