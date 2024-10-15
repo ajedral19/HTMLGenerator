@@ -7,10 +7,13 @@ import cn from 'classnames'
 
 const TemplatesGrid = ({ data }: { data?: TemplateDetails[] }) => {
     const dispatch = useDispatch()
-    const isGrid = useSelector((state: { headerOptions: { display: { isGrid: boolean } } }) => state.headerOptions.display.isGrid)
+    const { isGrid, isVisible } = useSelector((state: { headerOptions: { display: { isGrid: boolean } }, sidePane: { isVisible: boolean } }) => ({ isGrid: state.headerOptions.display.isGrid, isVisible: state.sidePane.isVisible }))
 
     const getDetailsOnClick = (details: TemplateDetails) =>
         dispatch(showSidePane({ isVisible: true, visibleState: "themeDetails", details: details }))
+
+    console.log(isVisible);
+
 
     return <Fragment>
         <div className="flex">
@@ -18,7 +21,7 @@ const TemplatesGrid = ({ data }: { data?: TemplateDetails[] }) => {
                 data &&
                     data.length ?
                     data.map((template: TemplateDetails, key: number) => (
-                        <div className={cn("col", isGrid ? "col-3" : "col-12")} key={key}>
+                        <div className={cn("col", isGrid ? isVisible ? "col-3" : "col-2" : "col-12")} key={key}>
                             <Card data={template.data} onClick={() => getDetailsOnClick(template)} layout={isGrid ? "grid" : "list"} />
                         </div>
                     ))
