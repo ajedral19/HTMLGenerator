@@ -2,7 +2,6 @@ import AceEditor from 'react-ace'
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/theme-twilight";
 import "ace-builds/src-noconflict/ext-language_tools";
-import snippet from "ace-builds/src-noconflict/snippets/html"
 import { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify'
 import MarkdownPreview from '@uiw/react-markdown-preview';
@@ -11,10 +10,6 @@ import useExtract from '../Hooks/useExtract';
 import Handlebars, { registerHelper } from 'handlebars'
 import cn from 'classnames'
 import style from '../Styles/global.module.sass'
-import test from 'node:test';
-
-console.log(snippet)
-
 
 export default function Fiddle() {
     const [html, setHtml] = useState<string>("<h1>hello</h1>")
@@ -39,7 +34,9 @@ export default function Fiddle() {
 
             })
         })
+
         const compile = Handlebars.compile(html)
+
         try {
             if (data.rows) {
                 const render = compile(data.rows[0])

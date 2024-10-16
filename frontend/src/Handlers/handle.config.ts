@@ -7,7 +7,7 @@ export const API = (baseURL: string, timeout: number, headers?: any) =>
 	axios.create({
 		baseURL,
 		timeout,
-		headers
+		headers,
 	});
 
 export const api = API("/api", 60000, { "X-Custom-Header": "Hello" });

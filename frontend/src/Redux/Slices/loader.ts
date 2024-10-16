@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type loader = (
+type loading = (
 	state: {
 		progress: number;
 		max: number;
@@ -15,7 +15,7 @@ type loader = (
 	}
 ) => void;
 
-const loader: loader = (state, action) => ({
+const loading: loading = (state, action) => ({
 	...state,
 	progress: action.payload.progress,
 	max: action.payload.max,
@@ -28,7 +28,7 @@ export const loaderSlice = createSlice({
 		progress: 0,
 		max: 0,
 	},
-	reducers: { loaderState: loader },
+	reducers: { loaderState: loading },
 });
 
 export const { loaderState } = loaderSlice.actions;

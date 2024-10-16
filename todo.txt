@@ -1,69 +1,33 @@
-add cooldown counter
-    cooldown takes a minute
-    cooldown takes effect after generation html files
+// TODO
+templateForm
+	display icon if file is not empty
+	add option
+		store
+		generate
 
-add limitter
-    set limit when generating files. maximum 30 files per request
+button
+	options
+	loading state
 
-inject css to preview
-    allow uploaded to choose which stylesheet to use for the preview
+template
+	options
+		archive
+		edit -> redirects to fiddle
+	favorite
+		stores in browser cache
+	create helpers
 
-routes
-/templates -
-/template/add -
-/template/:id -
-/template/:id -
-/template/:id/screenshot -
-/template/:id/generate?spreadsheet -
-/extract?spreadsheet -
+fiddle
+	save -> saves edit or freestyle
+	generate
+	
 
+panel
+	add pane for favorites
 
-/templates?page
-
-
-<script async>
-            // const imgs = document.querySelector('.img-list')
-            // const li = document.createElement('li')
-            // const img = document.createElement('img')
-
-            // imgs.appendChild(li).appendChild(img)
-
-            // get base url
-
-            const form = document.querySelector("form");
-            form.addEventListener("submit", async (e) => {
-                e.preventDefault();
-                const { url } = await getUrl();
-
-                const file = e.srcElement.file_src.files[0];
-                if (file) {
-                    await putUrl(url, file);
-                }
-
-                const file_type = file.type.split("/")[1];
-                const imgUrl = url.split("?")[0];
-
-                const img = document.querySelector("img");
-                img.setAttribute("src", imgUrl);
-
-                document.body.appendChild(img);
-            });
-
-            const getUrl = async () => {
-                return await fetch("http://localhost:9100/s3").then((res) => res.json());
-            };
-
-            const putUrl = async (url, file) => {
-                fetch(url, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                    body: file,
-                });
-            };
-        </script>
+	header
+		add filter for favorites
 
 
-
-    https://react-icons.github.io/react-icons/icons/md/
+////////////////
+Documentation

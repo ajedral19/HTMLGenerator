@@ -55,6 +55,10 @@ export default function TemplateForm() {
         inputRef.current = file
     }
 
+    useEffect(() => {
+        console.log(getValues("files"))
+    }, [inputRef.current])
+
 
     return <Fragment>
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -10,20 +10,8 @@ export const HTMLGenerate = async (id: string, spreadsheet: string, offset?: num
 		headers,
 		responseType: "arraybuffer",
 		onDownloadProgress: (progressEvent) => {
-			const { loaded, total, bytes } = progressEvent;
+			const { loaded, total = 0, bytes } = progressEvent;
 			store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes }));
-			console.log(progressEvent);
 		}
-		
-		// 	const { loaded, total, bytes } = progressEvent;
-		// 	store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes }));
-		// 	console.log(progressEvent);	
-		// onUploadProgress: (progressEvent) => {
-		// 	console.log('helloing');
-
-		// 	const { loaded, total, bytes } = progressEvent;
-		// 	store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes }));
-		// 	console.log(progressEvent);
-		// }
-	});
+	})
 };

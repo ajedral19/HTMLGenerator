@@ -7,10 +7,14 @@ export const DocumentExtract = async (src: string) => {
 	return api
 		.get(`/data/extract?spreadsheet=${src}`, {
 			onDownloadProgress: (progressEvent) => {
-				const { loaded, total, bytes } = progressEvent;
-				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes, state:"jsonData" }));
+				const { loaded, total = 0, bytes } = progressEvent;
+				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes, state: "jsonData" }));
 			}
 		})
-		.then((response) => response.data)
+		.then((response) => { 
+			let cache: any{} = {}
+			cache["test"] = response.data
+			response.data 
+		})
 		.catch((err) => err);
 };

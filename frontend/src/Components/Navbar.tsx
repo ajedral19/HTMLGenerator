@@ -3,14 +3,12 @@ import { Fragment } from "react/jsx-runtime";
 // import Button from "./Button";
 import useTheme from "../Hooks/useTheme";
 import cn from 'classnames'
-import { URLSearchParams } from "url";
-import { TbBulb, TbBulbOff } from "react-icons/tb";
 import { Button } from "./Widgets";
-
+import { MdOutlineWbSunny } from "react-icons/md";
+import { IoMdMoon } from "react-icons/io";
 
 export default function Navbar({ className }: { className: string }) {
     const [isDark, setIsDark] = useTheme()
-
     return <Fragment>
         <nav>
             <div className={cn("navbar container", className)}>
@@ -28,7 +26,7 @@ export default function Navbar({ className }: { className: string }) {
                         <Link to="/templates">Templates</Link>
                     </li>
                     <li className="menu_item">
-                        <Button icon={isDark ? <TbBulb fontSize="2rem" /> : <TbBulbOff fontSize="2rem" />} variant="transparent" onClick={() => setIsDark(!isDark)} />
+                        <Button icon={isDark ? <MdOutlineWbSunny fontSize="2rem" /> : <IoMdMoon fontSize="2rem" />} variant="transparent" onClick={() => setIsDark(!isDark)} />
                     </li>
                     {/* <li className="menu__item">
                         <Link to="/backlog">Backlog</Link>
