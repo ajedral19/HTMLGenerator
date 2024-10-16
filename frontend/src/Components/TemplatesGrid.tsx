@@ -12,9 +12,6 @@ const TemplatesGrid = ({ data }: { data?: TemplateDetails[] }) => {
     const getDetailsOnClick = (details: TemplateDetails) =>
         dispatch(showSidePane({ isVisible: true, visibleState: "themeDetails", details: details }))
 
-    console.log(isVisible);
-
-
     return <Fragment>
         <div className="flex">
             {

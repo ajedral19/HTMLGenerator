@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import Field from "./Widgets/field.widget";
 import { useImage } from "../Hooks/useImage";
 import { useForm } from "react-hook-form";
-import { HTMLGenerate } from "../Handlers/HandleHTML";
+import { CacheHTMLGenerate, HTMLGenerate } from "../Handlers/HandleHTML";
 import fileDownload from "js-file-download";
 import { indexStore } from "../Utils/IndexedDB";
 
@@ -53,7 +53,6 @@ export default function Details({ data }: TemplateDetails) {
         setState((state) => ({ ...state, isLoading: true }))
         const { offset, limit } = getValues()
         const { spreadsheetURL, id } = data
-
         HTMLGenerate(id, spreadsheetURL, parseInt(offset), parseInt(limit))
             .then(response => {
                 if (response) {
