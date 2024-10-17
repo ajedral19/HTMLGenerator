@@ -9,18 +9,10 @@ export const useImage = (image: Buffer | string | null) => {
         const controller = new AbortController()
         if (image) {
             if (typeof image === 'string') return setImg(image)
-            const reader = new FileReader()
             const buffer = Buffer.from(image)
             const blob = new Blob([buffer])
-
-            reader.addEventListener('load', () => {
-                const render = new Image()
-                render.height = 1200
-                render.title = ""
-                setImg(reader.result)
-            }, controller)
-
-            reader.readAsDataURL(blob)
+            const url = URL.createObjectURL(blob.slice(0, blob.size, "image/webp"))
+            setImg(url)
         }
 
         return () => controller.abort()

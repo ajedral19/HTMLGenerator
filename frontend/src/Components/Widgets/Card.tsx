@@ -13,9 +13,15 @@ import { BiExpandAlt } from "react-icons/bi";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
+type state = {
+    active?: boolean,
+    isFav?: boolean
+}
+
 export default function Card({ data, onClick, layout = "grid" }: CardContent & { onClick?: () => void, layout?: "grid" | "list" }) {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image } = data
-    const [active, setActive] = useState(false)
+    const [state, setState] = useState<state>({ isFav: isFavorite })
+
     const current = useSelector((state: { sidePane: { details?: TemplateDetails } }) => state.sidePane.details?.data.id)
 
     const myImg = useImage(image) || "/images/template-placeholder.png"
@@ -23,9 +29,9 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
 
     useEffect(() => {
         if (current == id)
-            setActive(true);
+            setState(state => ({ ...state, active: true }))
         else
-            setActive(false);
+            setState(state => ({ ...state, active: false }))
     }, [current])
 
     const expandTemplate = (e: React.SyntheticEvent, id: string) => {
@@ -34,12 +40,16 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
         // do request
     }
 
+    const handleFavorite = () => {
+        setState(state => ({ ...state, isFav: !state.isFav }))
+    }
+
 
     return <Fragment>
-        <div className={cn(style.card, style[layout], { [style.focused]: active })} onClick={onClick}>
+        <div className={cn(style.card, style[layout], { [style.focused]: state.active })} onClick={onClick}>
 
             <div className={cn(style.card__img)}>
-                {active &&
+                {state.active &&
                     <Link to={`/api/template/${id}/preview`} target="_blank" rel="noopener noreferrer">
                         <BiExpandAlt className={style.expand} onClick={(e) => expandTemplate(e, id)} />
                     </Link>
@@ -69,7 +79,7 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
                 }
 
                 <span role="button" className={cn(style.favorite)}>
-                    <Favotite isFavorite={isFavorite} fontSize="2rem" />
+                    <Favotite isFavorite={state.isFav} fontSize="2rem" onClick={handleFavorite} />
                 </span>
             </div>
 
