@@ -20,7 +20,7 @@ type state = {
 
 export default function Card({ data, onClick, layout = "grid" }: CardContent & { onClick?: () => void, layout?: "grid" | "list" }) {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image } = data
-    const [state, setState] = useState<state>({ isFav: isFavorite })
+    const [state, setState] = useState<state>({})
 
     const current = useSelector((state: { sidePane: { details?: TemplateDetails } }) => state.sidePane.details?.data.id)
 
@@ -40,16 +40,12 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
         // do request
     }
 
-    const handleFavorite = () => {
-        setState(state => ({ ...state, isFav: !state.isFav }))
-    }
-
 
     return <Fragment>
         <div className={cn(style.card, style[layout], { [style.focused]: state.active })} onClick={onClick}>
 
             <div className={cn(style.card__img)}>
-                {state.active &&
+                {state?.active &&
                     <Link to={`/api/template/${id}/preview`} target="_blank" rel="noopener noreferrer">
                         <BiExpandAlt className={style.expand} onClick={(e) => expandTemplate(e, id)} />
                     </Link>
@@ -79,7 +75,7 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
                 }
 
                 <span role="button" className={cn(style.favorite)}>
-                    <Favotite isFavorite={state.isFav} fontSize="2rem" onClick={handleFavorite} />
+                    <Favotite id={id} isFavorite={isFavorite} fontSize="2rem" />
                 </span>
             </div>
 
