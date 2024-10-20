@@ -12,6 +12,7 @@ import { useImage } from "../../Hooks/useImage";
 import { BiExpandAlt } from "react-icons/bi";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { getFromIndexStore } from "../../Utils/IndexedDB";
 
 type state = {
     active?: boolean,
@@ -26,6 +27,12 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
 
     const myImg = useImage(image) || "/images/template-placeholder.png"
 
+    const [archive, setArchive] = useState()
+    // getFromIndexStore(data.id, setArchive)
+
+    // useEffect(() => {
+    //     console.log(archive);
+    // }, [])
 
     useEffect(() => {
         if (current == id)

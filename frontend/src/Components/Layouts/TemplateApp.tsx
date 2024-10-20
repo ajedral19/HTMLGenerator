@@ -4,6 +4,8 @@ import Header from "../Header";
 import ProgressBar from "../Widgets/progressBar.widget";
 import { TemplateFindAll } from "../../Handlers/HandleTemplate";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { initializeIndexStore } from "../../Utils/IndexedDB";
 
 export default function TemplateApp({ children }: { children: React.ReactNode }) {
     const { isLoading } = useQuery({
@@ -11,6 +13,10 @@ export default function TemplateApp({ children }: { children: React.ReactNode })
         queryKey: ["templates"],
         refetchOnWindowFocus: false,
     })
+
+    useEffect(() => {
+        // initializeIndexStore()
+    }, [])
 
     return <Fragment>
         <div className="h-100">

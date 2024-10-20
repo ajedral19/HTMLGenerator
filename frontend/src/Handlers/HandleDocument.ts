@@ -9,5 +9,8 @@ export const DocumentExtract = async (src: string) => {
 			const { loaded, total = 0, bytes } = progressEvent;
 			store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes, state: "jsonData" }));
 		},
-	});
+	}).then(axiosResponse => {
+		console.log(axiosResponse, 'response');
+		return axiosResponse
+	})
 };

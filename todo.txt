@@ -31,3 +31,27 @@ panel
 
 ////////////////
 Documentation
+
+cache
+		.then((axiosResponse) => {
+			const headers = new Headers();
+			const response: Response = new Response(axiosResponse.data, {
+				headers: { ...axiosResponse.headers, ...headers },
+				status: axiosResponse.status,
+				statusText: axiosResponse.statusText,
+			});
+
+			const CacheName = `Generate`;
+			const url = axiosResponse.config.url ? axiosResponse.config.url : "";
+			caches
+				.open(CacheName)
+				.then((cache) => {
+					cache.put(url, response);
+					return cache;
+				})
+				.then((cacheResponse) => {
+					cacheResponse.keys(url).then((responseUrl) => console.log(responseUrl));
+				});
+
+			return axiosResponse;
+		});

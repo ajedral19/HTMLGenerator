@@ -23,10 +23,6 @@ export const TemplateSave = async (template_prop: Template) => {
 		// stylesheetId,
 	};
 
-	// console.log(payload);
-
-	// return
-
 	return api
 		.post("/template/add", payload, { headers })
 		.then((response) => response.data)

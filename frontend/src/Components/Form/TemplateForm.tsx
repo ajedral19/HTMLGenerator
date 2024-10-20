@@ -53,6 +53,8 @@ export default function TemplateForm() {
         const file = e.target.files
         setValue("files", file)
         inputRef.current = file
+        console.log(e, 'changed');
+        
     }
 
     useEffect(() => {

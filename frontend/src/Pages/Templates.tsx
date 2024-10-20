@@ -12,6 +12,7 @@ import TemplateForm from "../Components/Form/TemplateForm";
 import TemplatesGrid from "../Components/TemplatesGrid";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { getFromIndexStor, getFromIndexStore, indexStore } from "../Utils/IndexedDB";
 
 // const templatesData: TemplateDetails[] = [
 //     {

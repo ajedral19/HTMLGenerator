@@ -1,5 +1,9 @@
 import { TemplateDetails } from "../types";
 
+export const storeName: { favorites: string } = {
+	favorites: "favorites",
+};
+
 export const init_details: TemplateDetails = {
 	data: {
 		id: "",

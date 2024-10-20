@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useReducer, useState } from "react";
 import cn from 'classnames'
 import StripTag from "./Widgets/StripTag";
-import { MdArchive, MdEdit, MdMoreHoriz, MdPerson4 } from "react-icons/md";
+import { MdArchive, MdEdit, MdMoreHoriz, MdOutlineFileDownload, MdPerson4 } from "react-icons/md";
 import { FaShare } from "react-icons/fa6";
 import { TemplateDetails } from "../types";
 import { Button } from "./Widgets";
@@ -15,7 +15,7 @@ import { useImage } from "../Hooks/useImage";
 import { useForm } from "react-hook-form";
 import { CacheHTMLGenerate, HTMLGenerate } from "../Handlers/HandleHTML";
 import fileDownload from "js-file-download";
-import { indexStore } from "../Utils/IndexedDB";
+import { addItemToIndexStore, getFromIndexStore, indexStore } from "../Utils/IndexedDB";
 
 const editButton = [
     {
@@ -35,11 +35,11 @@ const editButton = [
 type state = {
     status: "Generate" | "Submit" | "Download",
     isLoading: boolean,
-    file?: [ArrayBuffer, string]
+    file?: [ArrayBuffer, string],
 }
 
 export default function Details({ data }: TemplateDetails) {
-    const { name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
+    const { id, name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
     const { register, getValues, reset } = useForm({ defaultValues: { offset: "1", limit: "10" } })
     const [state, setState] = useState<state>({
         status: "Generate",
@@ -65,7 +65,7 @@ export default function Details({ data }: TemplateDetails) {
                             status: "Download",
                             file: [response.data, attachment]
                         }))
-                        // indexStore(id)
+                        addItemToIndexStore(id, response.data)
                     }
                 }
             }).catch(err => console.log(err))
@@ -99,6 +99,9 @@ export default function Details({ data }: TemplateDetails) {
             isLoading: false,
             file: undefined
         }))
+        getFromIndexStore(id, setState, { status: "Download" }, `${name}.zip`)
+        console.log(isFavorite);
+
     }, [data])
 
     return <Fragment>
@@ -126,7 +129,7 @@ export default function Details({ data }: TemplateDetails) {
                                     <StripTag text={ticket.id} url={ticket.url} />
                                 : null
                         }
-                        <Favotite isFavorite={isFavorite} fontSize="2.4rem" />
+                        <Favotite id={id} isFavorite={isFavorite} fontSize="2.4rem" />
                     </div>
                     <div>
                         <h4 className={cn("title title--2")}>{name}</h4>
@@ -183,11 +186,14 @@ export default function Details({ data }: TemplateDetails) {
                         <div className="flex">
                             <Field className={cn("col col-6", style.input_offset)} defaultValue="1" min={1} {...register("offset")} type="number" label="Offset" />
                             <Field className={cn("col col-6", style.input_limit)} defaultValue="1" min={1} max={60} {...register("limit")} type="number" label="Limit" />
-                            {state.isLoading && "loading..."}
                         </div>
                     }
                     <div className="mt-auto no-gap flex">
-                        <Button className="mr-auto" text={state.status} onClick={handleOnClick} disabled={state.isLoading} />
+                        <Button
+                            className="mr-auto"
+                            text={state.isLoading ? "Loading" : state.status}
+                            onClick={handleOnClick} disabled={state.isLoading}
+                            icon={state.status == "Download" ? <MdOutlineFileDownload fontSize="2rem" /> : undefined} />
                         <Button className="" icon={<MdMoreHoriz />} title="More" options={editButton} />
                     </div>
                 </div>
