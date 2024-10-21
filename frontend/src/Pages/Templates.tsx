@@ -5,14 +5,13 @@ import cn from 'classnames'
 import style from '../Styles/templates.module.sass'
 import { useDispatch, useSelector } from "react-redux";
 import { showSidePane } from "../Redux/Slices/sidePane";
-import { TemplateData, TemplateDetails } from "../types";
+import { TemplateDetails } from "../types";
 import { init_details } from "../Utils/initialStates";
 import { MdClose } from "react-icons/md";
 import TemplateForm from "../Components/Form/TemplateForm";
 import TemplatesGrid from "../Components/TemplatesGrid";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { getFromIndexStor, getFromIndexStore, indexStore } from "../Utils/IndexedDB";
 
 // const templatesData: TemplateDetails[] = [
 //     {

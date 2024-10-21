@@ -81,9 +81,9 @@ export default function Card({ data, onClick, layout = "grid" }: CardContent & {
                     </p>
                 }
 
-                <span role="button" className={cn(style.favorite)}>
+                {/* <span role="button" className={cn(style.favorite)}>
                     <Favotite id={id} isFavorite={isFavorite} fontSize="2rem" />
-                </span>
+                </span> */}
             </div>
 
         </div>

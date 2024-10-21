@@ -56,8 +56,7 @@ export const addItemToIndexStore = (key: string, value: any) => {
 	};
 };
 
-export const getFromIndexStore = (key: string, setter, setterExtras, name?: string) => {
-	let result;
+export const getFromIndexStore = (key: string, setter: React.SetStateAction<any>, setterExtras: {}, name?: string) => {
 	const store = indexedDB.open("templateStore", 1.2);
 	store.onerror = (e) => console.log(store.error?.message, "error");
 	store.onsuccess = (e) => {
@@ -81,5 +80,5 @@ export const getFromIndexStore = (key: string, setter, setterExtras, name?: stri
 		const db = (e.target as IDBOpenDBRequest).result;
 		db.createObjectStore("stash");
 	};
-	return result;
+	return;
 };

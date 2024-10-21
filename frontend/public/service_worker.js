@@ -2,12 +2,12 @@ const cacheName = "from-service-worker";
 
 // call install event
 self.addEventListener("install", (event) => {
-	console.log("Service Worker: Installed");
+	// console.log("Service Worker: Installed");
 });
 
 // call activate event
 self.addEventListener("activate", (event) => {
-	console.log("Service Worker: Activated");
+	// console.log("Service Worker: Activated");
 
 	// remove unwanted caches
 	event.waitUntil(
@@ -15,7 +15,7 @@ self.addEventListener("activate", (event) => {
 			return Promise.all(
 				cacheNames.map((cache) => {
 					if (cache !== cacheName) {
-						console.log("Service Worker: Clearing old cache");
+						// console.log("Service Worker: Clearing old cache");
 						return caches.delete(cache);
 					}
 				})
@@ -26,17 +26,18 @@ self.addEventListener("activate", (event) => {
 
 // call fetch event
 self.addEventListener("fetch", (event) => {
-	console.log("Service Worker: Fetching");
+	// console.log("Service Worker: Fetching");
 	event.respondWith(
 		fetch(event.request)
 			.then((response) => {
 				// Make a clone of response
 				const responseClone = response.clone();
+				
 				// Open cache
 				caches.open(cacheName).then((cache) => {
 					// add response to the cache
 					cache.put(event.request, responseClone);
-					console.log("caching here hehe");
+					// console.log("caching here hehe");
 				});
 				return response;
 			})

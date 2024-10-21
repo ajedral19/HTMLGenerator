@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { CacheHTMLGenerate, HTMLGenerate } from "../Handlers/HandleHTML";
 import fileDownload from "js-file-download";
 import { addItemToIndexStore, getFromIndexStore, indexStore } from "../Utils/IndexedDB";
+import { useLocalStorage } from "../Hooks/useLocalStorage";
 
 const editButton = [
     {
@@ -36,6 +37,7 @@ type state = {
     status: "Generate" | "Submit" | "Download",
     isLoading: boolean,
     file?: [ArrayBuffer, string],
+    isFav: boolean
 }
 
 export default function Details({ data }: TemplateDetails) {
@@ -44,7 +46,8 @@ export default function Details({ data }: TemplateDetails) {
     const [state, setState] = useState<state>({
         status: "Generate",
         isLoading: false,
-        file: undefined
+        file: undefined,
+        isFav: isFavorite
     })
 
     const myImg = useImage(image)
@@ -83,9 +86,6 @@ export default function Details({ data }: TemplateDetails) {
             case "Submit":
                 handleGenerate()
                 return
-            case "Download":
-                handleDownload()
-                return
             default:
                 setState((state) => ({ ...state, status: "Submit" }))
         }
@@ -97,23 +97,18 @@ export default function Details({ data }: TemplateDetails) {
             ...state,
             status: "Generate",
             isLoading: false,
-            file: undefined
+            file: undefined,
+            isFav: isFavorite
         }))
         getFromIndexStore(id, setState, { status: "Download" }, `${name}.zip`)
-        console.log(isFavorite);
-
     }, [data])
 
     return <Fragment>
         <section className={cn(style.details)}>
             <img src={myImg?.toString()} alt={name} />
             <ul className={cn(style.details__tabs)}>
-                <li role="button">
-                    Details
-                </li>
-                <li role="button">
-                    Activity
-                </li>
+                <li role="button">Details</li>
+                <li role="button">Activity</li>
             </ul>
             <div className={cn(style.details__content)}>
                 <div className={cn(style.details__meta)}>
@@ -124,12 +119,11 @@ export default function Details({ data }: TemplateDetails) {
                                 Array.isArray(ticket) ?
                                     ticket.map((item, key) => (
                                         <StripTag text={item.id} url={item.url} key={key} />
-                                    ))
-                                    :
-                                    <StripTag text={ticket.id} url={ticket.url} />
-                                : null
+                                    )) :
+                                    <StripTag text={ticket.id} url={ticket.url} /> :
+                                null
                         }
-                        <Favotite id={id} isFavorite={isFavorite} fontSize="2.4rem" />
+                        {/* <Favotite id={id} isFavorite={state.isFav} fontSize="2.4rem" /> */}
                     </div>
                     <div>
                         <h4 className={cn("title title--2")}>{name}</h4>
@@ -147,11 +141,7 @@ export default function Details({ data }: TemplateDetails) {
                     {spreadsheetURL &&
                         <div>
                             <p className="label">Spreadsheet URL</p>
-                            <p>
-                                <Link to={spreadsheetURL} target="_blank">
-                                    {spreadsheetURL}
-                                </Link>
-                            </p>
+                            <p><Link to={spreadsheetURL} target="_blank">{spreadsheetURL}</Link></p>
                         </div>
                     }
 
@@ -191,10 +181,14 @@ export default function Details({ data }: TemplateDetails) {
                     <div className="mt-auto no-gap flex">
                         <Button
                             className="mr-auto"
-                            text={state.isLoading ? "Loading" : state.status}
+                            text={state.isLoading ? "Loading" : "Generate"}
                             onClick={handleOnClick} disabled={state.isLoading}
-                            icon={state.status == "Download" ? <MdOutlineFileDownload fontSize="2rem" /> : undefined} />
-                        <Button className="" icon={<MdMoreHoriz />} title="More" options={editButton} />
+                        />
+                        {
+                            state.file &&
+                            !state.isLoading &&
+                            <Button className="" icon={<MdOutlineFileDownload fontSize="2rem" />} title="Download" onClick={handleDownload} disabled={state.isLoading} />
+                        }
                     </div>
                 </div>
             </div>
