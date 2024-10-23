@@ -2,8 +2,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type templateState = {
-    favorites: string[],
-    downloadReady: string[]
+    favorites?: string[],
+    downloadReady?: string[]
 }
 
 const getState = (state: any, action: { payload: templateState; }) => (

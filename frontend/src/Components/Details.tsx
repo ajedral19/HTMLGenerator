@@ -17,6 +17,7 @@ import { CacheHTMLGenerate, HTMLGenerate } from "../Handlers/HandleHTML";
 import fileDownload from "js-file-download";
 import { addItemToIndexStore, getFromIndexStore, indexStore } from "../Utils/IndexedDB";
 import { useLocalStorage } from "../Hooks/useLocalStorage";
+import { useSelector } from "react-redux";
 
 const editButton = [
     {
@@ -43,6 +44,7 @@ type state = {
 export default function Details({ data }: TemplateDetails) {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
     const { register, getValues, reset } = useForm({ defaultValues: { offset: "1", limit: "10" } })
+    const favorites = useSelector((state: { templatesState: { favorites: string[] } }) => state.templatesState.favorites)
     const [state, setState] = useState<state>({
         status: "Generate",
         isLoading: false,
@@ -98,10 +100,17 @@ export default function Details({ data }: TemplateDetails) {
             status: "Generate",
             isLoading: false,
             file: undefined,
-            isFav: isFavorite
+            isFav: favorites.includes(id)
         }))
         getFromIndexStore(id, setState, { status: "Download" }, `${name}.zip`)
+
     }, [data])
+
+    useEffect(() => {
+        // console.log(favorites.includes(id));
+        setState((state) => ({ ...state, isFav: favorites.includes(id) }))
+    }, [data, favorites])
+
 
     return <Fragment>
         <section className={cn(style.details)}>
@@ -123,7 +132,7 @@ export default function Details({ data }: TemplateDetails) {
                                     <StripTag text={ticket.id} url={ticket.url} /> :
                                 null
                         }
-                        {/* <Favotite id={id} isFavorite={state.isFav} fontSize="2.4rem" /> */}
+                        <Favotite id={id} isFavorite={state.isFav} fontSize="2rem" />
                     </div>
                     <div>
                         <h4 className={cn("title title--2")}>{name}</h4>
