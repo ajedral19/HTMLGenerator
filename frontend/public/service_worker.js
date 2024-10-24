@@ -36,7 +36,8 @@ self.addEventListener("fetch", (event) => {
 				// Open cache
 				caches.open(cacheName).then((cache) => {
 					// add response to the cache
-					cache.put(event.request, responseClone);
+					if(!event.request.url.includes("chrome-extension"))
+						cache.put(event.request, responseClone);
 					// console.log("caching here hehe");
 				});
 				return response;

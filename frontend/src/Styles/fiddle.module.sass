@@ -1,0 +1,37 @@
+.fiddle
+    display: flex
+    flex-flow: row
+    height: 100%
+    aside
+        outline: 1px dashed pink
+        flex: 0 1 15%
+
+    &__main_panel
+        outline: 1px dashed grey
+        flex: 1
+        display: flex
+
+        .fiddle_editor_pane
+            outline: 1px solid orange
+        .fiddle_result_pane
+            outline: 1px solid teal
+
+        .fiddle_pane
+            flex: 1 0 50%
+            display: flex
+            flex-flow: column
+
+            &__header
+                outline: 1px dotted lightblue
+                display: flex
+                flex-flow: wrap
+                justify-content: space-between
+                padding-inline: 1em
+                padding-block: .4em
+                font-size: 1rem
+
+            &__body
+                flex: 1
+
+                &.result_wrap
+                    background: #FFFFFF
