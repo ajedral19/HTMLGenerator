@@ -1,7 +1,7 @@
 <?php $page_num = 0; ?>
 <article class="webtext native_expression native_expression_teacher ielts tb--v4 lang-<?php echo $locale; ?>" id="webtext_%class_id%_%chapter_id%" data-class_id="%class_id%" data-chapter_id="%chapter_id%" data-orderno="%orderno%">
     <!-- 1 -->
-    <div class="webtext_page webtext_page_break no-padding native-background" id="webtext_page_%class_id%_%chapter_id%_<?php echo ++$page_num; ?>">
+    <div class="webtext_page webtext_page_break no-padding native-background" id="<?php echo ++$page_num; ?>">
         <div class="padding_3_2">
             <div class="box_wt_2columns no_ratio right_scrollable tb--2021-teacher m_b_20">
                 <div class="wt_col book full-h">
@@ -9,7 +9,7 @@
                         <div class="v4--canvas-1">
                             <div class="card-img">
                                 <div class="img-<?= $locale; ?>">
-                                    <img src="%cdn_path%resources/speak_train_ielts_3/{{ item_number }}/{{ item_number }}-1.png">
+                                    <img src="{{ item_number }}/{{ item_number }}-1.png">
                                 </div>
                             </div>
                         </div>

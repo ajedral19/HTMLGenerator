@@ -1,0 +1,42 @@
+.type_text
+    width: 100%
+.field
+    --__err-color: #ea5144
+    --__border-color: var(--theme-field-border)
+    --__border-width: 2px
+    position: relative
+    isolation: isolate
+    &__input
+        background: var(--theme-field-background)
+        display: flex
+        flex-flow: row nowrap
+        align-items: center
+        border-radius: 2em
+        overflow: hidden
+        outline: var(--__border-width) solid var(--__border-color)
+        transition: box-shadow .2s ease-in
+
+        &.error
+            // --__border-color: var(--__err-color)
+
+        &.number
+            border-radius: .4em
+
+    &__label,
+    &__error
+        font-size: 1.4rem
+
+    &__label
+        padding: .4em
+        display: block
+        color: var(--theme-text-color-accent)
+
+    &__error
+        color: var(--__err-color)
+        padding: .8em .4em 0 .4em
+
+    &:focus-within
+        .field__input
+            box-shadow: 0 0 6px -1px #4050859f
+        .field__label
+            color: var(--theme-text-color)

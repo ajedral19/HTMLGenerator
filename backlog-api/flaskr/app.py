@@ -1,4 +1,4 @@
-from flask import Flask, Response, url_for
+from flask import Flask, Response, url_for, request, jsonify
 
 app = Flask(__name__)
 
@@ -10,15 +10,16 @@ def index():
     return resp
 
 
-@app.route("/api/new")
+@app.route("/api/task/new", methods=["POST"])
 def new():
-    return None
+    body = request.get_json()
+    return jsonify(body)
 
 
-@app.route("/api/update")
-def get():
-    # accepts payloads
-    return None
+# @app.route("/api/update")
+# def get():
+#     # accepts payloads
+#     return None
 
 
 @app.route("/api/get")

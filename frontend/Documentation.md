@@ -1,7 +1,7 @@
 # Textbook Generator Documentation
 
 
-Visit [Mustache](https://mustache.github.io/), we'll be using this tool to create the template for every textbook layout.
+Visit [Handlebars](https://handlebarsjs.com/), we'll be using this tool to create the template for every textbook layout.
 
  
 
@@ -84,6 +84,17 @@ Visit [Mustache](https://mustache.github.io/), we'll be using this tool to creat
     }
 ]
 ```
+
+ ```html
+ {{#items}}
+   {{ this.eng }}
+   {{ this.jp }}
+ {{/items}}
+ ```
+
+ ## Helpers
+ blank
+
 <!-- ### Template Creation
 ```html
 <div>

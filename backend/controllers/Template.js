@@ -9,6 +9,8 @@ export const TemplateStylesheetUpload = async(req, res) => {
 }
 
 export const TemplateAdd = async (req, res) => {
+    console.log('testing');
+    
     const formData = req.body;
     const template = req.file;
     const { name, sheet, cdn } = formData;

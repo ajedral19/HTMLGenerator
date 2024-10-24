@@ -1,0 +1,92 @@
+@use 'sass:math'
+
+.card
+    --__bg: #11172c
+    --__img-size: 100%
+    --__ratio: 1.36/1
+    --__grid-layout: "info favorite" "tags tags"
+    border-radius: .6em
+    padding: .4em
+    display: flex
+    // transition: all .2s ease-in
+    background: var(--__bg)
+    gap: .4em .8em
+    height: 100%
+
+    &__img
+        position: relative
+        aspect-ratio: var(--__ratio)
+        overflow: hidden
+        border-radius: .3em
+        isolation: isolate
+        .expand
+            position: absolute
+            cursor: pointer
+            right: .6rem
+            top: .6rem
+            color: var(--theme-text-color)
+            font-size: 1.6rem
+            background: #29314E80
+            width: 2.6rem
+            height: 2.6rem
+            padding: .6rem
+            border-radius: 2em
+            z-index: 10
+            opacity: .5
+            &:hover
+                opacity: 1
+        img
+            object-fit: cover
+            height: var(--__img-size)
+            width: var(--__img-size)
+            object-position: top center
+            z-index: 0
+
+        &::before
+            content: ''
+            position: absolute
+            inset: 0
+            height: 50%
+            background: linear-gradient(0deg, transparent 0%, #00000040 180%)
+            mix-blend-mode: multiply
+
+    &__meta
+        display: grid
+        grid-template-areas: var(--__grid-layout)
+        align-items: center
+        width: 100%
+        gap: .4em
+        .info
+            grid-area: info
+            .author
+                font-size: 1.4rem
+        .tags
+            grid-area: tags
+            display: flex
+            flex-flow: row wrap
+            gap: .6em
+            
+        .favorite
+            align-self: start
+            grid-area: favorite
+            justify-self: end
+
+    &:hover
+        --__bg: #29314E
+        box-shadow: 0 2px 8px -2px #10183070
+
+    &.focused
+        --__bg: #29314E
+        outline: 1px solid #22fbb692
+
+    &.grid
+        --__img-size: 100%
+        --__grid-layout: "info favorite" "tags tags"
+        flex-flow: column
+        gap: .6em
+
+    &.list
+        --__img-size: 80px
+        --__ratio: 1/1
+        --__grid-layout: "info favorite" "tags tags"
+        flex-flow: row

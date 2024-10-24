@@ -4,7 +4,7 @@ import Templates from "./Pages/Templates";
 import Generate from "./Pages/Generate";
 import Home from "./Pages/Home";
 import Documentation from "./Pages/Documentation";
-import LiveEditor from "./Pages/LiveEditor";
+import Fiddle from "./Pages/Fiddle";
 import Backlog from "./Pages/Backlog";
 import Helper from "./Pages/Helper";
 import { TemplateApp } from "./Components/Layouts";
@@ -45,7 +45,11 @@ const SiteRoutes = createBrowserRouter([
             },
             {
                 path: 'live-editor',
-                element: <Layout><TemplateApp><LiveEditor /></TemplateApp></Layout>
+                element: <Layout><TemplateApp><Fiddle /></TemplateApp></Layout>
+            },
+            {
+                path: 'fiddle',
+                element: <Layout><TemplateApp><Fiddle /></TemplateApp></Layout>
             },
             {
                 path: 'generate',

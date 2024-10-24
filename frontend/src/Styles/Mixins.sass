@@ -3,16 +3,25 @@
 @mixin white_space
     $types: (m: margin, p: padding)
     $directions: (l: left, r: right, t: top, b: bottom)
+    @each $key, $val in $directions
+        .m#{$key}-auto
+            margin-#{$val}: auto
     @each $type_key, $type in $types
         @each $dir_key, $dir in $directions
             @for $n from 0 through 12
                 .#{$type_key}#{$dir_key}-#{$n}
                     #{$type}-#{$dir}: #{$n}em
 
-@mixin flexbox($n_grid: 12, $breakpoint: null)
+@mixin flexbox($n_columns: 12, $breakpoint: null)
     $cn: col
-    @if $breakpoint 
+    @if $breakpoint
         $cn: col-#{$breakpoint}
-    @for $n from 1 through $n_grid
+    @for $n from 1 through $n_columns
         .#{$cn}-#{$n}
-            flex-basis: math.percentage(math.div($n, $n_grid))
+            flex-basis: math.percentage(math.div($n, $n_columns))
+
+@mixin grid($n_columns: 12)
+    grid-template-columns: repeat(#{$n_columns}, 1fr)
+    @for $n from 1 through $n_columns
+        .grid-item.span-#{$n}
+            grid-column: span #{$n}

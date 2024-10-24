@@ -9,6 +9,16 @@
     padding: 0
     box-sizing: border-box
 
+    &::before, &::after
+        clear: both
+
+    &[role="button"]
+        cursor: pointer
+
+    &::selection
+        background: #890d8fd2
+        color: #fff
+
 html
     font-size: 62.5%
 
@@ -21,6 +31,8 @@ body
 p
     --__fs: 1.6rem
     font-size: var(--__fs)
+    word-break: break-all
+    widows: 3
 
     span
         font-size: var(--__fs)
@@ -32,6 +44,9 @@ a
     &:hover
         color: var(--theme-text-color-cool-accent)
 
+svg
+    vertical-align: middle
+
 ul, li
     font-size: inherit
     list-style: none
@@ -40,44 +55,55 @@ h1, h2, h3, h4, h5, h6
     --__fs: 1.6rem
     font-size: var(--__fs)
 
-label, input[type="text"], button
+label, input, button
     --__fs: inherit
-    --__color: var(--theme-field-text-color)
-    color: var(--__color)
     font-size: var(--__fs)
+    font-family: inherit
 
-input[type="text"], button
+input[type="text"], input[type="number"], button
+    border: none
+    outline: none
+    display: inline-block
+    vertical-align: middle
+
+button, a[role="button"]
     --__bg: #F3F3F3
     --__color: inherit
-    --__pad-x: 0
-    --__pad-y: 0
+    --__bg-hover: #c9c9c9
+    --__color: var(--theme-text-color-default)
+    --__pad-x: 1.8em
+    --__pad-y: .8em
     --__radius: var(--brdr-radius)
     --__width: auto
-    background: var(--theme-field-background)
-    border: none
     border-radius: var(--__radius)
     color: var(--__color)
-    display: inline-block
-    font-family: inherit
+    cursor: pointer
     padding: var(--__pad-y) var(--__pad-x)
-    outline: none
+    transition: color, background .2s ease-out, box-shadow .1s ease-in
     width: var(--__width)
 
-input[type="text"]
-    --__color: var(--theme-field-text-color)
-
-button
-    --__color: var(--theme-text-color-default)
-    --__pad-x: 1.2em
-    --__pad-y: .6em
-    cursor: pointer
-    transition: color, background .2s ease-in-out
-
     &:hover
-        --__bg-hover: #c9c9c9
+        background: var(--__bg-hover)
+        box-shadow: 0 0 6px -2px var(--__bg)
+
+input
+    &[type="text"], &[type="number"]
+        --__bg: var(--theme-field-background)
+        --__color: var(--theme-field-color)
+        --__border: var(--theme-field-border)
+        height: var(--control-size)
+        padding-inline: 1em
+        background: var(--__bg)
+        color: var(--__color)
+        &::placeholder
+            color: var(--__color)
+            opacity: .3
 
 .h-100
     height: 100%
+
+.w-full
+    width: 100%
 
 .bg-unset
     background: unset
@@ -87,6 +113,16 @@ button
 
 .pad-y-0
     padding-block: 0
+
+.y-auto
+    overflow-y: auto
+
+.relative
+    position: relative
+
+.sticky
+    position: sticky
+    top: 0
 
 .rounded
     border-radius: var(--brdr-radius)
@@ -122,12 +158,23 @@ button
         flex-wrap: nowrap
     &.items-center
         align-items: center
+    &.space-between
+        justify-content: space-between
     @include mxn.flexbox(12)
+
+.grid
+    display: grid
+    grid-template-rows: minmax(6em, auto)
+    height: 100%
+    @include mxn.grid(12)
+    .grid-item
+        transition: all .2s ease-in
 
 .container
     width: 100%
-    max-width: 860px
-    max-width: 80dvw
+    max-width: 1620px
+    min-width: 1080px
+    width: 95dvw
     margin-inline: auto
     &.wide
         max-width: 60dvw
@@ -147,6 +194,10 @@ button
 
 .t-center
     text-align: center
+
+.label
+    color: #ABAEB9
+    font-size: 1.4rem
 
 .block
     display: block
