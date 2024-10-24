@@ -1,4 +1,3 @@
-import { error } from "console";
 import { api } from "./handle.config";
 import store from "../store";
 import { loaderState } from "../Redux/Slices/loader";

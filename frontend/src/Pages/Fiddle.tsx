@@ -10,6 +10,8 @@ import useExtract from '../Hooks/useExtract';
 import Handlebars, { registerHelper } from 'handlebars'
 import cn from 'classnames'
 import style from '../Styles/global.module.sass'
+import { Button } from '../Components/Widgets';
+import Field from '../Components/Widgets/field.widget';
 
 export default function Fiddle() {
     const [html, setHtml] = useState<string>("<h1>hello</h1>")
@@ -56,6 +58,17 @@ export default function Fiddle() {
     }
 
     return <>
+        <section>
+        <div className={cn(style.fiddle_actions)}>
+            <Button text='Download Render' />
+            <Field id='stylesheet' label='Stylesheet' placeholder='Choose stylesheet to use' />
+            <Button text='Save' />
+            <div>
+                {/* is save button is triggerd */}
+                <Field id='template_name' label='Template Name' placeholder='Add name to this template' />
+                <Button text='submit' />
+            </div>
+        </div>
         <div className={cn(style.fiddle)}>
             <div className={cn(style.fiddle__data)}>
                 <MarkdownPreview
@@ -98,6 +111,7 @@ export default function Fiddle() {
                 </div>
             </div>
         </div>
+        </section>
 
     </>
 }
