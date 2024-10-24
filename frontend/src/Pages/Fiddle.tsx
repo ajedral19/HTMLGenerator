@@ -58,17 +58,6 @@ export default function Fiddle() {
     }
 
     return <>
-        <section>
-        <div className={cn(style.fiddle_actions)}>
-            <Button text='Download Render' />
-            <Field id='stylesheet' label='Stylesheet' placeholder='Choose stylesheet to use' />
-            <Button text='Save' />
-            <div>
-                {/* is save button is triggerd */}
-                <Field id='template_name' label='Template Name' placeholder='Add name to this template' />
-                <Button text='submit' />
-            </div>
-        </div>
         <div className={cn(style.fiddle)}>
             <div className={cn(style.fiddle__data)}>
                 <MarkdownPreview
@@ -111,7 +100,5 @@ export default function Fiddle() {
                 </div>
             </div>
         </div>
-        </section>
-
     </>
 }
