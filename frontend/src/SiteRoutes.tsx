@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./Components/Layouts/Layout";
 import Templates from "./Pages/Templates";
-import Generate from "./Pages/Generate";
 import Home from "./Pages/Home";
 import Documentation from "./Pages/Documentation";
 import Fiddle from "./Pages/Fiddle";
@@ -50,10 +49,6 @@ const SiteRoutes = createBrowserRouter([
             {
                 path: 'fiddle',
                 element: <Layout><TemplateApp><Fiddle /></TemplateApp></Layout>
-            },
-            {
-                path: 'generate',
-                element: <Layout><TemplateApp><Generate /></TemplateApp></Layout>
             },
             {
                 path: 'bucket',

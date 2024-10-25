@@ -35,15 +35,10 @@ export default function Button({ text, icon, title, name, href, id, className, r
                     icon && text ?
                         <Fragment>
                             {
-                                rtl ?
-                                    <><span>{text}</span> {icon}</>
-                                    :
-                                    <>{icon} <span>{text}</span></>
-
+                                rtl ? <><span>{text}</span> {icon}</>
+                                    : <>{icon} <span>{text}</span></>
                             }
-                        </Fragment> :
-                        icon ? icon :
-                            text
+                        </Fragment> : icon ? icon : text
                 }
             </Link>
         </Fragment>
@@ -56,15 +51,10 @@ export default function Button({ text, icon, title, name, href, id, className, r
                         icon && text ?
                             <Fragment>
                                 {
-                                    rtl ?
-                                        <><span>{text}</span> {icon}</>
-                                        :
-                                        <>{icon} <span>{text}</span></>
-
+                                    rtl ? <><span>{text}</span> {icon}</>
+                                        : <>{icon} <span>{text}</span></>
                                 }
-                            </Fragment> :
-                            icon ? icon :
-                                text
+                            </Fragment> : icon ? icon : text
                     }
                 </button>
                 <div className={cn(style.btn_select__options)}>
@@ -81,15 +71,10 @@ export default function Button({ text, icon, title, name, href, id, className, r
                 icon && text ?
                     <Fragment>
                         {
-                            rtl ?
-                                <><span>{text}</span> {icon}</>
-                                :
-                                <>{icon} <span>{text}</span></>
-
+                            rtl ? <><span>{text}</span> {icon}</>
+                                : <>{icon} <span>{text}</span></>
                         }
-                    </Fragment> :
-                    icon ? icon :
-                        text
+                    </Fragment> : icon ? icon : text
             }
         </button>
     </Fragment>

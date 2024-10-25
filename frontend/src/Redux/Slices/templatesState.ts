@@ -13,9 +13,6 @@ const getState = (state: any, action: { payload: templateState; }) => (
     }
 )
 
-// const filter = () => { }
-
-
 export const templatesStateSlice = createSlice({
     name: 'templates',
     initialState: {
