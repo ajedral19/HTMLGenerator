@@ -3,9 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "../Header";
 import ProgressBar from "../Widgets/progressBar.widget";
 import { TemplateFindAll } from "../../Handlers/HandleTemplate";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { initializeIndexStore } from "../../Utils/IndexedDB";
 
 export default function TemplateApp({ children }: { children: React.ReactNode }) {
     const { isLoading } = useQuery({

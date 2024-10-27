@@ -26,7 +26,7 @@ type state = {
 
 export default function Details({ data }: TemplateDetails) {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
-    const { register, getValues, reset } = useForm({ defaultValues: { offset: "1", limit: "10" } })
+    const { register, getValues } = useForm({ defaultValues: { offset: "1", limit: "10" } })
     const favorites = useSelector((state: { templatesState: { favorites: string[] } }) => state.templatesState.favorites)
     const [state, setState] = useState<state>({
         status: "Generate",

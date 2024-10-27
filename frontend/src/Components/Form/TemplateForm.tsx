@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import Field from "../Widgets/field.widget";
 import { Button } from "../Widgets";
 import cn from 'classnames'
@@ -12,7 +12,7 @@ const spreadsheet_pattern = /docs\.google\.com\/spreadsheets\b([-a-zA-Z0-9()@:%_
 const cdn_pattern = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
 
 export default function TemplateForm() {
-    const { register, watch, setValue, setFocus, getValues, formState: { errors }, handleSubmit } = useForm<{
+    const { register, setValue, getValues, formState: { errors }, handleSubmit } = useForm<{
         files: any
         templateName: string
         spreadsheetURL: string
@@ -48,13 +48,13 @@ export default function TemplateForm() {
         e.preventDefault()
     }
 
-    const onchange = (e) => {
+    const onchange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // console.log(e);
         const file = e.target.files
         setValue("files", file)
         inputRef.current = file
         console.log(e, 'changed');
-        
+
     }
 
     useEffect(() => {

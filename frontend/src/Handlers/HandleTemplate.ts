@@ -12,7 +12,7 @@ type Template = {
 };
 
 export const TemplateSave = async (template_prop: Template) => {
-	const { templateFiles, templateName, spreadsheet, cdn, stylesheetId } = template_prop;
+	const { templateFiles, templateName, spreadsheet, cdn } = template_prop;
 	const headers = { "Content-Type": "multipart/form-data" };
 	const payload = {
 		template: templateFiles[0],

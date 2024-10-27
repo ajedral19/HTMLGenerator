@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API } from "./handle.config";
 
-export const S3Put = async (file, path = "") => {
+export const S3Put = async (file: {name: string, type: string}, path = "") => {
 	let { name, type } = file;
 
 	if (!type) type = "text/plain";

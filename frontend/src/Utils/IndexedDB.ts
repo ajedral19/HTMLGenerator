@@ -1,6 +1,7 @@
-export const indexStore = (name: string, data: { name: string; file: Blob }) => {
+// name: string,
+export const indexStore = (data: { name: string; file: Blob }) => {
 	const templatesStore = indexedDB.open("templatesStore", 1.2);
-	templatesStore.onerror = (e) => console.log(templatesStore.error?.message, "error");
+	templatesStore.onerror = () => console.log(templatesStore.error?.message, "error");
 	templatesStore.onsuccess = (event) => {
 		const db = (event.target as IDBOpenDBRequest).result;
 		const transaction = db.transaction("renders", "readwrite");
@@ -27,7 +28,7 @@ export const indexStore = (name: string, data: { name: string; file: Blob }) => 
 
 export const initializeIndexStore = () => {
 	const store = indexedDB.open("templateStore", 1);
-	store.onerror = (e) => console.log(store.error?.message, "error");
+	store.onerror = () => console.log(store.error?.message, "error");
 	store.onsuccess = (e) => {
 		const db = (e.target as IDBOpenDBRequest).result;
 		// const transaction = db.transaction("stash", "readwrite");
@@ -42,7 +43,7 @@ export const initializeIndexStore = () => {
 
 export const addItemToIndexStore = (key: string, value: any) => {
 	const store = indexedDB.open("templateStore", 1.2);
-	store.onerror = (e) => console.log(store.error?.message, "error");
+	store.onerror = () => console.log(store.error?.message, "error");
 	store.onsuccess = (e) => {
 		const db = (e.target as IDBOpenDBRequest).result;
 		const transaction = db.transaction("stash", "readwrite");
@@ -58,7 +59,7 @@ export const addItemToIndexStore = (key: string, value: any) => {
 
 export const getFromIndexStore = (key: string, setter: React.SetStateAction<any>, setterExtras: {}, name?: string) => {
 	const store = indexedDB.open("templateStore", 1.2);
-	store.onerror = (e) => console.log(store.error?.message, "error");
+	store.onerror = () => console.log(store.error?.message, "error");
 	store.onsuccess = (e) => {
 		const db = (e.target as IDBOpenDBRequest).result;
 		const stash = db.transaction("stash", "readonly");

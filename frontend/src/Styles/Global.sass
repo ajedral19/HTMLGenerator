@@ -19,6 +19,10 @@
         background: #890d8fd2
         color: #fff
 
+    &[contenteditable]
+        font-size: initial
+        outline: none
+
 html
     font-size: 62.5%
 
@@ -92,8 +96,8 @@ input
         --__color: var(--theme-field-color)
         --__border: var(--theme-field-border)
         height: var(--control-size)
-        padding-inline: 1em
-        background: var(--__bg)
+        padding-inline: var(--inline-pad)
+        background: var(--theme-field-background)
         color: var(--__color)
         &::placeholder
             color: var(--__color)

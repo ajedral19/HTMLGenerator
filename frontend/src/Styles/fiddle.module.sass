@@ -3,18 +3,19 @@
     flex-flow: row
     height: 100%
     aside
-        outline: 1px dashed pink
+        // outline: 1px dashed pink
         flex: 0 1 15%
+        width: 15%
 
     &__main_panel
-        outline: 1px dashed grey
+        // outline: 1px dashed grey
         flex: 1
         display: flex
 
         .fiddle_editor_pane
-            outline: 1px solid orange
+            // outline: 1px solid orange
         .fiddle_result_pane
-            outline: 1px solid teal
+            // outline: 1px solid teal
 
         .fiddle_pane
             flex: 1 0 50%
@@ -22,28 +23,18 @@
             flex-flow: column
 
             &__header
-                outline: 1px dotted lightblue
+                // outline: 1px dotted lightblue
                 display: flex
                 flex-flow: wrap
                 justify-content: space-between
+                align-items: center
                 padding-inline: 1em
                 padding-block: .6em
                 font-size: 1rem
+                min-height: 3.7em
 
             &__body
                 flex: 1
 
                 &.result_wrap
                     background: #FFFFFF
-
-
-.panels
-    outline: 1px dashed red
-    &__tabs
-        display: flex
-        &__tab
-            padding: .6em .4em
-            width: 6ch
-            overflow: hidden
-            text-overflow: ellipsis
-            position: relative

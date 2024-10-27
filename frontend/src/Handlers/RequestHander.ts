@@ -1,7 +1,6 @@
 import axios from "axios";
-import { log } from "console";
 import fileDownload from "js-file-download";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 const api = axios.create({
 	baseURL: "/api",

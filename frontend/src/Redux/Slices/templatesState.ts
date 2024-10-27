@@ -16,7 +16,7 @@ const getState = (state: any, action: { payload: templateState; }) => (
 export const templatesStateSlice = createSlice({
     name: 'templates',
     initialState: {
-        favorites: [],
+        favorites:[""],
         downloadReady: []
 
     },

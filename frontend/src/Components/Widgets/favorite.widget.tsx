@@ -11,7 +11,7 @@ type Favotite = {
     onClick?: () => void
 };
 
-export default function Favotite({ id, fontSize, isFavorite = false }: Favotite) {
+export default function Favotite({ id, fontSize }: Favotite) {
     const favorites = useSelector((state: { templatesState: { favorites: string[] } }) => state.templatesState.favorites)
     const [isFav, setIsFav] = useState<boolean>(false)
 

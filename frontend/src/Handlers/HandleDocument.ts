@@ -10,7 +10,7 @@ export const DocumentExtract = async (src: string) => {
 			store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes, state: "jsonData" }));
 		},
 	}).then(axiosResponse => {
-		console.log(axiosResponse, 'response');
-		return axiosResponse
+		console.log(axiosResponse.data.rows, 'response');
+		return axiosResponse.data.rows
 	})
 };

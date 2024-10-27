@@ -1,6 +1,5 @@
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
-// import Button from "./Button";
 import useTheme from "../Hooks/useTheme";
 import cn from 'classnames'
 import { Button } from "./Widgets";
@@ -28,15 +27,6 @@ export default function Navbar({ className }: { className: string }) {
                     <li className="menu_item">
                         <Button icon={isDark ? <MdOutlineWbSunny fontSize="2rem" /> : <IoMdMoon fontSize="2rem" />} variant="transparent" onClick={() => setIsDark(!isDark)} />
                     </li>
-                    {/* <li className="menu__item">
-                        <Link to="/backlog">Backlog</Link>
-                    </li>
-                    <li className="menu__item">
-                        <Link to="/helper">Helper</Link>
-                    </li> */}
-                    {/* <li className="menu__item">
-                        <Button variant="primary" text="Switch Theme" onClick={() => { }} />
-                    </li> */}
                 </ul>
             </div>
         </nav>

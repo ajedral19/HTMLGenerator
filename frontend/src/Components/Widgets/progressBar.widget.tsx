@@ -8,7 +8,7 @@ import { loaderState } from "../../Redux/Slices/loader";
 export default function ProgressBar() {
     const dispatch = useDispatch()
     const loader = useSelector((state: { loader: { progress: number, max: number } }) => state.loader)
-    const { progress, max } = loader
+    const { progress } = loader
 
     useEffect(() => {
         let timeout = setTimeout(() => {

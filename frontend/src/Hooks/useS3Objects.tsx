@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { S3Fetch } from "../Handlers/HandleS3"
 export default function useS3Objects() {
     // const queryClient = useQueryClient()

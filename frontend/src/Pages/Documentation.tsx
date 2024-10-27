@@ -1,7 +1,5 @@
 import { Fragment } from "react/jsx-runtime";
 import MarkdownPreview from "@uiw/react-markdown-preview";
-import { readFileDataAsBase64 } from "../Utils/FileHandlers";
-import fs from 'fs/promises'
 // import documentation from '../../Documentation.md'
 import { useEffect, useState } from "react";
 

@@ -12,6 +12,7 @@ import { useImage } from "../../Hooks/useImage";
 import { BiExpandAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { showSidePane } from "../../Redux/Slices/sidePane";
+import { RootState } from "../../store";
 
 type state = {
     active?: boolean,
@@ -21,8 +22,7 @@ type state = {
 export default function Card({ data, layout = "grid" }: CardContent & { onClick?: () => void, layout?: "grid" | "list" }) {
     const { id, name, author, ticket, spreadsheetURL, image } = data
     const [state, setState] = useState<state>({})
-    const favorites = useSelector((state: { templatesState: { favorites: string[] } }) => state.templatesState.favorites)
-    const current = useSelector((state: { sidePane: { details?: TemplateDetails } }) => state.sidePane.details?.data.id)
+    const { current, favorites } = useSelector((state: RootState) => ({ current: state.sidePane.details.data.id, favorites: state.templatesState.favorites }))
     const myImg = useImage(image) || "/images/template-placeholder.png"
     const dispatch = useDispatch()
 

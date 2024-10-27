@@ -1,7 +1,7 @@
-import { DragEventHandler, EventHandler, ForwardedRef, forwardRef, Fragment, useEffect, useRef, useState } from "react"
+import { DragEventHandler, ForwardedRef, forwardRef, Fragment } from "react"
 import cn from 'classnames'
 import style from '../../Styles/fileInputField.module.sass'
-import { FieldError, FieldErrorsImpl, Merge, useForm } from "react-hook-form"
+import { FieldError } from "react-hook-form"
 import { BiSolidCloudUpload } from "react-icons/bi"
 
 type FileInput = {
@@ -13,7 +13,7 @@ type FileInput = {
     onDragEnter?: DragEventHandler
     onDrop?: DragEventHandler
     onClick?: (e: React.SyntheticEvent) => void
-    onChange?: (e: React.SyntheticEvent) => void
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const FileInputField = forwardRef(({ id, name, className, error, onDragOver, onDragEnter, onDrop, onChange }: FileInput, ref: ForwardedRef<HTMLInputElement | null>) => {
