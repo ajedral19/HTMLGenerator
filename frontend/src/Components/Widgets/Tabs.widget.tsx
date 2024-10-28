@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useState } from "react"
+import { Fragment, useState } from "react"
 import cn from 'classnames'
 import style from '../../Styles/tabs.module.sass'
 

@@ -10,11 +10,6 @@ import Select from '../Components/Widgets/Select.widget';
 import Editable from '../Components/Widgets/Editable.widget';
 import Tabs from '../Components/Widgets/Tabs.widget';
 import MarkdownPreview from '@uiw/react-markdown-preview'
-import { QueryClient, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
-import useExtract from '../Hooks/useExtract';
 import CodeView from '../Components/CodeView';
 
 const stylesheets = [

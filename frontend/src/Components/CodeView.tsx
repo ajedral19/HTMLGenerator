@@ -12,7 +12,7 @@ type State = {
 export default function CodeView() {
     const [state, setState] = useState<State>()
     const { url } = useSelector((state: RootState) => state.spreadsheet)
-    const { data, isLoading } = useExtract(url)
+    const { data } = useExtract(url)
 
     useEffect(() => {
         setState({ data })

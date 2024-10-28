@@ -1,11 +1,10 @@
-import { ChangeEvent, Fragment, InputHTMLAttributes, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Fragment, useState } from "react";
 
 type State = {
     title?: string
 }
 
-export default function Editable({ name, defaultValue = "Untitled" }: { name?: string, defaultValue: string }) {
+export default function Editable({ defaultValue = "Untitled" }: { name?: string, defaultValue: string }) {
     const [state, setState] = useState<State>({ title: defaultValue })
 
     const handleOnBlur = (e: React.FocusEvent<HTMLElement>) => {
@@ -18,7 +17,7 @@ export default function Editable({ name, defaultValue = "Untitled" }: { name?: s
             tabIndex={1}
             contentEditable="true"
             suppressContentEditableWarning={true}
-            onFocus={(e) => setState(currentState => ({ ...currentState, title: state.title == defaultValue ? "" : state.title }))}
+            onFocus={() => setState(currentState => ({ ...currentState, title: state.title == defaultValue ? "" : state.title }))}
             onBlur={handleOnBlur}>{state?.title}</p>
     </Fragment>
 }
