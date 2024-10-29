@@ -1,5 +1,5 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { serviceAccountAuth } from "../config.js";
+import { client_email, serviceAccountAuth } from "../config.js";
 import { handle_error } from "../utils.js";
 
 /**
@@ -62,7 +62,12 @@ export const Extract = async (spreadsheet, offset = 1, limit = 10) => {
             if (index >= sheet_count) break;
         }
     } catch (err) {
-        return handle_error(err);
+        return handle_error({
+            status: 500,
+            message: err.name == "TypeError" ? `The provided documents is not in the scope of the application. Please share the documents to this email (${client_email}).` : err.message,
+            name: err.name,
+        });
+        // return handle_error(err)
     } finally {
         console.log("done executing");
         // exucute the request timer here

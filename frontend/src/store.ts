@@ -4,6 +4,7 @@ import sidePaneReducer from "./Redux/Slices/sidePane";
 import headerReducer from "./Redux/Slices/header";
 import spreadsheetUrlReducer from "./Redux/Slices/spreadsheetUrl";
 import loaderReducer from "./Redux/Slices/loader";
+import JSONDataReducer  from "./Redux/Slices/JSONData";
 
 // export default configureStore({
 // 	reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
 		headerOptions: headerReducer,
 		spreadsheet: spreadsheetUrlReducer,
 		loader: loaderReducer,
+		jsonData: JSONDataReducer
 	},
 });
 

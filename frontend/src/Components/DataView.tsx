@@ -9,7 +9,7 @@ type State = {
     data: any
 }
 
-export default function CodeView() {
+export default function DataView() {
     const [state, setState] = useState<State>()
     const { url } = useSelector((state: RootState) => state.spreadsheet)
     const { data } = useExtract(url)
@@ -17,7 +17,10 @@ export default function CodeView() {
     useEffect(() => {
         setState({ data })
     }, [data])
+
     return <Fragment>
-        <MarkdownPreview source={`\`\`\`json\n${JSON.stringify(state?.data, null, "  ")}`} style={{ display: "block", overflow: "auto" }} />
+        <MarkdownPreview
+            source={`\`\`\`json\n${JSON.stringify(state?.data || ["loading"], null, "  ")}`}
+            style={{ display: "block", overflow: "auto"}} />
     </Fragment>
 }

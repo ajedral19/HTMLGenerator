@@ -5,6 +5,8 @@ const env = config();
 
 const { CLIENT_EMAIL, PRIVATE_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = env.parsed;
 
+export const client_email =  CLIENT_EMAIL
+
 // google spreadsheet api service
 export const serviceAccountAuth = new JWT({
 	email: CLIENT_EMAIL,
