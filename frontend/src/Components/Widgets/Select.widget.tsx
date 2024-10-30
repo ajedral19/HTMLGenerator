@@ -74,6 +74,8 @@ export default function Select({ options, name, placeholder }: Select) {
                 <input {...register(name, {
                     onChange: (e) => handleOnChange(e)
                 })}
+                    autoComplete="off"
+                    autoCorrect="off"
                     type="text" id={name}
                     placeholder={placeholder}
                     onClick={toggleOnClick}
