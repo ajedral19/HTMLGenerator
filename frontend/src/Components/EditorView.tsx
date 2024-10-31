@@ -20,38 +20,38 @@ const stylesheets = [
     { id: "0125", name: "Sheety" },
 ]
 
-const helpers = [
-    {
-        name: "",
-        task: () => { }
-    }
-    // helpers must be stored in database
-    // so both the banckend and the frontend will have access to it
-    // helpers must stored as a json objects
-]
-const temporaryHelpers = [
+type Helper = {
+    name: string,
+    task: (...args: any) => string | number | HTMLElement,
+    description?: string
+}
+// helpers must be stored in database
+// so both the banckend and the frontend will have access to it
+// helpers must stored as a json objects
+
+const temporaryHelpers: Helper[] = [
     {
         name: "loud",
-        task: (str: string) => {
-            return str.toUpperCase()
-        }
+        task: (str: string) => str.toUpperCase(),
+        description: ""
     },
     {
         name: "underlined",
-        task: (str: string) => {
-            return `<h1>${str}</h1>`.toString()
-        }
+        task: (str: string) => `<h1>${str}</h1>`,
+        description: ""
     },
     {
         name: "indexify",
-        task: (index: number) => index + 1
+        task: (index: number) => index + 1,
+        description: ""
     }
 ]
 
 export default function EditorView() {
     const htmlInit = "<p>Do you know Handlerbars? Visit <a href=\"https://handlebarsjs.com/\" target=\"_blank\">Handlebars</a>.</p>"
     const [state, setState] = useState<{ code: string, rendered: string }>({ code: htmlInit, rendered: "" })
-    const { data } = useSelector((selector: RootState) => selector.jsonData)
+    const { url, data } = useSelector((selector: RootState) => ({ data: selector.jsonData.data, url: selector.spreadsheet.url }))
+
 
     useEffect(() => {
         temporaryHelpers.forEach(({ name, task }) => {
@@ -75,12 +75,22 @@ export default function EditorView() {
         setState((state) => ({ ...state, code: value }))
     }
 
+    const handleSave = () => {
+        console.log(url);
+        console.log(data);
+        console.log(state.code, 'code')
+    }
+
+    const handleDownload = () => {
+        console.log(state.rendered, 'rendered')
+    }
+
     return <Fragment>
         <section className={style.editor_view}>
             <div className={cn(style.editor_view__editor)}>
                 <div className={cn(style.editor_view__header)}>
                     <Editable defaultValue='Click to add title' />
-                    <p role='button'><RiFileUploadFill /> Save</p>
+                    <button className='btn btn--normal' onClick={handleSave}><RiFileUploadFill /> Save</button>
                 </div>
                 <div className={cn(style.editor_wrap)}>
                     <AceEditor
@@ -109,7 +119,7 @@ export default function EditorView() {
                             showPrintMargin: true,
                             highlightActiveLine: true,
                             displayIndentGuides: true,
-                            wrapBehavioursEnabled: true
+                            wrapBehavioursEnabled: true,
                         }}
                         onChange={handleEditor}
                     />
@@ -118,13 +128,13 @@ export default function EditorView() {
             <div className={cn(style.editor_view__render)}>
                 <div className={cn(style.editor_view__header)}>
                     <Select name='stylesheets' options={stylesheets} placeholder='Chosse stylesheet' />
-                    <p role='button'>Download <IoCodeDownloadOutline /></p>
+                    <button className='btn btn--normal' onClick={handleDownload}>Download <IoCodeDownloadOutline /></button>
                 </div>
 
                 <div className={cn(style.render_wrap)}>
-                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(state.rendered, { IN_PLACE: true, FORBID_TAGS: ['style', 'script'] }) }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(state.rendered, { IN_PLACE: true, FORBID_TAGS: ['script', 'style'] }) }}></div>
                 </div>
             </div>
         </section>
-    </Fragment>
+    </Fragment >
 }
