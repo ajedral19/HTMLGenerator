@@ -13,7 +13,8 @@ import { BiExpandAlt } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { showSidePane } from "../../Redux/Slices/sidePane";
 import { RootState } from "../../store";
-import { RiEditBoxLine } from "react-icons/ri";
+import { HiMiniArchiveBoxXMark } from "react-icons/hi2";
+import { TemplateArchiveOne } from "../../Handlers/HandleTemplate";
 
 type state = {
     active?: boolean,
@@ -26,7 +27,6 @@ export default function Card({ data, layout = "grid" }: CardContent & { onClick?
     const { current, favorites } = useSelector((state: RootState) => ({ current: state.sidePane.details.data.id, favorites: state.templatesState.favorites }))
     const myImg = useImage(image) || "/images/template-placeholder.png"
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (current == id)
@@ -37,13 +37,6 @@ export default function Card({ data, layout = "grid" }: CardContent & { onClick?
 
     const getDetailsOnClick = (details: TemplateDetails) =>
         dispatch(showSidePane({ isVisible: true, visibleState: "themeDetails", details: { ...details, data: { ...details.data, isFavorite: favorites.includes(id) } } }))
-
-    const editOnClick = (e, data) => {
-        e.stopPropagation()
-        console.log(data);
-        navigate('/templates/fiddle')
-
-    }
 
     return <Fragment>
         <div className={cn(style.card, style[layout], { [style.focused]: state.active })} onClick={() => getDetailsOnClick({ data: { id, name, author, ticket, spreadsheetURL, isFavorite: data.isFavorite, image, stylesheets: [], uploadDate: "" } })}>
@@ -81,10 +74,12 @@ export default function Card({ data, layout = "grid" }: CardContent & { onClick?
                 <span role="button" className={cn(style.favorite)}>
                     <Favotite id={id} fontSize="2rem" />
                 </span>
-                <span role="button" className={cn(style.edit)} onClick={(e) => editOnClick(e, data)}>
-                    <RiEditBoxLine />
-                    {/* <Favotite id={id} fontSize="2rem" /> */}
-                </span>
+                {
+                    state.active &&
+                    <span role="button" onClick={() => { TemplateArchiveOne(id, !data.is_archived) }}>
+                        <HiMiniArchiveBoxXMark fontSize='2rem' />
+                    </span>
+                }
             </div>
 
         </div>

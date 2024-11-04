@@ -1,16 +1,22 @@
 import { GetCount } from "../Model.js";
-import { TemplateDeleteOne, TemplatePreview, TemplatesAddOne, TemplateScreenshot, TemplatesFind, TemplatesFindOne } from "../models/model.templates.js";
+import {
+    TemplateArchive,
+    TemplateDeleteOne,
+    TemplatePreview,
+    TemplatesAddOne,
+    TemplateScreenshot,
+    TemplatesFind,
+    TemplatesFindOne,
+} from "../models/model.templates.js";
 import { get_random_sheet, get_sheet_id, response_handler, template_uri } from "../utils.js";
 import { Extract, SheetCount } from "../models/model.spreadsheet.js";
 import { Generate } from "../models/model.generate.js";
 
-export const TemplateStylesheetUpload = async(req, res) => {
-    
-}
+export const TemplateStylesheetUpload = async (req, res) => {};
 
 export const TemplateAdd = async (req, res) => {
-    console.log('testing');
-    
+    console.log("testing");
+
     const formData = req.body;
     const template = req.file;
     const { name, sheet, cdn } = formData;
@@ -43,9 +49,9 @@ export const TemplateDelete = async (req, res) => {
 };
 
 export const TemplteGetAll = async (req, res) => {
-    let { page } = req.query;
+    let { page, archives } = req.query;
     page = isNaN(page) ? 1 : parseInt(page);
-    const templates = await TemplatesFind(parseInt(page));
+    const templates = await TemplatesFind(parseInt(page), 10, archives);
 
     if (templates?.error) {
         const { error, message, status } = templates;
@@ -161,4 +167,15 @@ export const TemplateCount = async (req, res) => {
     console.log(count);
 
     return res.status(200).send("okay");
+};
+
+export const TemplateArchiveOne = async (req, res) => {
+    const { id } = req.params;
+    const { archive } = req.body;
+    const template = await TemplateArchive(id, archive);
+
+    if (template?.error) {
+        const { error, status, message } = sheet;
+        return response_handler(status, null, { error, message })(res);
+    }
 };

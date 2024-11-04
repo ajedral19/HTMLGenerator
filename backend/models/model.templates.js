@@ -65,13 +65,13 @@ export const TemplateDeleteOne = async (template_id) => {
  * @param {number} limit
  * @returns
  */
-export const TemplatesFind = async (page = 1, limit = 10) => {
+export const TemplatesFind = async (page = 1, limit = 10, is_archived = false) => {
     const offset = get_offset(page, limit);
     try {
-        const rows = await HTMLGenerator.find({}).skip(offset).limit(limit);
+        const rows = await HTMLGenerator.find({ is_archived }).skip(offset).limit(limit);
         const data = rows.map((row) => {
-            const { id, template_name: name, template_data_url: spreadsheetURL, template_screenshot } = row;
-            return { data: { id, name, author: "", ticket: "", spreadsheetURL, isFavorite: false, image: template_screenshot } };
+            const { id, template_name: name, template_data_url: spreadsheetURL, template_screenshot, is_archived } = row;
+            return { data: { id, name, author: "", ticket: "", spreadsheetURL, isFavorite: false, image: template_screenshot, is_archived } };
         });
 
         return { rows: [...data] };
@@ -126,5 +126,15 @@ export const TemplatePreview = async (template_id) => {
         return { name: template.template_name, html };
     } catch (err) {
         return handle_error(err);
+    }
+};
+
+export const TemplateArchive = async (template_id, archive = false) => {
+    try {
+        const template = await HTMLGenerator.updateOne({ _id: template_id }, { $set: {is_archived: archive} });
+        console.log(template);
+        
+    } catch (err) {
+        handle_error(err);
     }
 };

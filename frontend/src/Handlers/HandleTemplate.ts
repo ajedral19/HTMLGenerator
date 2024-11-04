@@ -37,9 +37,12 @@ export const TemplateDelete = async (id: string) => {
 		.catch((err) => console.log(err));
 };
 
-export const TemplateFindAll = async (page?: number, signal?: AbortSignal) => {
+export const TemplateFindAll = async (archive?: boolean, page?: number, signal?: AbortSignal) => {
+	const uri = archive ? "?archive=true" : ""
+
+	// ${page ? "?page=" + page : ""}
 	return api
-		.get(`/templates${page ? "?page=" + page : ""}`, {
+		.get(`/templates${uri}`, {
 			signal, onDownloadProgress: (progressEvent) => {
 				const { loaded, total = 0, bytes } = progressEvent;
 				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes, state: "templates" }));
@@ -62,3 +65,9 @@ export const TemplateCountPages = async () => {
 		.then((response) => response.data)
 		.catch((err) => console.log(err));
 };
+
+export const TemplateArchiveOne = async (id: string, archive: boolean) => {
+	return api.patch(`/template/archive/${id}`, { archive }, { headers: { "Content-Type": "application/json" } })
+		.then(response => response.data)
+		.catch((err) => console.log(err))
+}

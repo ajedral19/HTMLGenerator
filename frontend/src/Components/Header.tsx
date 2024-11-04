@@ -16,6 +16,7 @@ import { init_details } from "../Utils/initialStates";
 import SearchField from "./Widgets/search_field.widget";
 import { spreadsheetUrl } from "../Redux/Slices/spreadsheetUrl";
 import { useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 
 type state = {
     hasTemplates: boolean
@@ -52,6 +53,12 @@ export default function Header() {
         showTemplateForm: false,
         isFetching: false
     })
+
+    const { register, watch, getFieldState } = useForm()
+
+    useEffect(() => {
+        console.log(watch('toggle_archive'))
+    }, [watch('toogle_archive')])
 
     const sidePane = useSelector((state: { sidePane: { visibleState?: "newThemeForm" | "themeDetails", isVisible: boolean } }) => state.sidePane)
     const { visibleState, isVisible } = sidePane
@@ -148,10 +155,16 @@ export default function Header() {
                 disabled={state.isFetching} />
             {
                 isRouteMatch('/templates') &&
-                <Button
-                    icon={state.showTemplateForm ? <MdClose fontSize="2rem" /> : <MdAdd fontSize="2rem" />}
-                    className="mr-auto"
-                    onClick={state.showTemplateForm ? handleCloseSidePane : handleShowSidePane} />
+                <>
+                    <p className="checkbox">
+                        <input {...register("toggle_archive")} type="checkbox" name="toggle_archive" id="toggle_archive" aria-hidden="true" hidden />
+                        <label htmlFor="toggle_archive">Show Archives</label>
+                    </p>
+                    <Button
+                        icon={state.showTemplateForm ? <MdClose fontSize="2rem" /> : <MdAdd fontSize="2rem" />}
+                        className="ml-auto"
+                        onClick={state.showTemplateForm ? handleCloseSidePane : handleShowSidePane} />
+                </>
             }
             <Button
                 text={state.navigation?.text}
@@ -159,7 +172,7 @@ export default function Header() {
                 rtl={state.navigation?.rtl}
                 onClick={state.navigation?.fn}
                 href={state.navigation?.href}
-                className="ml-auto"
+                className={cn(!isRouteMatch('/templates') && "ml-auto")}
             />
         </div>
     </Fragment>

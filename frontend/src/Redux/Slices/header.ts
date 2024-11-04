@@ -2,14 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type header = (
 	state: {
-		display:{
+		display: {
 			isGrid: boolean
+			archives?: boolean
 		}
 	},
 	action: {
-		payload:{
+		payload: {
 			display: {
 				isGrid: boolean
+				archives?: boolean
 			}
 		}
 	}
@@ -19,6 +21,7 @@ const header: header = (state, action) => ({
 	...state,
 	display: {
 		isGrid: action.payload.display.isGrid,
+		archives: action.payload.display.archives
 	},
 });
 
@@ -27,6 +30,7 @@ export const headerSlice = createSlice({
 	initialState: {
 		display: {
 			isGrid: false,
+			archives: false
 		},
 	},
 	reducers: {
