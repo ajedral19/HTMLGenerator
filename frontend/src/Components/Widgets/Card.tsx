@@ -10,9 +10,11 @@ import style from '../../Styles/card.module.sass'
 import { useDispatch, useSelector } from "react-redux";
 import { useImage } from "../../Hooks/useImage";
 import { BiExpandAlt } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { showSidePane } from "../../Redux/Slices/sidePane";
 import { RootState } from "../../store";
+import { HiMiniArchiveBoxXMark } from "react-icons/hi2";
+import { TemplateArchiveOne } from "../../Handlers/HandleTemplate";
 
 type state = {
     active?: boolean,
@@ -72,6 +74,12 @@ export default function Card({ data, layout = "grid" }: CardContent & { onClick?
                 <span role="button" className={cn(style.favorite)}>
                     <Favotite id={id} fontSize="2rem" />
                 </span>
+                {
+                    state.active &&
+                    <span role="button" onClick={() => { TemplateArchiveOne(id, !data.is_archived) }}>
+                        <HiMiniArchiveBoxXMark fontSize='2rem' />
+                    </span>
+                }
             </div>
 
         </div>

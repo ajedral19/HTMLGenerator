@@ -4,7 +4,7 @@
     --__bg: #11172c
     --__img-size: 100%
     --__ratio: 1.36/1
-    --__grid-layout: "info favorite" "tags tags"
+    --__grid-layout: "info edit favorite" "tags tags tags"
     border-radius: .6em
     padding: .4em
     display: flex
@@ -70,6 +70,10 @@
             align-self: start
             grid-area: favorite
             justify-self: end
+        .edit
+            align-self: start
+            grid-area: edit
+            justify-self: end
 
     &:hover
         --__bg: #29314E
@@ -81,12 +85,12 @@
 
     &.grid
         --__img-size: 100%
-        --__grid-layout: "info favorite" "tags tags"
+        --__grid-layout: "info edit favorite" "tags tags tags"
         flex-flow: column
         gap: .6em
 
     &.list
         --__img-size: 80px
         --__ratio: 1/1
-        --__grid-layout: "info favorite" "tags tags"
+        --__grid-layout: "info edit favorite" "tags tags tags"
         flex-flow: row

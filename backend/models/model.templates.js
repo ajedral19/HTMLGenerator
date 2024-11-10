@@ -80,12 +80,12 @@ export const TemplatesFind = async (page = 1, limit = 10, archived = false) => {
 			return {
 				data: {
 					id,
-					// name,
-					// author: "",
-					// ticket: "",
-					// spreadsheetURL,
-					// isFavorite: false,
-					// image: template_screenshot,
+					name,
+					author: "",
+					ticket: "",
+					spreadsheetURL,
+					isFavorite: false,
+					image: template_screenshot,
 					archived: typeof template_archived !== 'boolean' ? null : template_archived,
 				},
 			};
@@ -161,4 +161,14 @@ export const ArchiveTemplate = async (id) => {
 	} catch (err) {
 		return handle_error(err);
 	}
+};
+
+export const TemplateArchive = async (template_id, archive = false) => {
+    try {
+        const template = await HTMLGenerator.updateOne({ _id: template_id }, { $set: {is_archived: archive} });
+        console.log(template);
+        
+    } catch (err) {
+        handle_error(err);
+    }
 };

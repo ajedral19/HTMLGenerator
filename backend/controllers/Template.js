@@ -178,3 +178,14 @@ export const TemplateCount = async (req, res) => {
 
 	return res.status(200).send("okay");
 };
+
+export const TemplateArchiveOne = async (req, res) => {
+    const { id } = req.params;
+    const { archive } = req.body;
+    const template = await TemplateArchive(id, archive);
+
+    if (template?.error) {
+        const { error, status, message } = sheet;
+        return response_handler(status, null, { error, message })(res);
+    }
+};

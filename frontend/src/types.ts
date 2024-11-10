@@ -51,6 +51,7 @@ export type TemplateData = {
 	ticket: Ticket | Ticket[];
 	spreadsheetURL: string;
 	isFavorite: boolean;
+	is_archived: boolean;
 	image: Buffer | string;
 };
 
