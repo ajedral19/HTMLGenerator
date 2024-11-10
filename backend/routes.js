@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
+import { TemplateAdd, TemplateDelete, TemplteGetAll, TemplateArchive, ExtractSheet } from "./controllers/index.js";
 
 import { CountSheets, TemplateGenerate, TemplateGetOne, TemplateGetPreview, TemplateGetScreenshot } from "./controllers/Template.js";
 import { aiTest } from "./ai_test.js";
@@ -15,6 +15,7 @@ const s3Router = Router();
 // working routes
 
 template_router.get("/templates", TemplteGetAll); //okay - 1
+template_router.patch("/template/:id/archive", TemplateArchive); // okay
 template_router.get("/template/:id/preview", TemplateGetPreview); // okay - 1
 template_router.get("/template/:template_id/screenshot", TemplateGetScreenshot); // okay - 1
 template_router.get("/template/:template_id", TemplateGetOne); //okay - 1

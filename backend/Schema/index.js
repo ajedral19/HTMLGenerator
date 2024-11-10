@@ -40,6 +40,7 @@ const templatesSchema = new Schema({
 	template_data_url: { type: String, required: true },
 	template_cdn_url: { type: String },
 	template_screenshot: { type: Buffer, contentType: String },
+	template_archived: { type: Boolean, default: false },
 });
 
 const HTMLGenerator = model("Template", templatesSchema);
