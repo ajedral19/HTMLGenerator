@@ -1,37 +1,35 @@
 import { Fragment } from "react/jsx-runtime";
-import { Button } from "../Components/Widgets";
-import FileUpload from "../Components/Form/File";
-import { S3Put } from "../Handlers/HandleS3";
-import useS3Objects from "../Hooks/useS3Objects";
+// import { Button } from "../Components/Widgets";
+// import { S3Put } from "../Handlers/HandleS3";
+// import useS3Objects from "../Hooks/useS3Objects";
 
 export default function BucketGateway() {
 
-    const { data, isLoading } = useS3Objects()
-    console.log(data, isLoading);
+    // const { data, isLoading } = useS3Objects()
+    // console.log(data, isLoading);
 
-    const handleSubmit = (e: React.SyntheticEvent) => {
-        e.preventDefault()
+    // const handleSubmit = (e: React.FormEvent) => {
+        // e.preventDefault()
         // alert('function disable ATM')
         // return
+        // const target =  (e.target)
 
-
-        if (e.target) {
-            const form = e.target
-            const file = form.field_file.files[0]
+        // if (target) {
+            // const form = target
+            // const file = form.field_file.files[0]
             // const { name } = file
-            S3Put(file)
-        }
+            // S3Put(file)
+        // }
 
         // console.log(e.target?.field_file.files[0]);
-    }
+    // }
 
-    const gotoOnClick = (cdn: string) => {
-        window.open(cdn, 'rel=noopener noreferrer')
-    }
+    // const gotoOnClick = (cdn: string) => {
+    //     window.open(cdn, 'rel=noopener noreferrer')
+    // }
     return <Fragment>
         <h1>S3 bucket</h1>
-        <form onSubmit={handleSubmit}>
-            <FileUpload name="field_file" accept="text/css;text/sass;text/scss" />
+        {/* <form onSubmit={handleSubmit}>
             <Button type="submit" text="Upload" />
 
             <ul>
@@ -46,6 +44,6 @@ export default function BucketGateway() {
                         <li>loading...</li>
                 }
             </ul>
-        </form>
+        </form> */}
     </Fragment>
 }

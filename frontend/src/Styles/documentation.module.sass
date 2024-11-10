@@ -1,0 +1,47 @@
+.documentation
+    height: 100%
+    position: relative
+    display: flex
+    flex-flow: row
+    // &__pane
+    //     padding: 1em
+
+    &__aside
+        grid-area: list
+        // background: #111522
+        flex: 0 1 15%
+        border-inline-end: 1px dashed
+
+    &__view
+        flex: 1
+        grid-area: view
+        padding-inline: 2em 6em
+
+    &__navigation
+        grid-area: navigation
+        flex: 0 1 15%
+        // padding: 1.6em
+        height: fit-content
+        position: sticky
+        top: 0
+        // border-radius: .4em
+        // outline: 1px dashed
+        ul
+            li
+                a
+                    padding: .4em 0
+                    display: block
+                    color: #fff
+
+h2
+    a
+        color: #fff
+        &:hover
+            color: #fff
+    .link
+        display: none
+        width: 24px
+        vertical-align: top
+    &:hover
+        .link
+            display: unset

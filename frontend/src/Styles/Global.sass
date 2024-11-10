@@ -19,6 +19,10 @@
         background: #890d8fd2
         color: #fff
 
+    &[contenteditable]
+        font-size: initial
+        outline: none
+
 html
     font-size: 62.5%
 
@@ -27,6 +31,7 @@ body
     font-size: 1.6rem
     background: var(--theme-background)
     color: var(--theme-text-color)
+    line-height: 1.4
 
 p
     --__fs: 1.6rem
@@ -92,12 +97,41 @@ input
         --__color: var(--theme-field-color)
         --__border: var(--theme-field-border)
         height: var(--control-size)
-        padding-inline: 1em
-        background: var(--__bg)
+        padding-inline: var(--inline-pad)
+        background: var(--theme-field-background)
         color: var(--__color)
         &::placeholder
             color: var(--__color)
             opacity: .3
+
+    &[type='checkbox']
+        position: relative
+
+        ~label
+            color: pink
+            position: relative
+            
+            &::before, &::after
+                content: ''    
+                position: absolute
+                width: 2rem
+                heoght: 2rem
+                background: red
+                display: block
+                top: 0
+                left: 0
+
+        &:checked
+            ~label
+                color: red
+                    
+
+.checkbox
+    display: flex
+    align-items: center
+    font-size: inherit
+
+
 
 .h-100
     height: 100%
@@ -173,7 +207,7 @@ input
 .container
     width: 100%
     max-width: 1620px
-    min-width: 1080px
+    min-width: 1440px
     width: 95dvw
     margin-inline: auto
     &.wide

@@ -208,7 +208,7 @@ export const get_sheet_id = (url) => {
 export const handle_error = (err) => {
 	let err_name = err.name;
 	let err_msg = err.message;
-	let err_status = 500;
+	let err_status = err.status || 500;
 
 	return {
 		status: err_status || undefined,

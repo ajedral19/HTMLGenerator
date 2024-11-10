@@ -1,0 +1,48 @@
+.select
+    position: relative
+    isolation: isolate
+
+    &__field
+        --control-size: auto
+        --theme-field-background: #16192d
+        display: flex
+        flex-flow: row nowrap
+        input
+            border-radius: .2em 0 0 .2em
+            padding-block: .4em
+            font-size: 1.2rem
+            padding-inline: .6em
+            --inline-pad: .4em
+
+        label
+            border-radius: 0 .2em .2em 0
+            padding-inline: .4em
+            background: var(--theme-field-background)
+            display: inline-block
+
+    &__options
+        font-size: 1.2rem
+        font-family: inherit
+        position: absolute
+        width: 100%
+        top: 100%
+        transform: translateY(.25em)
+        border-radius: .2em
+        max-height: 12em
+        overflow-y: auto
+        background: #1f2c4d
+
+        .option
+            padding: .4em .6em
+
+            &.selected
+                background: red
+
+            &.no_value
+                text-align: center
+                color: #737476
+
+            &:not(.no_value)
+                cursor: pointer
+                &:hover
+                    background: red

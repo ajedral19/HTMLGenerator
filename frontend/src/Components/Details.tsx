@@ -1,8 +1,7 @@
-import { Fragment, useEffect, useReducer, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import cn from 'classnames'
 import StripTag from "./Widgets/StripTag";
-import { MdArchive, MdEdit, MdMoreHoriz, MdOutlineFileDownload, MdPerson4 } from "react-icons/md";
-import { FaShare } from "react-icons/fa6";
+import { MdOutlineFileDownload, MdPerson4 } from "react-icons/md";
 import { TemplateDetails } from "../types";
 import { Button } from "./Widgets";
 import Favotite from "./Widgets/favorite.widget";
@@ -13,26 +12,10 @@ import { Link } from "react-router-dom";
 import Field from "./Widgets/field.widget";
 import { useImage } from "../Hooks/useImage";
 import { useForm } from "react-hook-form";
-import { CacheHTMLGenerate, HTMLGenerate } from "../Handlers/HandleHTML";
+import { HTMLGenerate } from "../Handlers/HandleHTML";
 import fileDownload from "js-file-download";
-import { addItemToIndexStore, getFromIndexStore, indexStore } from "../Utils/IndexedDB";
-import { useLocalStorage } from "../Hooks/useLocalStorage";
+import { addItemToIndexStore, getFromIndexStore } from "../Utils/IndexedDB";
 import { useSelector } from "react-redux";
-
-const editButton = [
-    {
-        icon: <MdEdit />,
-        title: "Edit"
-    },
-    {
-        icon: <MdArchive />,
-        title: "Archive",
-    },
-    {
-        icon: <FaShare />,
-        title: "share",
-    },
-]
 
 type state = {
     status: "Generate" | "Submit" | "Download",
@@ -43,7 +26,7 @@ type state = {
 
 export default function Details({ data }: TemplateDetails) {
     const { id, name, author, ticket, spreadsheetURL, isFavorite, image, stylesheets, uploadDate } = data
-    const { register, getValues, reset } = useForm({ defaultValues: { offset: "1", limit: "10" } })
+    const { register, getValues } = useForm({ defaultValues: { offset: "1", limit: "10" } })
     const favorites = useSelector((state: { templatesState: { favorites: string[] } }) => state.templatesState.favorites)
     const [state, setState] = useState<state>({
         status: "Generate",

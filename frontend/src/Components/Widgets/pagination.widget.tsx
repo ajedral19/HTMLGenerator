@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Button from "./button.widget";
 import { useEffect } from "react";
 
-export default function Pagination({ pageCount = 10, listener, visible = 5 }: { pageCount?: number, listener?: (page: number) => void, visible?: number }) {
+export default function Pagination({ pageCount = 10, listener}: { pageCount?: number, listener?: (page: number) => void, visible?: number }) {
     const [searchParams, setSearchParams] = useSearchParams()
     const n_of_pages = Array.from(Array(pageCount), (_, k) => k)
 

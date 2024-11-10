@@ -4,3 +4,5 @@ export const modal_types = [
     "previewTemplate",
     "previewScreenshot",
 ]
+
+export const baseRoute = "/dist/"

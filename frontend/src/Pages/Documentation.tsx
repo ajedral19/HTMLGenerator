@@ -1,40 +1,67 @@
 import { Fragment } from "react/jsx-runtime";
-import MarkdownPreview from "@uiw/react-markdown-preview";
-import { readFileDataAsBase64 } from "../Utils/FileHandlers";
-import fs from 'fs/promises'
-// import documentation from '../../Documentation.md'
-import { useEffect, useState } from "react";
+import NestedList from "../Components/Widgets/NestedList";
+import cn from 'classnames'
+import style from '../Styles/documentation.module.sass'
+import { Link } from "react-router-dom";
+import { RiLinkM } from "react-icons/ri";
 
-
+const list = [
+    {
+        slug: "introduction",
+        title: "Introduction"
+    },
+    {
+        slug: "getting-started",
+        title: "Getting Started",
+        sub: [{ slug: "tutorial", title: "Tutorial" }]
+    },
+    {
+        slug: "template-creation",
+        title: "Template Createtion",
+        sub: [
+            { slug: "syntax", title: "Syntax" },
+            { slug: "spreadsheet", title: "Spreadsheet" },
+            {
+                slug: "helpers",
+                title: "Helpers",
+                sub: [
+                    { slug: "loud", title: "loud" },
+                    { slug: "blank", title: "blank" },
+                    { slug: "person", title: "person" },
+                ]
+            },
+            { slug: "contribute", title: "Contribute" },
+        ]
+    },
+    { slug: "how-to-use", title: "How to use" },
+]
 
 export default function Documentation() {
-    const [markdown, setMarkdown] = useState("")
-
-    useEffect(() => {
-        fetch('../../Documentation.md')
-            .then(res => res.text())
-            .then(res => setMarkdown(res))
-            .catch(err => console.log(err))
-        // import('../../Documentation.md')
-        //     .then(res => {
-        //         fetch(res.default)
-        //             .then(res => res.text())
-        //             .then(res => setMarkdown(res))
-        //             .catch(err => console.log(err))
-        //     })
-    }, [])
-
-
-
-    // fs.readFile('',).then(res => console.log(res)).catch(err => console.log(err.message))
-
-
-    // base64.then(res => console.log(res))
-
-
-
-
     return <Fragment>
-        <MarkdownPreview source={markdown} wrapperElement={{ "data-color-mode": "dark" }} style={{ padding: "2rem" }} />
+        <main className={cn(style.documentation)}>
+            <aside className={cn(style.documentation__pane, style.documentation__aside)}>
+                <div className={cn(style.content)}>
+
+                    <NestedList list={list} />
+                </div>
+            </aside>
+            <section className={cn(style.documentation__pane, style.documentation__view)}>
+                <h2 className="title title--1"><Link to="#">Introduction <RiLinkM className={cn(style.link)} /></Link></h2>
+                <p className="mt-1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem adipisci sit fugit ut. Explicabo minima officiis quae deleniti, maiores, quidem sequi quas minus commodi itaque quod atque ea perspiciatis sit laudantium magni, error blanditiis ullam eos? Eius aliquam debitis sapiente enim eveniet necessitatibus architecto impedit fugiat ratione eum sit deleniti pariatur, dicta rerum unde autem dolores aperiam officia deserunt corporis?</p>
+            </section>
+            <aside className={cn(style.documentation__pane, style.documentation__navigation)}>
+                <ul>
+                    <li>
+                        <Link to="#">Lorem, ipsum.</Link>
+                    </li>
+                    <li>
+                        <Link to="#">Lorem ipsum dolor sit.</Link>
+                    </li>
+                    <li>
+                        <Link to="#">Lorem, ipsum dolor.</Link>
+                    </li>
+                </ul>
+            </aside>
+        </main>
     </Fragment>
 }

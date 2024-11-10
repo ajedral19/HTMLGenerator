@@ -1,14 +1,12 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, useRouteError } from "react-router-dom";
 import Layout from "./Components/Layouts/Layout";
 import Templates from "./Pages/Templates";
-import Generate from "./Pages/Generate";
 import Home from "./Pages/Home";
 import Documentation from "./Pages/Documentation";
 import Fiddle from "./Pages/Fiddle";
-import Backlog from "./Pages/Backlog";
-import Helper from "./Pages/Helper";
 import { TemplateApp } from "./Components/Layouts";
 import BucketGateway from "./Pages/BucketGateway";
+
 
 // export default function SiteRoutes() {
 //     return (
@@ -30,52 +28,61 @@ import BucketGateway from "./Pages/BucketGateway";
 const SiteRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <Layout><Home /></Layout>
-    },
-    {
-        path: 'documentation',
-        element: <Layout><Documentation /></Layout>
-    },
-    {
-        path: 'templates',
+        // errorElement: <h1>Ooops! Got into trouble</h1>,
+        ErrorBoundary: () => {
+            const error = useRouteError()
+            if (error)
+                console.log(error, "oops! we have to log this error and inform the developer");
+
+            return <h2>Boundary Hehe!</h2>
+        },
         children: [
             {
                 index: true,
-                element: <Layout><TemplateApp><Templates /></TemplateApp></Layout>,
+                element: <Layout><Home /></Layout>,
             },
             {
-                path: 'live-editor',
-                element: <Layout><TemplateApp><Fiddle /></TemplateApp></Layout>
+                path: `documentation`,
+                element: <Layout><Documentation /></Layout>,
+                children: [
+                    {
+                        path: ':subpage',
+                        element: <Layout><Documentation /></Layout>,
+                        children: [
+                            {
+                                path: ':subpage',
+                                element: <Layout><Documentation /></Layout>,
+                                children: [
+                                    {
+                                        path: ':subpage',
+                                        element: <Layout><Documentation /></Layout>
+                                    }
+                                ]
+                            }
+                        ],
+                    }
+                ]
             },
             {
-                path: 'fiddle',
-                element: <Layout><TemplateApp><Fiddle /></TemplateApp></Layout>
+                path: `templates`,
+                children: [
+                    {
+                        index: true,
+                        element: <Layout><TemplateApp><Templates /></TemplateApp></Layout>,
+                    },
+                    {
+                        path: 'fiddle',
+                        element: <Layout><TemplateApp><Fiddle /></TemplateApp></Layout>
+                    },
+                    {
+                        path: 'bucket',
+                        element: <Layout><TemplateApp><BucketGateway /></TemplateApp></Layout>
+                    }
+                ]
             },
             {
-                path: 'generate',
-                element: <Layout><TemplateApp><Generate /></TemplateApp></Layout>
-            },
-            {
-                path: 'bucket',
-                element: <Layout><TemplateApp><BucketGateway /></TemplateApp></Layout>
-            }
-        ]
-    },
-    {
-        path: 'backlog',
-        children: [
-            {
-                index: true,
-                element: <Layout><Backlog /></Layout>
-            }
-        ]
-    },
-    {
-        path: 'helper',
-        children: [
-            {
-                index: true,
-                element: <Layout><Helper /></Layout>
+                path: "*",
+                element: <h1>Oops! Error 404 - Page not found</h1>
             }
         ]
     },

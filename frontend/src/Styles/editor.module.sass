@@ -1,0 +1,36 @@
+.editor_view
+    width: 100%
+    height: 100%
+    display: flex
+    flex-flow: row
+
+    &__header
+        display: flex
+        flex-flow: row nowrap
+        justify-content: space-between
+        padding: .4em .6em
+
+    &__editor, &__render
+        flex: 1 0 50%
+        height: 100%
+        display: flex
+        flex-flow: column
+
+    &__editor
+        .editor_wrap
+            flex: 1
+
+    &__render
+        .render_wrap
+            color: var(--theme-text-color-invert)
+            background: var(--theme-background-invert)
+            height: 100%
+            overflow: auto
+
+    .ace_editor
+        &::-webkit-scrollbar
+            background: red
+        &::-webkit-scrollbar-thumb
+            background: red
+        &::-webkit-scrollbar-track
+            background: red

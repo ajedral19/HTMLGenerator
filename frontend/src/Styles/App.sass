@@ -6,7 +6,8 @@
 
 // button
 .btn, a[role="button"].btn
-    --__color: var(--theme-text-color-default)
+    --__bg: var(--theme-background-invert)
+    --__color: var(--theme-text-color-invert)
     --__dimension: var(--control-size)
     --__pad-y: 0
     --__pad-x: 1.8em
@@ -19,6 +20,20 @@
     position: relative
     isolation: isolate
     overflow: hidden
+
+    &--normal
+        --__pad-x: .6rem
+        --__pad-y: 0
+        --__dimension: auto
+        --__color: var(--theme-text-color)
+        --__bg: transparent
+        --__bg-hover: #494754
+        border-radius: .4rem
+        display: flex
+        flex-flow: row wrap
+        gap: .2em
+        align-items: center
+
     &.primary, &.icon-primary
         --__bg: var(--theme-color-cool)
         --__bg-hover: var(--theme-color-cool-accent)

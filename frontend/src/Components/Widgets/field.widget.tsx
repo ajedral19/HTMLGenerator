@@ -20,7 +20,7 @@ type Input = {
     onBlur?: ChangeHandler
 }
 
-const Field = forwardRef(({ id, name, label, className, icon, placeholder, disabled, defaultValue, tip, error, onChange, onBlur, type = "text" }: Input, ref: ForwardedRef<HTMLInputElement>) => {
+const Field = forwardRef(({ id, name, label, className, icon, placeholder, disabled, defaultValue, error, onChange, onBlur, type = "text" }: Input, ref: ForwardedRef<HTMLInputElement>) => {
     
     return <Fragment>
         <div className={cn(style.field, className)}>
