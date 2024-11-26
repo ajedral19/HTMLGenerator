@@ -1,18 +1,26 @@
-from flask import Flask, Response, url_for, request, jsonify
+from flask import Flask, Response, url_for, request, jsonify, render_template, Blueprint
 
 app = Flask(__name__)
+
+views = Blueprint("views", __name__, template_folder="views")
+
+app.register_blueprint(views)
 
 
 @app.route("/api/")
 def index():
-    resp = Response("<h1>Hello</h1>")
-    resp.headers["custom-header"] = "custom header content"
-    return resp
+    # resp = Response("<h1>Hello</h1>")
+    data = {"test": "some data"}
+    # resp.headers["custom-header"] = "custom header content"
+    return jsonify(data)
+    # return resp
+    # return render_template("test.html", **{"test_data": "this is a test"})
 
 
 @app.route("/api/task/new", methods=["POST"])
 def new():
     body = request.get_json()
+    print(body)
     return jsonify(body)
 
 
