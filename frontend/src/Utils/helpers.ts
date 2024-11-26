@@ -5,6 +5,9 @@ export const helpers = {
     wrapped: (tag: string | null, className: string | null, text: string) => {
         return new Handlebars.SafeString(`<${tag || "span"} class="${className}">${text}</${tag || "span"}>`)
     },
+    helperMissing: () => new Handlebars.SafeString("Undefined method"),
+    plusOne: (index: number) => index + 1
+
 
 
 }
