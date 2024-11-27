@@ -1,0 +1,58 @@
+:root {
+  --brdr-radius: .4rem;
+  --gap: 1.2em;
+  --control-size: 2.8em;
+}
+
+[app-theme=light] {
+  --theme-background: #ebecf3;
+  --theme-text-color: #1b1c1c;
+  --theme-text-color-accent: #9c9faa;
+  --theme-text-color-cool: #45ADFF;
+  --theme-text-color-cool-accent: #148FFF;
+  --theme-text-color-mild: #73FDE0;
+  --theme-text-color-mild-accent: #50E3C2;
+  --theme-text-color-hot: #FD8975;
+  --theme-text-color-hot-accent: #FD5436;
+  --theme-color-cool: #173BAE;
+  --theme-color-cool-accent: #2246ba;
+  --theme-color-mild: #068AA7;
+  --theme-color-mild-accent: #1997B2;
+  --theme-color-hot: #FD8975;
+  --theme-color-hot-accent: #FD5436;
+  --theme-border: #f4f4fb22;
+  --theme-field-background: #ebecf3;
+  --theme-field-color: #1b1c1c;
+  --theme-field-border: #cccdcf;
+  --theme-field-icon-color: #1b1c1c;
+  --panel-bg: #fffefe;
+}
+
+[app-theme=dark] {
+  --theme-background: #090d17;
+  --theme-text-color: #F4F4FB;
+  --theme-text-color-accent: #9c9faa;
+  --theme-text-color-cool: #45ADFF;
+  --theme-text-color-cool-accent: #148FFF;
+  --theme-text-color-mild: #73FDE0;
+  --theme-text-color-mild-accent: #50E3C2;
+  --theme-text-color-hot: #FD8975;
+  --theme-text-color-hot-accent: #FD5436;
+  --theme-color-cool: #173BAE;
+  --theme-color-cool-accent: #2246ba;
+  --theme-color-mild: #068AA7;
+  --theme-color-mild-accent: #1997B2;
+  --theme-color-hot: #FD8975;
+  --theme-color-hot-accent: #FD5436;
+  --theme-border: #f4f4fb22;
+  --theme-field-background: #070e27;
+  --theme-field-color: #FFFFFF;
+  --theme-field-border: #1F2741;
+  --theme-field-icon-color: #3A466C;
+  --panel-bg: #0b1322;
+}
+@media (prefers-color-scheme: light) {
+  [app-theme=dark] {
+    --theme-background: green;
+  }
+}

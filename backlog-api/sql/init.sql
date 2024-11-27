@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS backlogs;
+
+USE backlogs;
+
+CREATE TABLE IF NOT EXISTS tickets id VARCHAR(64)

@@ -1,0 +1,30 @@
+.strip-tag {
+  --__bg: #1f2145cc;
+  --__hover-bg: #30325bcc;
+  padding: 0.3em 0.8em;
+  width: fit-content;
+  background: var(--__bg);
+  color: #ffffff;
+  border-radius: 2em;
+  display: block;
+}
+.strip-tag:hover {
+  background: var(--__hover-bg);
+}
+.strip-tag a {
+  color: inherit;
+}
+.strip-tag.purple {
+  --__bg: #7925e3cc;
+  --__hover-bg: #8332e5cc;
+}
+.strip-tag.teal {
+  --__bg: #0F9393cc;
+  --__hover-bg: #1c9898cc;
+}
+.strip-tag.small {
+  font-size: 1.2rem;
+}
+.strip-tag.normal {
+  font-size: 1.6rem;
+}

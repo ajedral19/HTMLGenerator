@@ -1,0 +1,11 @@
+.search_field {
+  width: 30dvw;
+  min-width: 24ch;
+}
+.search_field .field_icon {
+  opacity: 0.7;
+}
+.search_field .field_icon.active:hover {
+  opacity: 1;
+  filter: drop-shadow(0px 0px 8px #68dcff);
+}

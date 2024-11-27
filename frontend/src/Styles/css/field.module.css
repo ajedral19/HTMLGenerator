@@ -1,0 +1,42 @@
+.type_text {
+  width: 100%;
+}
+
+.field {
+  --__err-color: #ea5144;
+  --__border-color: var(--theme-field-border);
+  --__border-width: 2px;
+  position: relative;
+  isolation: isolate;
+}
+.field__input {
+  background: var(--theme-field-background);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  border-radius: 2em;
+  overflow: hidden;
+  outline: var(--__border-width) solid var(--__border-color);
+  transition: box-shadow 0.2s ease-in;
+}
+.field__input.number {
+  border-radius: 0.4em;
+}
+.field__label, .field__error {
+  font-size: 1.4rem;
+}
+.field__label {
+  padding: 0.4em;
+  display: block;
+  color: var(--theme-text-color-accent);
+}
+.field__error {
+  color: var(--__err-color);
+  padding: 0.8em 0.4em 0 0.4em;
+}
+.field:focus-within .field__input {
+  box-shadow: 0 0 6px -1px rgba(64, 80, 133, 0.6235294118);
+}
+.field:focus-within .field__label {
+  color: var(--theme-text-color);
+}

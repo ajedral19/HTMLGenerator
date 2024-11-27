@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  background: #fff;
+}
+
+body {
+  font-size: 1.6rem;
+  color: #111213;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 2rem;
+}
+
+.testing > h1, .testing > h2, .testing > h3, .testing > h4, .testing > h5, .testing > h6 {
+  color: red;
+}

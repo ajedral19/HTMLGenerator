@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{text}}</h1>
+        <h1>{{type_of_data}}</h1>
+        <ul>
+            {% for item in data %}
+                <li>
+                    <h4>{{item.title}}</h4>
+                    <p>{{item.description}}</p>
+                    <blockquote>{{item.date_created}}</blockquote>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay .modal {
+  max-width: 600px;
+  min-height: 300px;
+  width: 80%;
+  height: fit-content;
+  border-radius: var(--brdr-radius);
+  background: var(--theme-background);
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+}
+.modal-overlay .modal__header {
+  position: relative;
+  z-index: 1;
+  padding: calc(var(--gap) / 1.5);
+  background: var(--theme-background);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--theme-text-color);
+}
+.modal-overlay .modal__header .modal-close-btn {
+  --__color: var(--theme-text-color);
+}
+.modal-overlay .modal__body {
+  position: relative;
+  overflow-y: auto;
+  width: inherit;
+  height: inherit;
+  height: 100%;
+  max-height: 700px;
+  width: 100%;
+}
+.modal-overlay .modal__body .preview-wrap, .modal-overlay .modal__body .screenshot-wrap {
+  position: relative;
+  height: 100%;
+}
+.modal-overlay .modal__body .preview-wrap img, .modal-overlay .modal__body .screenshot-wrap img {
+  width: 100%;
+}
+
+.download-display {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+}
+.download-display__preview-wrap {
+  position: relative;
+  overflow: hidden;
+  max-height: 300px;
+}
+.download-display__preview-wrap .preview {
+  width: 100%;
+}
+.download-display__body {
+  flex: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: var(--gap);
+  align-items: center;
+  justify-content: center;
+  padding: 3em 2em;
+}

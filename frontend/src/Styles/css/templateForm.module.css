@@ -1,0 +1,14 @@
+.template_form {
+  padding: 1.8em 1.4em;
+  display: flex;
+  flex-flow: column;
+  gap: 0.6em;
+}
+.template_form__btns {
+  display: flex;
+  flex-flow: row;
+  gap: 1em;
+}
+.template_form__btns button:first-child {
+  flex: 1;
+}

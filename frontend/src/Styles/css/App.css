@@ -1,0 +1,102 @@
+@keyframes loading {
+  0% {
+    transform: translate(-50%, -50%) rotate(4turn);
+  }
+}
+.btn, a[role=button].btn {
+  --__color: var(--theme-text-color-default);
+  --__dimension: var(--control-size);
+  --__pad-y: 0;
+  --__pad-x: 1.8em;
+  --__radius: 20em;
+  background: var(--__bg);
+  height: var(--__dimension);
+  width: fit-content;
+  vertical-align: middle;
+  line-height: 1.2;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.btn.primary, .btn.icon-primary, a[role=button].btn.primary, a[role=button].btn.icon-primary {
+  --__bg: var(--theme-color-cool);
+  --__bg-hover: var(--theme-color-cool-accent);
+  --__color: #ffffff;
+}
+.btn.secondary, .btn.icon-secondary, a[role=button].btn.secondary, a[role=button].btn.icon-secondary {
+  --__bg: var(--theme-color-mild);
+  --__bg-hover: var(--theme-color-mild-accent);
+  --__color: #ffffff;
+}
+.btn.danger, .btn.icon-danger, a[role=button].btn.danger, a[role=button].btn.icon-danger {
+  --__bg: var(--theme-color-hot);
+  --__bg-hover: var(--theme-color-hot-accent);
+  --__color: #ffffff;
+}
+.btn.transparent, a[role=button].btn.transparent {
+  --__bg: unset;
+  --__bg-hover: unset;
+}
+.btn.mild-opaque, a[role=button].btn.mild-opaque {
+  --__bg: #F4F4FB7c;
+  --__bg-hover: #F4F4FB;
+}
+.btn--icon, .btn.icon, a[role=button].btn--icon, a[role=button].btn.icon {
+  --__pad-x: 0;
+  width: var(--__dimension);
+  min-width: var(--__dimension);
+  transition: color 0.2s ease-in-out;
+}
+.btn--icon.small, .btn.icon.small, a[role=button].btn--icon.small, a[role=button].btn.icon.small {
+  --__dimension: 1.6em;
+}
+.btn.icon-text, a[role=button].btn.icon-text {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: var(--__pad-y) var(--__pad-x) var(--__pad-y) calc(var(--__pad-x) / 1.25);
+  gap: 0.5rem;
+}
+.btn.icon-text span, .btn.icon-text svg, a[role=button].btn.icon-text span, a[role=button].btn.icon-text svg {
+  display: inline-block;
+}
+.btn.icon-text.rtl, a[role=button].btn.icon-text.rtl {
+  padding: var(--__pad-y) calc(var(--__pad-x) / 1.25) var(--__pad-y) var(--__pad-x);
+}
+.btn:disabled, .btn.disabled, a[role=button].btn:disabled, a[role=button].btn.disabled {
+  --__bg: #1a2448;
+  --__bg-hover: var(--__bg);
+  --__color: #ffffff;
+  pointer-events: none;
+}
+.btn.loading::before, .btn.loading::after, a[role=button].btn.loading::before, a[role=button].btn.loading::after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+.btn.loading:before, a[role=button].btn.loading:before {
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(90deg, white 50%, transparent 50%, white 40%, black 20%);
+  animation: loading 1s 0s ease-in-out infinite both;
+}
+.btn.loading::after, a[role=button].btn.loading::after {
+  height: 90%;
+  width: 90%;
+  background: var(--__bg);
+  border-radius: inherit;
+}
+.btn svg, a[role=button].btn svg {
+  line-height: inherit;
+  display: block;
+  margin: auto;
+  vertical-align: middle;
+}
+
+a[role=button].btn {
+  display: flex;
+  align-items: center;
+}

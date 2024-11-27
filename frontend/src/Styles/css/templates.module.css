@@ -1,0 +1,36 @@
+.templates_layout {
+  --__gap: 0;
+  --__fr1: 12fr;
+  --__fr2: 0;
+  display: grid;
+  grid-template-columns: var(--__fr1) var(--__fr2);
+  grid-template-areas: "templates sidebar";
+  gap: var(--__gap);
+}
+.templates_layout__templates {
+  grid-area: templates;
+}
+.templates_layout__sidepane {
+  position: relative;
+  background: #1F263D;
+  grid-area: sidebar;
+  overflow: hidden;
+  display: none;
+  border-radius: 0.6em;
+  isolation: isolate;
+}
+.templates_layout--side_pane_visible {
+  --__gap: var(--gap);
+  --__fr1: 9fr;
+  --__fr2: 3fr;
+}
+.templates_layout--side_pane_visible .templates_layout__sidepane {
+  display: block;
+}
+.templates_layout .btn_close {
+  position: absolute;
+  right: 0.6em;
+  top: 0.6em;
+  color: var(--theme-text-color-default);
+  z-index: 99;
+}
