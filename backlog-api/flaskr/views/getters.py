@@ -1,5 +1,6 @@
 from typing import TypedDict, NotRequired, Literal
 import datetime
+from database import Connection
 
 
 class Ticket(TypedDict):
@@ -11,6 +12,14 @@ class Ticket(TypedDict):
 
 
 def list_of_backlogs() -> list[Ticket]:
+    db = Connection()
+    
+    conn = db.connect()
+    print(conn)
+    # finds = conn.execute('SELECT * FROM users')
+    # print(finds, 'got connected. Yey!')
+    # conn = db.disconnect()
+    
     return [
         {
             "id": "0192",
