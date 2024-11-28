@@ -14,13 +14,51 @@
         <h1>{{type_of_data}}</h1>
         <ul>
             {% for item in data %}
-                <li>
-                    <h4>{{item.title}}</h4>
-                    <p>{{item.description}}</p>
-                    <blockquote>{{item.date_created}}</blockquote>
-                </li>
+            <li>
+                <h4>{{item.title}}</h4>
+                <p>{{item.description}}</p>
+                <blockquote>{{item.date_created}}</blockquote>
+            </li>
             {% endfor %}
         </ul>
+        <table border="1">
+
+            <tr>
+                <td colspan="2" align="center">Record 1</td>
+            </tr>
+            <tr valign="top">
+                <th>_id</th>
+                <td align="left">c79b90e1-1582-45ce-a33d-6fd5a7b7aaf6</td>
+            </tr>
+            <tr valign="top">
+                <th>firstname</th>
+                <td align="left">Jane</td>
+            </tr>
+            <tr valign="top">
+                <th>middlename</th>
+                <td align="left">Crimson</td>
+            </tr>
+            <tr valign="top">
+                <th>lastname</th>
+                <td align="left">Doe</td>
+            </tr>
+            <tr valign="top">
+                <th>birthdate</th>
+                <td align="left">1998-03-23</td>
+            </tr>
+            <tr valign="top">
+                <th>uname</th>
+                <td align="left">j.doe_98</td>
+            </tr>
+            <tr valign="top">
+                <th>pword</th>
+                <td align="left">1234</td>
+            </tr>
+            <tr valign="top">
+                <th>iat</th>
+                <td align="left">2024-11-27 16:49:25.179141</td>
+            </tr>
+        </table>
     </div>
 </body>
 

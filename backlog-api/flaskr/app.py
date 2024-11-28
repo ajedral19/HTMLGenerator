@@ -1,6 +1,9 @@
 from flask import Flask, Response, url_for, request, jsonify, render_template, Blueprint
 from os import getcwd
+
+import requests.cookies
 from views import getters
+import requests
 
 app = Flask(__name__)
 
@@ -9,12 +12,9 @@ views = Blueprint("views", __name__, template_folder="templates")
 app.register_blueprint(views)
 
 
-@app.route("/api/")
+@app.route("/")
 def index():
-    data = getters.list_of_backlogs()
-    return render_template("index.html", **{"text": "Backlogs API Documentation", "data": data, 'type_of_data': type(data[0])})
-
-
+    return render_template("index.html", **{"text": "Backlogs API Documentation"})
 
 
 @app.route("/api/task/new", methods=["POST"])
@@ -50,6 +50,6 @@ def trash():
 
 if __name__ == "__main__":
     with app.test_request_context():
-        print(url_for("index"), 'this is index')
+        print(url_for("index"), "this is index")
 
     app.run(debug=True)

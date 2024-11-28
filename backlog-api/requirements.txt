@@ -3,3 +3,4 @@ python-dotenv
 watchdog
 # pymongo
 psycopg2
+requests
