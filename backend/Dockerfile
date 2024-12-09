@@ -11,7 +11,7 @@ COPY package.json .
 
 RUN apk add chromium
 
-RUN npm install
+RUN npm install && npm audit fix
 
 COPY . .
 

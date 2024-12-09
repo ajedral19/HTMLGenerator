@@ -6,7 +6,7 @@ ENV BASE_URL=http://nodejs-api:9100
 
 COPY package.json .
 
-RUN npm install --legacy-peer-deps
+RUN npm install --legacy-peer-deps && npm audit fix --legacy-peer-deps
 
 COPY . .
 
