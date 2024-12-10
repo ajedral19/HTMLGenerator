@@ -1,16 +1,18 @@
+import http from "http";
+import https from 'https'
 import express from "express";
 import cors from "cors";
 import { TemplateRoutes, S3Routes, AuthRoutes } from "./routes.js";
 
 import { Server } from "socket.io";
-import http from "http";
 import { socket_get_all_templates } from "./SocketControls.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
 
-const server = http.createServer(app);
-const io = new Server(server, {
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer({}, app);
+const io = new Server(httpServer, {
     cors: {
         origin: "*", // client
         methods: ["POST", "GET", "DELETE", "UPDATE", "PUT", "PATCH"],
@@ -47,4 +49,7 @@ io.on("connection", (socket) => {
 const port = process.env.PORT || 9100;
 
 // app.listen(port, () => console.log("server runs at port " + port));
-server.listen(port, () => console.log("server runs at port " + port));
+httpServer.listen(port, () => console.log("server runs at port " + port));
+
+
+// https://stackoverflow.com/questions/11744975/enabling-https-on-express-js
