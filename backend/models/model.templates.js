@@ -61,6 +61,22 @@ export const TemplateDeleteOne = async (template_id) => {
 
 /**
  *
+ * @returns
+ */
+export const TemplateDeleteAll = async () => {
+    try {
+        const template = await HTMLGenerator.deleteMany({});
+
+        return {
+            message: "collection clear"
+        };
+    } catch (err) {
+        return handle_error(err);
+    }
+};
+
+/**
+ *
  * @param {number} page
  * @param {number} limit
  * @returns

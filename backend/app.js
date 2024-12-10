@@ -1,10 +1,11 @@
 import express from "express";
 import cors from "cors";
-import { TemplateRoutes, S3Routes } from "./routes.js";
+import { TemplateRoutes, S3Routes, AuthRoutes } from "./routes.js";
 
 import { Server } from "socket.io";
 import http from "http";
 import { socket_get_all_templates } from "./SocketControls.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -18,7 +19,9 @@ const io = new Server(server, {
 });
 
 app.use(cors());
-app.use(express.json({ limit: "50mb" }));
+app.use(express.json({ limit: "1kb" }));
+app.use(cookieParser());
+app.use("/auth/", AuthRoutes);
 app.use("/api/", TemplateRoutes);
 app.use("/bucket/api/", S3Routes);
 
