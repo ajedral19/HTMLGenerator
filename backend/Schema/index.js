@@ -44,11 +44,21 @@ const templatesSchema = new Schema({
 
 const userSchema = new Schema({
     name: { type: String, required: true, maxLength: 64 },
-    email: { type: String, required: true, maxLength: 64, unique: true },
+    email: {
+        type: String,
+        required: true,
+        maxLength: 64,
+        unique: true,
+    },
     username: { type: String, required: true, maxLength: 20, unique: true },
     password: { type: String, required: true },
-    refreshToken: { type: [String] },
-    role: { type: String },
+    secret: { type: String, required: true },
+    refreshTokens: { type: [String] },
+    role: {
+        type: String,
+        values: ["admin", "user", "editor"],
+        message: "{VALUE} is not supported",
+    },
 });
 
 const HTMLGenerator = model("Template", templatesSchema);
