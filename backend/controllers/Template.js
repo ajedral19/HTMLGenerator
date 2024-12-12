@@ -1,16 +1,22 @@
 import { GetCount } from "../Model.js";
-import { TemplateDeleteOne, TemplatePreview, TemplatesAddOne, TemplateScreenshot, TemplatesFind, TemplatesFindOne } from "../models/model.templates.js";
+import {
+    TemplateDeleteAll,
+    TemplateDeleteOne,
+    TemplatePreview,
+    TemplatesAddOne,
+    TemplateScreenshot,
+    TemplatesFind,
+    TemplatesFindOne,
+} from "../models/model.templates.js";
 import { get_random_sheet, get_sheet_id, response_handler, template_uri } from "../utils.js";
 import { Extract, SheetCount } from "../models/model.spreadsheet.js";
 import { Generate } from "../models/model.generate.js";
 
-export const TemplateStylesheetUpload = async(req, res) => {
-    
-}
+export const TemplateStylesheetUpload = async (req, res) => {};
 
 export const TemplateAdd = async (req, res) => {
-    console.log('testing');
-    
+    console.log("testing");
+
     const formData = req.body;
     const template = req.file;
     const { name, sheet, cdn } = formData;
@@ -33,7 +39,12 @@ export const TemplateAdd = async (req, res) => {
 
 export const TemplateDelete = async (req, res) => {
     const { template_id } = req.params;
-    const template = await TemplateDeleteOne(template_id);
+    let template = null;
+    if (template_id) {
+        template = await TemplateDeleteOne(template_id);
+    } else {
+        template = await TemplateDeleteAll();
+    }
 
     if (template?.error) {
         const { error, message, status } = template;
