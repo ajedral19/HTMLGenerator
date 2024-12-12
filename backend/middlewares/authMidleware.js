@@ -27,14 +27,14 @@ export const AuthMiddleware = (req, res, next) => {
 
     if (!refresh_token || !access_token) {
         // scan thru user's refresh_tokens and remove any token that has the same client_ip in its payload
-        RemoveToken(refresh_token, user, client_ip);
+        // RemoveToken(refresh_token, user, client_ip)
         // require sign in
         return res.status(403).json(responsder(false, { error: "Unauthorized access. Register or Login to your account" }));
     }
 
     if (!verify(refresh_token, client_ip, user)) {
         // remove in document
-        RemoveToken(refresh_token, user);
+        // RemoveToken(refresh_token, user)
         // require sign in
         return res.status(403).json(responsder(false, { error: "Session expired. Login again" }));
     }

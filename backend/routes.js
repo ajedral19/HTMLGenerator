@@ -22,7 +22,7 @@ const s3Router = Router();
 auth_router.post("/login", APIKeyMiddleware, LoginController);
 auth_router.delete("/logout", APIKeyMiddleware, LogoutController);
 auth_router.post("/register", APIKeyMiddleware, RegisterController);
-auth_router.get("/forgot-password", ForgotPaswordController);
+auth_router.get("/forgot-password", APIKeyMiddleware, AuthMiddleware, ForgotPaswordController);
 auth_router.put("/reset-password", ResetPaswordController);
 
 template_router.get("/test", APIKeyMiddleware, AuthMiddleware, (req, res, next) => {

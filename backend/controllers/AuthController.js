@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { Login, Register, RegisterRefreshToken } from "../models/model.auth.js";
+import { Login, Register, CreateRefreshToken, Logout } from "../models/model.auth.js";
 import { responsder } from "../Utils/util.js";
 
 /**
@@ -18,26 +18,35 @@ export const LoginController = async (req, res) => {
     if (!user_data) return res.status(401).json(responsder(false, { error: "Invalid credential." }));
 
     // create access and refresh token
-    const { name, role, secret } = user_data;
+    const { username, name, role, secret } = user_data;
     const client_ip = req.socket.remoteAddress;
     const payload = { client_ip, name, user, role };
     const access_token = jwt.sign(payload, secret, { algorithm: "HS256", expiresIn: "1h" });
-    const refresh_token = jwt.sign(payload, secret, { algorithm: "HS256", expiresIn: "1w" });
+    // const refresh_token = jwt.sign(payload, secret, { algorithm: "HS256", expiresIn: "1w" });
+    const token = await CreateRefreshToken(payload, user, secret, client_ip);
+    if (!token.ok) return res.status(500).json(responsder(false, { ...token.data, message: "Failed to issue a token" }));
 
     // update/register refresh_token to user_data's refresh_token
-    await RegisterRefreshToken(user, client_ip, refresh_token);
 
     const headers = {
-        User: user,
+        User: username,
         "Access-Role": role,
         "Access-Token": access_token,
     };
 
-    res.status(202).cookie("Refresh-Token", refresh_token, { httpOnly: true, sameSite: "strict" }).header(headers).send("logged in");
+    res.status(202)
+        .cookie("Refresh-Token", token.data.refreshToken, { httpOnly: true, sameSite: "strict" })
+        .header(headers)
+        .json(responsder(true, { name, role }));
 };
 
 export const LogoutController = async (req, res) => {
-    res.status(200).send("logged in");
+    const token = res.locals.RefreshToken;
+    const client_ip = req.socket.remoteAddress;
+    const { user } = req.headers;
+    // delete refresh token in document
+    Logout(user, client_ip, token);
+    res.status(200).send("logged out");
 };
 
 /**
@@ -57,7 +66,7 @@ export const RegisterController = async (req, res) => {
     const data = { name, email, username, password };
 
     const new_user = await Register(data);
-    if (!new_user.ok) return res.status(406).json(responsder(false, { error: `{${new_user.data?.field.toUpperCase()}} already exists.` }));
+    if (!new_user.ok) return res.status(406).json(responsder(false, { error: `[${new_user.data?.field.toUpperCase()}] already exists.` }));
 
     console.log(new_user.data.secret);
 

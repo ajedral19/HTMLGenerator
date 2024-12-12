@@ -43,6 +43,7 @@ const templatesSchema = new Schema({
 });
 
 const userSchema = new Schema({
+    iat: { type: Date, default: new Date().toLocaleDateString().replaceAll("/", "-") },
     name: { type: String, required: true, maxLength: 64 },
     email: {
         type: String,
