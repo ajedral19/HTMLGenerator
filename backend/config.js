@@ -32,3 +32,9 @@ export const webServicesS3Auth = new S3({
     // @deprecated SDK v3 only supports signature v4.
     signatureVersion: "v4",
 });
+
+// defaults
+export const expires = {
+    at: "1h",
+    rt: "60s",
+};

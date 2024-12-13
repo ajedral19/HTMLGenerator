@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { Login, Register, CreateRefreshToken, Logout } from "../models/model.auth.js";
-import { responsder } from "../Utils/util.js";
+import { Login, Register, Logout } from "../models/model.auth.js";
+import { handleTokens, responsder } from "../Utils/util.js";
 
 /**
  *
@@ -19,27 +19,28 @@ export const LoginController = async (req, res) => {
 
     // create access and refresh token
     const { username, name, role, secret } = user_data;
-    const client_ip = req.socket.remoteAddress;
-    const payload = { client_ip, name, user, role };
-    const access_token = jwt.sign(payload, secret, { algorithm: "HS256", expiresIn: "1h" });
-    // const refresh_token = jwt.sign(payload, secret, { algorithm: "HS256", expiresIn: "1w" });
-    const token = await CreateRefreshToken(payload, user, secret, client_ip);
-    if (!token.ok) return res.status(500).json(responsder(false, { ...token.data, message: "Failed to issue a token" }));
+    const payload = { name, user, role };
+    const tokens = await handleTokens(secret, payload, req);
 
-    // update/register refresh_token to user_data's refresh_token
+    if (!tokens.ok) return res.status(500).json(responsder(false, { ...tokens.data, message: "Failed to issue a token" }));
 
     const headers = {
         User: username,
         "Access-Role": role,
-        "Access-Token": access_token,
+        "Access-Token": tokens.data.accessToken,
     };
 
     res.status(202)
-        .cookie("Refresh-Token", token.data.refreshToken, { httpOnly: true, sameSite: "strict" })
+        .cookie("Refresh-Token", tokens.data.refreshToken, { httpOnly: true, sameSite: "strict" })
         .header(headers)
         .json(responsder(true, { name, role }));
 };
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ */
 export const LogoutController = async (req, res) => {
     const token = res.locals.RefreshToken;
     const client_ip = req.socket.remoteAddress;

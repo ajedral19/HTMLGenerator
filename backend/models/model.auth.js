@@ -4,6 +4,7 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { responsder } from "../Utils/util.js";
 import { error } from "console";
+import { expires } from "../config.js";
 
 /**
  *
@@ -33,6 +34,7 @@ export const Login = async (cred) => {
 };
 
 export const Logout = async (user, client_ip, token) => {
+
     await Users.updateOne(
         {
             $or: [{ username: user }, { email: user }],
@@ -83,19 +85,27 @@ export const Register = async (cred) => {
     }
 };
 
-export const CreateRefreshToken = async (payload, user, secret, client_ip) => {
-    // const rt = RemoveToken(token, user, client_ip);
+export const CreateRefreshToken = async (payload, user, secret, security) => {
+    const { client_ip = null, user_agent = null } = security;
+    const { rt } = expires;
 
-    const token = await jwt.sign(payload, secret, { algorithm: "HS256", expiresIn: "1d" });
+    // client's IP is missing
+    if (!client_ip) return responsder(false, { error: "Invalid request" });
+
+    const tokens = await RemoveToken(user, client_ip);
+
+    if (tokens) if (!tokens.ok) return responsder(false, { ...tokens.data });
+
+    const fresh_token = jwt.sign(payload, secret, { algorithm: "HS256", expiresIn: rt });
     try {
         await Users.updateOne(
             { $or: [{ email: user }, { username: user }] },
             {
-                refreshTokens: [token],
+                refreshTokens: [...tokens.data.refreshTokens, fresh_token],
             }
         );
 
-        return responsder(true, { refreshToken: token });
+        return responsder(true, { refreshToken: fresh_token });
     } catch (err) {
         // log error in text document
         return responsder(false, { error: err.message });
@@ -108,28 +118,30 @@ export const CreateRefreshToken = async (payload, user, secret, client_ip) => {
  * @param {string} user
  * @param {string | null} client_ip
  */
-export const RemoveToken = async (token, user, client_ip = null) => {
+export const RemoveToken = async (user, client_ip = null) => {
     const filter = { $or: [{ email: user }, { username: user }] };
 
-    const { refreshTokens } = await Users.findOne(filter, "refreshTokens");
+    const data = await Users.findOne(filter, "refreshTokens");
+    const { refreshTokens } = data;
+    const tokens = refreshTokens;
+    // console.log(tokens);
 
-    if (refreshTokens) {
-        const filtered_refresh_tokens = refreshTokens.filter((item) => {
-            if (!client_ip) return item !== token;
+    // return;
 
-            const user_ip = jwt.decode(item, { json: true })?.client_ip;
-            if (user_ip !== client_ip) return item;
+    const filtered = tokens.filter((item) => {
+        const payload = jwt.decode(item, { json: true });
+
+        if (client_ip !== payload.client_ip) return item;
+    });
+
+    try {
+        await Users.updateOne(filter, {
+            refreshTokens: filtered,
         });
 
-        try {
-            await Users.updateOne(filter, {
-                refreshTokens: filtered_refresh_tokens,
-            });
-
-            return responsder(true, { refreshToken: filtered_refresh_tokens });
-        } catch (err) {
-            // log error in text document
-            return responsder(false, { error: err.message });
-        }
+        return responsder(true, { refreshTokens: filtered });
+    } catch (err) {
+        // log error in text document
+        return responsder(false, { error: err.message });
     }
 };

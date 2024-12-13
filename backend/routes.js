@@ -28,7 +28,7 @@ auth_router.put("/reset-password", ResetPaswordController);
 template_router.get("/test", APIKeyMiddleware, AuthMiddleware, (req, res, next) => {
     const rt = res.locals.RefreshToken;
     const at = res.locals.AccessToken;
-    console.log(res.locals.payload);
+    // console.log(res.locals.payload);
 
     res.status(200).cookie("Refresh-Token", rt, { httpOnly: true, sameSite: "strict" }).header({ "Access-Token": at }).send("all good now");
 });
