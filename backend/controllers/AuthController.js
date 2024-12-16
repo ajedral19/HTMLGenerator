@@ -84,9 +84,6 @@ export const RegisterController = async (req, res) => {
         .json(responsder(true, { message: `New user named ${new_user.data.name} role default to USER.`, user: new_user.data.user }));
 };
 
-export const ForgotPaswordController = async (req, res) => {
-    res.status(200).send("logged in");
-};
 
 export const ResetPaswordController = async (req, res) => {
     res.status(200).send("logged in");

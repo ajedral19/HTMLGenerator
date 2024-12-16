@@ -15,8 +15,8 @@ export const handleTokens = async (secret, payload_init, req = null) => {
     const client_ip = req?.socket.remoteAddress;
     const user_agent = req?.headers["user-agent"];
     const {at} = expires
-    console.log(client_ip);
-    console.log(user_agent);
+    // console.log(client_ip);
+    // console.log(user_agent);
 
     let payload = { ...payload_init };
     if (client_ip && user_agent) payload = { ...payload_init, client_ip };

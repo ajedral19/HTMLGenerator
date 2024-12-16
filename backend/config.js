@@ -35,6 +35,6 @@ export const webServicesS3Auth = new S3({
 
 // defaults
 export const expires = {
-    at: "1h",
-    rt: "60s",
+    at: "60s",
+    rt: "1h",
 };

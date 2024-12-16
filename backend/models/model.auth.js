@@ -3,7 +3,6 @@ import bcryptjs from "bcryptjs";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { responsder } from "../Utils/util.js";
-import { error } from "console";
 import { expires } from "../config.js";
 
 /**
@@ -34,12 +33,13 @@ export const Login = async (cred) => {
 };
 
 export const Logout = async (user, client_ip, token) => {
-
     await Users.updateOne(
         {
             $or: [{ username: user }, { email: user }],
             $where: async () => {
                 const client = await jwt.decode(token, { json: true });
+                console.log(client, "client");
+
                 return client.ip !== client_ip;
             },
         },
@@ -57,8 +57,8 @@ export const Logout = async (user, client_ip, token) => {
 export const Register = async (cred) => {
     const { name, username, email, password, role } = cred;
 
-    const buffer = await crypto.randomBytes(16);
-    const user_secret = await buffer.toString("base64");
+    const buffer = crypto.randomBytes(16);
+    const user_secret = buffer.toString("base64");
     const salt = await bcryptjs.genSalt(10);
     const hash = await bcryptjs.hash(password, salt);
 
@@ -83,6 +83,10 @@ export const Register = async (cred) => {
         const { errmsg, keyPattern } = error.errorResponse;
         return responsder(false, { error: errmsg, field: Object.keys(keyPattern)[0] });
     }
+};
+
+export const ResetPassword = async () => {
+    await Users.updateOne({ $or: [{ username: "" }, { email: "" }] }, { password: "" });
 };
 
 export const CreateRefreshToken = async (payload, user, secret, security) => {
@@ -122,11 +126,9 @@ export const RemoveToken = async (user, client_ip = null) => {
     const filter = { $or: [{ email: user }, { username: user }] };
 
     const data = await Users.findOne(filter, "refreshTokens");
+    if (!data) return responsder(false, { error: "Unauthorized access." });
     const { refreshTokens } = data;
     const tokens = refreshTokens;
-    // console.log(tokens);
-
-    // return;
 
     const filtered = tokens.filter((item) => {
         const payload = jwt.decode(item, { json: true });

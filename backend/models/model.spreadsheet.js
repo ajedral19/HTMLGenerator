@@ -1,6 +1,6 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { serviceAccountAuth } from "../config.js";
-import { handle_error } from "../utils.js";
+import { get_random_sheet, get_sheet_id, handle_error } from "../utils.js";
 
 /**
  * @param {string} spreadsheet - Spreadsheet URL or ID
@@ -89,11 +89,11 @@ export const SheetCount = async (spreadsheet) => {
 };
 
 // extract unstructured documents
-// export const RandomSheet = async (req, res) => {
-//     const spreadsheet = "https://docs.google.com/spreadsheets/d/1CgbIAfjgW-P8Z6te2KKiIBuUftAuwdxk9RBydm3TZr0/edit?gid=1945486897#gid=1945486897";
-//     const sheet_id = get_sheet_id(spreadsheet);
+export const RandomSheet = async (req, res) => {
+    const spreadsheet = "https://docs.google.com/spreadsheets/d/1CgbIAfjgW-P8Z6te2KKiIBuUftAuwdxk9RBydm3TZr0/edit?gid=1945486897#gid=1945486897";
+    const sheet_id = get_sheet_id(spreadsheet);
 
-//     const sheet = await get_random_sheet(sheet_id);
+    const sheet = await get_random_sheet(sheet_id);
 
-//     return res.status(200).json(sheet);
-// };
+    return res.status(200).json(sheet);
+};
