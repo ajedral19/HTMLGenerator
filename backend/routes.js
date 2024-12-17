@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
+import { ChatController, TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
 import { CountSheets, TemplateGenerate, TemplateGetOne, TemplateGetPreview, TemplateGetScreenshot } from "./controllers/Template.js";
-import { aiTest } from "./ai_test.js";
 import { get_s3_objects, handle_s3_v2 } from "./controllers/S3Controller.js";
 import { BucketGetSignedConnection, GetResources } from "./controllers/Bucket.js";
 import { LoginController, LogoutController, RegisterController, ResetPaswordController } from "./controllers/AuthController.js";
 import { RandomSheet } from "./models/model.spreadsheet.js";
-import multer from "multer";
 import { AuthMiddleware, ResetPasswordMiddleware } from "./middlewares/index.js";
+import multer from "multer";
 
 const upload = multer();
 const auth_router = Router();
 const template_router = Router();
 const s3Router = Router();
+const gemini_router = Router();
 
 // test route
 template_router.get("/test", AuthMiddleware, (req, res, next) => {
@@ -43,7 +43,7 @@ template_router.get("/data/sheet-count", CountSheets);
 // extract unstructured documents
 template_router.get("/random-sheets", RandomSheet);
 // Google Gemini
-template_router.get("/ai-test", aiTest);
+gemini_router.get("/test", ChatController);
 // S# Bucket
 s3Router.get("/get-secure-url", handle_s3_v2);
 s3Router.get("/get-contents", get_s3_objects);
@@ -52,5 +52,6 @@ s3Router.get("/resources", GetResources);
 
 const AuthRoutes = auth_router;
 const TemplateRoutes = template_router;
+const GeminiRoutes = gemini_router;
 const S3Routes = s3Router;
-export { AuthRoutes, TemplateRoutes, S3Routes };
+export { AuthRoutes, GeminiRoutes, TemplateRoutes, S3Routes };

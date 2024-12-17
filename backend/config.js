@@ -3,10 +3,12 @@ import { config } from "dotenv";
 import { JWT } from "google-auth-library";
 const env = config();
 
-const { CLIENT_EMAIL, PRIVATE_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, SECRET, API_KEY } = env.parsed;
+const { CLIENT_EMAIL, PRIVATE_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, SECRET, API_KEY, GOOGLE_API_KEY } = env.parsed;
 
 export const secret = SECRET;
 export const api_key = API_KEY;
+export const ai_key = GOOGLE_API_KEY
+export const ai_model = "gemini-1.5-flash"
 
 // google spreadsheet api service
 export const serviceAccountAuth = new JWT({

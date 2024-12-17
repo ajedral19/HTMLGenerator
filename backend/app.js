@@ -3,11 +3,15 @@ import https from "https";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import session from "express-session";
+import Store from "connect-mongo";
+import mongoose from "mongoose";
 import { readFileSync } from "fs";
-import { TemplateRoutes, S3Routes, AuthRoutes } from "./routes.js";
+import { TemplateRoutes, S3Routes, AuthRoutes, GeminiRoutes } from "./routes.js";
 import { APIKeyMiddleware, AuthMiddleware } from "./middlewares/index.js";
 import { socket_get_all_templates } from "./SocketControls.js";
 import { Server } from "socket.io";
+import { SessionMiddleware } from "./middlewares/sessionMiddleware.js";
 
 const app = express();
 const cert = readFileSync("ssl/CA_certificate.arm", "utf-8");
@@ -20,12 +24,28 @@ const httpsServer = https.createServer(credentials, app);
 
 app.disable("x-powered-by");
 app.use(cors());
-app.use(express.json({ limit: "1kb" }));
 app.use(cookieParser());
-app.use("/", APIKeyMiddleware);
+app.use(express.json({ limit: "1kb" }));
+app.use(APIKeyMiddleware);
+app.use(
+    session({
+        secret: "secret",
+        resave: true,
+        saveUninitialized: true,
+        name: "history",
+        genid: () => "generate random id or leave this property undefiend",
+        cookie: { domain: "host.generator.com", maxAge: 10 * 60000, secure: true, path: "/ai", httpOnly: true },
+        store: Store.create({
+            client: mongoose.connection.getClient(),
+            autoRemove: "interval",
+            autoRemoveInterval: 1, // 1 minute
+        }),
+    })
+);
 app.use("/auth/", AuthRoutes);
 app.use("/api/", AuthMiddleware, TemplateRoutes);
 app.use("/bucket/api/", AuthMiddleware, S3Routes);
+app.use("/ai/", SessionMiddleware, GeminiRoutes);
 // create pug ui for 404 response
 app.use("/*", (req, res) => res.status(404).json({ message: "Oops! Page not found" }));
 
