@@ -51,7 +51,13 @@ export const Logout = async (user, client_ip, token) => {
 
 /**
  *
- * @param {*} cred
+ * @param {{
+ *  name: string,
+ *  username: string,
+ *  email: string,
+ *  password: string,
+ *  role?: string
+ * }} cred
  * @returns
  */
 export const Register = async (cred) => {
@@ -85,7 +91,11 @@ export const Register = async (cred) => {
     }
 };
 
-export const ResetPassword = async () => {
+export const RequestPaswwortUpdate = async (user) => {
+    // send a token to email
+}
+
+export const ResetPassword = async (cred) => {
     await Users.updateOne({ $or: [{ username: "" }, { email: "" }] }, { password: "" });
 };
 
