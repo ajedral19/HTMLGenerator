@@ -43,7 +43,7 @@ template_router.get("/data/sheet-count", CountSheets);
 // extract unstructured documents
 template_router.get("/random-sheets", RandomSheet);
 // Google Gemini
-gemini_router.get("/test", ChatController);
+gemini_router.get("/chat", ChatController);
 // S# Bucket
 s3Router.get("/get-secure-url", handle_s3_v2);
 s3Router.get("/get-contents", get_s3_objects);

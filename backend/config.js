@@ -8,7 +8,7 @@ const { CLIENT_EMAIL, PRIVATE_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, SEC
 export const secret = SECRET;
 export const api_key = API_KEY;
 export const ai_key = GOOGLE_API_KEY
-export const ai_model = "gemini-1.5-flash"
+export const ai_model = "gemini-1.5-flash-8b"
 
 // google spreadsheet api service
 export const serviceAccountAuth = new JWT({

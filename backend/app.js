@@ -32,9 +32,9 @@ app.use(
         secret: "secret",
         resave: true,
         saveUninitialized: true,
-        name: "history",
+        name: "Chat",
         genid: () => "generate random id or leave this property undefiend",
-        cookie: { domain: "host.generator.com", maxAge: 10 * 60000, secure: true, path: "/ai", httpOnly: true },
+        cookie: { domain: "host.generator.com", maxAge: 10 * 60000, secure: true, path: "/helper", httpOnly: true },
         store: Store.create({
             client: mongoose.connection.getClient(),
             autoRemove: "interval",
@@ -45,7 +45,7 @@ app.use(
 app.use("/auth/", AuthRoutes);
 app.use("/api/", AuthMiddleware, TemplateRoutes);
 app.use("/bucket/api/", AuthMiddleware, S3Routes);
-app.use("/ai/", SessionMiddleware, GeminiRoutes);
+app.use("/helper/", AuthMiddleware, SessionMiddleware, GeminiRoutes);
 // create pug ui for 404 response
 app.use("/*", (req, res) => res.status(404).json({ message: "Oops! Page not found" }));
 
