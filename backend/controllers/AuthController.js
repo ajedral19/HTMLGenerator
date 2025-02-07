@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
-import { Login, Register, Logout } from "../models/model.auth.js";
+import { Login, Register, Logout, ResetPassword } from "../models/model.auth.js";
 import { handleTokens, responsder } from "../Utils/util.js";
+import nodemailer from 'nodemailer'
 
 /**
  *
@@ -9,31 +10,33 @@ import { handleTokens, responsder } from "../Utils/util.js";
  * @returns
  */
 export const LoginController = async (req, res) => {
-    const { user, password } = req.body;
-    if (!user || !password) return res.status(406).json(responsder(false, { error: "Field/s must not be empty" }));
+	const { user, password } = req.body;
+	if (!user || !password) return res.status(406).json(responsder(false, { error: "Field/s must not be empty" }));
 
-    // execute model
-    const user_data = await Login({ user, password });
+	// execute model
+	const user_data = await Login({ user, password });
 
-    if (!user_data) return res.status(401).json(responsder(false, { error: "Invalid credential." }));
+	if (!user_data) return res.status(401).json(responsder(false, { error: "Invalid credential." }));
 
-    // create access and refresh token
-    const { username, name, role, secret } = user_data;
-    const payload = { name, user, role };
-    const tokens = await handleTokens(secret, payload, req);
+	// create access and refresh token
+	const { username, name, role, secret } = user_data;
+	const payload = { name, user, role };
+	const tokens = await handleTokens(secret, payload, req);
 
-    if (!tokens.ok) return res.status(500).json(responsder(false, { ...tokens.data, message: "Failed to issue a token" }));
+	if (!tokens.ok)
+		return res.status(500).json(responsder(false, { ...tokens.data, message: "Failed to issue a token" }));
 
-    const headers = {
-        User: username,
-        "Access-Role": role,
-        "Access-Token": tokens.data.accessToken,
-    };
+	const headers = {
+		User: username,
+		"Access-Role": role,
+		"Access-Token": tokens.data.accessToken,
+	};
 
-    res.status(202)
-        .cookie("Refresh-Token", tokens.data.refreshToken, { httpOnly: true, sameSite: "strict" })
-        .header(headers)
-        .json(responsder(true, { name, role }));
+	res
+		.status(202)
+		.cookie("Refresh-Token", tokens.data.refreshToken, { httpOnly: true, sameSite: "strict" })
+		.header(headers)
+		.json(responsder(true, { name, role }));
 };
 
 /**
@@ -42,12 +45,14 @@ export const LoginController = async (req, res) => {
  * @param {*} res
  */
 export const LogoutController = async (req, res) => {
-    const token = res.locals.RefreshToken;
-    const client_ip = req.socket.remoteAddress;
-    const { user } = req.headers;
-    // delete refresh token in document
-    Logout(user, client_ip, token);
-    res.status(200).send("logged out");
+	const token = res.locals.RefreshToken;
+	const client_ip = req.socket.remoteAddress;
+	const { user } = req.headers;
+	// delete refresh token in document
+	Logout(user, client_ip, token);
+	// remove refresh token in response
+	res.status(200).cookie("Refresh-Token", null).send("logged out");
+	// res.status(200).send("logged out");
 };
 
 /**
@@ -57,34 +62,88 @@ export const LogoutController = async (req, res) => {
  * @returns
  */
 export const RegisterController = async (req, res) => {
-    // secret
-    // refreshTokens
-    // role
-    const { name, email, username, password, repassword } = req.body;
-    if (!name || !email || !username || !password || !repassword) return res.status(400).json(responsder(false, { error: "Field/s must not be empty" }));
-    if (password !== repassword) return res.status(400).json(responsder(false, { error: "Password didn't matched" }));
-    const client_ip = req.socket.remoteAddress;
-    const data = { name, email, username, password };
+	// secret
+	// refreshTokens
+	// role
+	const { name, email, username, password, repassword } = req.body;
 
-    const new_user = await Register(data);
-    if (!new_user.ok) return res.status(406).json(responsder(false, { error: `[${new_user.data?.field.toUpperCase()}] already exists.` }));
+	// check fields if not empty
+	if (!name || !email || !username || !password || !repassword)
+		return res.status(400).json(responsder(false, { error: "Field/s must not be empty" }));
 
-    console.log(new_user.data.secret);
+	// minimum lenght to password
+	if (password.length < 8)
+		return res.status(400).json(responsder(false, { error: "Password length atleast 8 characters long." }));
 
-    const payload = { test: "" };
-    const access_token = jwt.sign(payload, new_user.data.secret, { algorithm: "HS256", expiresIn: "1h" });
+	// check password if didn't match
+	if (password !== repassword) return res.status(400).json(responsder(false, { error: "Password didn't matched" }));
 
-    const headers = {
-        User: new_user.data.user,
-        "Access-Role": new_user.data.role,
-        "Access-Token": access_token,
-    };
-    res.status(201)
-        .header(headers)
-        .json(responsder(true, { message: `New user named ${new_user.data.name} role default to USER.`, user: new_user.data.user }));
+	const client_ip = req.socket.remoteAddress;
+	const data = { name, email, username, password };
+
+	const new_user = await Register(data);
+	if (!new_user.ok)
+		return res
+			.status(406)
+			.json(responsder(false, { error: `[${new_user.data?.field.toUpperCase()}] already exists.` }));
+
+	console.log(new_user.data.secret);
+
+	const payload = { test: "" };
+	const access_token = jwt.sign(payload, new_user.data.secret, { algorithm: "HS256", expiresIn: "1h" });
+
+	const headers = {
+		User: new_user.data.user,
+		"Access-Role": new_user.data.role,
+		"Access-Token": access_token,
+	};
+	res
+		.status(201)
+		.header(headers)
+		.json(
+			responsder(true, {
+				message: `New user named ${new_user.data.name} role default to USER.`,
+				user: new_user.data.user,
+			})
+		);
 };
 
+export const ForgotPasswordController = async (req, res) => {
+	const { user } = req.body;
+	if (!user) return res.status(400).json(responsder(false, { error: "Field/s must not be empty" }));
+
+	return res.status(200).send("I see. Yuo forgot your password. LOL");
+};
 
 export const ResetPaswordController = async (req, res) => {
-    res.status(200).send("logged in");
+	const { user, password, repassword } = req.body;
+
+	// TODO user must came from cookie/token distributed by ResetPassowordController
+
+	if (!user || !password || !repassword)
+		return res.status(400).json(
+			responsder(false, {
+				error: "Field must not be empty",
+			})
+		);
+
+	if (password.length < 8)
+		return res.status(400).json(responsder(false, { error: "Password length atleast 8 characters long." }));
+
+	if (password !== repassword) {
+		return res.status(400).json(
+			responsder(false, {
+				error: "Password didn't matched",
+			})
+		);
+	}
+	const cred = {
+		user,
+		new_password: password,
+	};
+
+	const result = await ResetPassword(cred);
+	// notify user thru email
+
+	res.status(200).json(result);
 };

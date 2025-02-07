@@ -29,6 +29,11 @@ export const AuthMiddleware = async (req, res, next) => {
     let access_token = headers["authorization"] ? headers["authorization"].split(" ")[1] : null;
     let refresh_token = cookie["Refresh-Token"] || null;
 
+    /*  TODO - bug
+        auth continues even if refresh and access token didn't matched
+    */
+    
+    // check if AT and RT are provided during request
     if (!refresh_token || !access_token) {
         // include user-agent
         await RemoveToken(user, client_ip);
@@ -36,6 +41,11 @@ export const AuthMiddleware = async (req, res, next) => {
         return res.status(403).json(responsder(false, { error: "Unauthorized access. Register or Login to your account" }));
     }
 
+    // TODO check if the provided RT exists in the user's document
+
+    const verified_access_token = await verify(access_token, client_ip, user);
+    console.log(verified_access_token);
+    
     const verified_token = await verify(refresh_token, client_ip, user);
 
     if (!verified_token) {

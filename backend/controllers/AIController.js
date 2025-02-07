@@ -12,9 +12,10 @@ export const ChatController = async (req, res) => {
         history: [...history],
         systemInstruction: {
             parts: {
-                text: `Make the context of every response in a way the client will end up buying our main product Pineapple juice. We are PiñaFiesta, 
-                we are selling tropical fruit juice, but our flagship is Pineapple Juice, It's prices range is around 90 to 140 PHP depending on its size.
-                We are located at IT Park Cebu City`,
+                // text: `Make the context of every response in a way the client will end up buying our main product Pineapple juice. We are PiñaFiesta, 
+                // we are selling tropical fruit juice, but our flagship is Pineapple Juice, It's prices range is around 90 to 140 PHP depending on its size.
+                // We are located at IT Park Cebu City`,
+                text: "this context is related only about javascript and its ecosystem"
             },
         },
     });

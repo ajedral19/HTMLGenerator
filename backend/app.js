@@ -28,50 +28,52 @@ app.use(cookieParser());
 app.use(express.json({ limit: "1kb" }));
 app.use(APIKeyMiddleware);
 app.use(
-    session({
-        secret: "secret",
-        resave: true,
-        saveUninitialized: true,
-        name: "Chat",
-        genid: () => "generate random id or leave this property undefiend",
-        cookie: { domain: "host.generator.com", maxAge: 10 * 60000, secure: true, path: "/helper", httpOnly: true },
-        store: Store.create({
-            client: mongoose.connection.getClient(),
-            autoRemove: "interval",
-            autoRemoveInterval: 1, // 1 minute
-        }),
-    })
+	session({
+		secret: "secret",
+		resave: true,
+		saveUninitialized: true,
+		name: "Chat",
+		genid: () => "generate random id or leave this property undefiend",
+		cookie: { domain: "host.generator.com", maxAge: 10 * 60000, secure: true, path: "/helper", httpOnly: true },
+		store: Store.create({
+			client: mongoose.connection.getClient(),
+			autoRemove: "interval",
+			autoRemoveInterval: 1 // 1 minute
+		})
+	})
 );
 app.use("/auth/", AuthRoutes);
-app.use("/api/", AuthMiddleware, TemplateRoutes);
-app.use("/bucket/api/", AuthMiddleware, S3Routes);
-app.use("/helper/", AuthMiddleware, SessionMiddleware, GeminiRoutes);
+
+// app.use(AuthMiddleware);
+app.use("/api/", TemplateRoutes);
+app.use("/bucket/api/", S3Routes);
+app.use("/helper/", SessionMiddleware, GeminiRoutes);
 // create pug ui for 404 response
 app.use("/*", (req, res) => res.status(404).json({ message: "Oops! Page not found" }));
 
 const io = new Server(httpServer, {
-    cors: {
-        origin: "*", // client
-        methods: ["POST", "GET", "DELETE", "UPDATE", "PUT", "PATCH"],
-        // credentials: true
-    },
+	cors: {
+		origin: "*", // client
+		methods: ["POST", "GET", "DELETE", "UPDATE", "PUT", "PATCH"]
+		// credentials: true
+	}
 });
 
 io.on("connection", (socket) => {
-    console.log("New user connected");
+	console.log("New user connected");
 
-    socket.on("test", (prop) => console.log("ahh okay " + prop.text));
+	socket.on("test", (prop) => console.log("ahh okay " + prop.text));
 
-    socket.on("templates", async () => {
-        const { rows, rowCount } = await socket_get_all_templates();
-        console.log("fetching");
+	socket.on("templates", async () => {
+		const { rows, rowCount } = await socket_get_all_templates();
+		console.log("fetching");
 
-        io.emit("get_templates", { rows, rowCount });
-    });
+		io.emit("get_templates", { rows, rowCount });
+	});
 
-    socket.on("disconnect", () => {
-        console.log("User disconnected");
-    });
+	socket.on("disconnect", () => {
+		console.log("User disconnected");
+	});
 });
 
 const port = process.env.PORT || 9100;
