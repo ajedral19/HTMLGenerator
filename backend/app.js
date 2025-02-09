@@ -26,7 +26,7 @@ app.disable("x-powered-by");
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json({ limit: "1kb" }));
-app.use(APIKeyMiddleware);
+// app.use(APIKeyMiddleware);
 app.use(
 	session({
 		secret: "secret",

@@ -41,7 +41,7 @@ const SiteRoutes = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Layout><TemplateApp><Templates /></TemplateApp></Layout>,
+                element: <Layout wide><TemplateApp><Templates /></TemplateApp></Layout>,
             },
             {
                 path: 'live-editor',
