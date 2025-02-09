@@ -1,39 +1,95 @@
 import { Router } from "express";
-import { TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
-
-import { CountSheets, TemplateGenerate, TemplateGetOne, TemplateGetPreview, TemplateGetScreenshot } from "./controllers/Template.js";
-import { aiTest } from "./ai_test.js";
-import multer from "multer";
+import { ChatController, TemplateAdd, TemplateDelete, TemplteGetAll, ExtractSheet } from "./controllers/index.js";
+import {
+	CountSheets,
+	TemplateGenerate,
+	TemplateGetOne,
+	TemplateGetPreview,
+	TemplateGetScreenshot,
+} from "./controllers/Template.js";
 import { get_s3_objects, handle_s3_v2 } from "./controllers/S3Controller.js";
 import { BucketGetSignedConnection, GetResources } from "./controllers/Bucket.js";
+import {
+	LoginController,
+	LogoutController,
+	RegisterController,
+	ResetPaswordController,
+} from "./controllers/AuthController.js";
+import { RandomSheet } from "./models/model.spreadsheet.js";
+import { AuthMiddleware, ResetPasswordMiddleware } from "./middlewares/index.js";
+import multer from "multer";
 
 const upload = multer();
-
+const auth_router = Router();
 const template_router = Router();
 const s3Router = Router();
-// router.get("/download/:id", DownloadFile);
-// working routes
+const gemini_router = Router();
 
-template_router.get("/templates", TemplteGetAll); //okay - 1
-template_router.get("/template/:id/preview", TemplateGetPreview); // okay - 1
-template_router.get("/template/:template_id/screenshot", TemplateGetScreenshot); // okay - 1
-template_router.get("/template/:template_id", TemplateGetOne); //okay - 1
-template_router.post("/template/add", upload.single("template"), TemplateAdd); //okay - 1
-template_router.delete("/template/:template_id", TemplateDelete); // okay - 1
-template_router.get("/template/:template_id/generate", TemplateGenerate); // okay - 1
-template_router.get("/data/extract", ExtractSheet); //okay - 1
-template_router.get("/data/sheet-count", CountSheets); // okay - 1
+// test route
+template_router.get("/test", AuthMiddleware, (req, res, next) => {
+	const rt = res.locals.RefreshToken;
+	const at = res.locals.AccessToken;
+	res
+		.status(200)
+		.cookie("Refresh-Token", rt, { httpOnly: true, sameSite: "strict" })
+		.header({ "Access-Token": at })
+		.send("all good now");
+});
+
+// working routes
+// Auths
+auth_router.post("/login", LoginController);
+auth_router.delete("/logout", LogoutController);
+auth_router.post("/register", RegisterController);
+
+/*  TODO
+    accepts user'username or email
+    generate token
+    send to user's email
+*/
+// with user's email/username payload -> sends email to the user
+auth_router.post("/forgot-password", ResetPasswordMiddleware, (req, res) => {});
+// with headers
+auth_router.get("/forgot-password", ResetPasswordMiddleware, (req, res) => {});
+/*  TODO
+    include forgot password token upon request    
+*/
+auth_router.patch("/reset-password", ResetPasswordMiddleware, ResetPaswordController);
+
+// Template Getter
+template_router.get("/templates", TemplteGetAll);
+template_router.get("/template/:template_id", TemplateGetOne);
+template_router.get("/template/:id/preview", TemplateGetPreview);
+template_router.get("/template/:template_id/screenshot", TemplateGetScreenshot);
+template_router.get("/template/:template_id/generate", TemplateGenerate);
+
+// Template Setters
+template_router.post("/template/add", upload.single("template"), TemplateAdd);
+template_router.delete("/template/", TemplateDelete);
+template_router.delete("/template/:template_id", TemplateDelete);
+
+// Spreadsheet Getters
+template_router.get("/data/extract", ExtractSheet);
+template_router.get("/data/sheet-count", CountSheets);
 
 // extract unstructured documents
-// template_router.get("/random-sheets", RandomSheet);
+template_router.get("/random-sheets", RandomSheet);
 
-template_router.get("/ai-test", aiTest);
-// s3Router.get("/", handle_s3);
+// Google Gemini
+gemini_router.get("/chat", ChatController);
+
+// S3 Bucket
 s3Router.get("/get-secure-url", handle_s3_v2);
 s3Router.get("/get-contents", get_s3_objects);
 s3Router.get("/request", BucketGetSignedConnection);
 s3Router.get("/resources", GetResources);
 
+const AuthRoutes = auth_router;
 const TemplateRoutes = template_router;
+const GeminiRoutes = gemini_router;
 const S3Routes = s3Router;
-export { TemplateRoutes, S3Routes };
+export { AuthRoutes, GeminiRoutes, TemplateRoutes, S3Routes };
+
+// https://blog.logrocket.com/implement-oauth-2-0-node-js/
+// https://www.nodemailer.com/usage/using-gmail/
+// https://www.w3schools.com/nodejs/nodejs_email.asp

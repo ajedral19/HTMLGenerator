@@ -18,7 +18,7 @@ export const TemplateSave = async (template_prop: Template) => {
 		template: templateFiles[0],
 		name: templateName,
 		sheet: spreadsheet,
-		cdn: cdn,
+		cdn: cdn
 		// stylesheetId,
 	};
 
@@ -40,7 +40,8 @@ export const TemplateDelete = async (id: string) => {
 export const TemplateFindAll = async (page?: number, signal?: AbortSignal) => {
 	return api
 		.get(`/templates${page ? "?page=" + page : ""}`, {
-			signal, onDownloadProgress: (progressEvent) => {
+			signal,
+			onDownloadProgress: (progressEvent) => {
 				const { loaded, total = 0, bytes } = progressEvent;
 				store.dispatch(loaderState({ progress: Math.round((loaded / total) * 100), max: bytes, state: "templates" }));
 			}

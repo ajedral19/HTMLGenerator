@@ -4,6 +4,8 @@ import { config } from "dotenv";
 
 const env = config();
 const BASE_URL = env.parsed?.BASE_URL;
+console.log(BASE_URL);
+
 const CDN_URL = env.parsed?.CDN_URL;
 
 // https://vitejs.dev/config/

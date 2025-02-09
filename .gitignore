@@ -3,7 +3,6 @@
 */Template/mock.html
 */Template/Styles
 */node_modules
-**-lock.json
 credentials
 
 */.venv
